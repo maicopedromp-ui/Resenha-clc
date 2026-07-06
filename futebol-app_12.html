@@ -1,0 +1,2768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resenha CLC</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --card:#161b22;
+    --card2:#1c2330;
+    --green:#22c55e;
+    --green-d:#15803d;
+    --gold:#eab308;
+    --text:#e6edf3;
+    --muted:#8b949e;
+    --border:#30363d;
+    --red:#ef4444;
+    --blue:#3b82f6;
+    --cup-gold:#ffd700;
+    --cup-green:#009c3b;
+    --cup-yellow:#ffdf00;
+    --cup-blue:#002776;
+  }
+  @keyframes shimmer{
+    0%{background-position:-200% 0;}
+    100%{background-position:200% 0;}
+  }
+  @keyframes confetti-fall{
+    0%{transform:translateY(-20px) rotate(0deg);opacity:1;}
+    100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+  }
+  @keyframes trophy-bounce{
+    0%,100%{transform:translateY(0) rotate(-3deg);}
+    50%{transform:translateY(-4px) rotate(3deg);}
+  }
+  @keyframes gradient-shift{
+    0%,100%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:linear-gradient(160deg,#0d1117 0%,#0f1a12 100%);
+    color:var(--text);
+    padding:16px;
+    padding-bottom:60px;
+  }
+  h1{
+    font-size:22px;
+    margin:0 0 4px 0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:linear-gradient(90deg, var(--cup-gold), var(--cup-green), var(--cup-gold));
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:gradient-shift 4s ease infinite;
+    font-weight:800;
+  }
+  .cup-badge{
+    display:inline-block;
+    animation:trophy-bounce 1.6s ease-in-out infinite;
+    -webkit-text-fill-color:initial;
+    background:none;
+  }
+  .subtitle{color:var(--muted);font-size:13px;margin-bottom:16px;}
+  .tabs{
+    display:flex;
+    gap:6px;
+    margin-bottom:16px;
+    overflow-x:auto;
+    padding-bottom:4px;
+  }
+  .tab{
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--muted);
+    padding:8px 14px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .tab.active{
+    background:linear-gradient(90deg, var(--cup-green), var(--green));
+    color:#04140a;
+    border-color:var(--cup-green);
+    box-shadow:0 2px 8px rgba(0,156,59,0.35);
+  }
+  .section{display:none;}
+  .section.active{display:block;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:10px;
+  }
+  .player-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .player-info{display:flex;align-items:center;gap:10px;flex:1;}
+  .avatar{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--card2);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:15px;
+    border:1px solid var(--border);
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;}
+  .avatar.goleiro{background:#3b2a0d;color:var(--gold);border-color:var(--gold);}
+  .pname{font-weight:600;font-size:15px;}
+  .ptag{font-size:11px;color:var(--muted);}
+  .pos-tag{
+    display:inline-block;
+    font-size:10px;
+    font-weight:700;
+    padding:1px 6px;
+    border-radius:5px;
+    margin-top:2px;
+  }
+  .pos-Goleiro{background:#3b2a0d;color:var(--gold);}
+  .pos-Zagueiro{background:#1e3a5f;color:#60a5fa;}
+  .pos-Lateral{background:#1e3a2e;color:#4ade80;}
+  .pos-Lateral-Direito{background:#1e3a2e;color:#4ade80;}
+  .pos-Lateral-Esquerdo{background:#1e3a2e;color:#86efac;}
+  .pos-Meio{background:#3a2e1e;color:#fb923c;}
+  .pos-Atacante{background:#3a1e2e;color:#f472b6;}
+  .skill-stars{display:flex;gap:2px;margin-top:2px;}
+  .star{cursor:pointer;font-size:16px;color:var(--border);}
+  .star.filled{color:var(--gold);}
+  .presence-toggle{
+    width:44px;height:26px;border-radius:14px;
+    background:var(--card2);
+    border:1px solid var(--border);
+    position:relative;cursor:pointer;
+    flex-shrink:0;
+  }
+  .presence-toggle.on{background:var(--green-d);border-color:var(--green);}
+  .presence-toggle .dot{
+    width:20px;height:20px;border-radius:50%;
+    background:var(--muted);
+    position:absolute;top:2px;left:2px;
+    transition:left .15s;
+  }
+  .presence-toggle.on .dot{left:22px;background:var(--green);}
+  button.primary{
+    background:linear-gradient(90deg, var(--cup-green), var(--cup-gold), var(--cup-green));
+    background-size:200% auto;
+    animation:gradient-shift 3s ease infinite;
+    color:#04140a;
+    border:none;
+    padding:13px 16px;
+    border-radius:10px;
+    font-weight:800;
+    font-size:14px;
+    cursor:pointer;
+    width:100%;
+    box-shadow:0 4px 14px rgba(255,215,0,0.25);
+    transition:transform .15s;
+  }
+  button.primary:active{ transform:scale(0.97); }
+  button.secondary{
+    background:var(--card2);
+    color:var(--text);
+    border:1px solid var(--border);
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+  }
+  button.danger{
+    background:transparent;
+    color:var(--red);
+    border:1px solid var(--red);
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:12px;
+    cursor:pointer;
+  }
+  .row-actions{display:flex;gap:6px;margin-top:8px;}
+  .team-box{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:4px solid var(--cup-green);
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:12px;
+    animation:team-reveal .4s ease;
+  }
+  @keyframes team-reveal{
+    from{opacity:0;transform:translateY(8px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .confetti-piece{
+    position:fixed;
+    top:-20px;
+    width:8px;
+    height:14px;
+    z-index:999;
+    pointer-events:none;
+    animation:confetti-fall linear forwards;
+  }
+  .cup-banner{
+    background:linear-gradient(90deg, var(--cup-green), var(--cup-blue), var(--cup-gold), var(--cup-green));
+    background-size:300% auto;
+    animation:gradient-shift 6s ease infinite;
+    color:#fff;
+    text-align:center;
+    font-size:12px;
+    font-weight:700;
+    padding:8px;
+    border-radius:10px;
+    margin-bottom:14px;
+    text-shadow:0 1px 2px rgba(0,0,0,0.4);
+  }
+  .team-title{
+    font-size:15px;font-weight:700;margin-bottom:8px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .team-badge{
+    font-size:11px;
+    background:var(--card2);
+    padding:3px 8px;
+    border-radius:6px;
+    color:var(--muted);
+  }
+  .team-player{
+    display:flex;justify-content:space-between;
+    padding:6px 0;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+    align-items:center;
+  }
+  .team-player:last-child{border-bottom:none;}
+  .empty{
+    text-align:center;color:var(--muted);
+    padding:30px 10px;font-size:13px;
+  }
+  .history-item{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:8px;
+  }
+  .history-date{font-size:12px;color:var(--muted);margin-bottom:6px;}
+  .stat-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    margin-bottom:12px;
+  }
+  .stat-box{
+    background:var(--card2);
+    border-radius:10px;
+    padding:10px;
+    text-align:center;
+  }
+  .stat-num{font-size:22px;font-weight:800;color:var(--green);}
+  .stat-label{font-size:11px;color:var(--muted);}
+  select.pos-select{
+    background:var(--card2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:3px 6px;
+    font-size:11px;
+  }
+  .loading{text-align:center;padding:40px;color:var(--muted);}
+  .toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    background:var(--green);color:#04140a;
+    padding:10px 18px;border-radius:20px;
+    font-size:13px;font-weight:600;
+    box-shadow:0 4px 12px rgba(0,0,0,.4);
+    z-index:100;
+    opacity:0;transition:opacity .2s;
+    pointer-events:none;
+  }
+  .toast.show{opacity:1;}
+  .num-teams-select{
+    display:flex;gap:6px;margin-bottom:12px;
+  }
+  .num-teams-select button{
+    flex:1;
+    background:var(--card2);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:8px;
+    border-radius:8px;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .num-teams-select button.sel{
+    background:var(--green);color:#04140a;border-color:var(--green);font-weight:700;
+  }
+  .fin-rule{
+    display:flex;justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+  }
+  .pay-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .pay-row:last-child{border-bottom:none;}
+  .pay-check{
+    width:26px;height:26px;border-radius:8px;
+    border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    font-size:15px;
+    flex-shrink:0;
+  }
+  .pay-check.paid{
+    background:var(--green);border-color:var(--green);color:#04140a;font-weight:900;
+  }
+  .lock-screen{
+    text-align:center;
+    padding:40px 16px;
+  }
+  .lock-icon{font-size:40px;margin-bottom:10px;}
+  .pin-input{
+    background:var(--card2);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:14px;
+    border-radius:10px;
+    font-size:20px;
+    text-align:center;
+    letter-spacing:6px;
+    width:160px;
+    margin:14px auto;
+    display:block;
+  }
+  .photo-upload-btn{
+    position:relative;
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--card2);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    cursor:pointer;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .photo-upload-btn input{
+    position:absolute;inset:0;
+    opacity:0;cursor:pointer;
+  }
+  .photo-upload-btn img{width:100%;height:100%;object-fit:cover;}
+  .edit-block{
+    display:flex;flex-direction:column;gap:6px;margin-top:8px;
+  }
+  .edit-row{display:flex;gap:6px;align-items:center;}
+  .expense-item{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:10px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .expense-item:last-child{border-bottom:none;}
+  .expense-thumb{
+    width:44px;height:44px;border-radius:8px;
+    object-fit:cover;
+    border:1px solid var(--border);
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .expense-thumb-empty{
+    width:44px;height:44px;border-radius:8px;
+    background:var(--card2);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:var(--muted);
+    flex-shrink:0;
+  }
+  .expense-desc{flex:1;}
+  .expense-value{font-weight:700;color:var(--red);}
+  input.exp-input{
+    background:var(--card2);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:10px;
+    border-radius:8px;
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<h1><span class="cup-badge">⚽</span> <span id="mainTitle">Resenha CLC</span></h1>
+<div class="subtitle" id="headerSub">carregando...</div>
+<div class="cup-banner">🏆 RUMO AO HEXA 🇧🇷 — Vai, Brasil! ⚽</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="presenca">Presença</div>
+  <div class="tab" data-tab="jogadores">Jogadores 🔒</div>
+  <div class="tab" data-tab="sorteio">Sorteio</div>
+  <div class="tab" data-tab="historico">Histórico</div>
+  <div class="tab" data-tab="financeiro">Financeiro</div>
+  <div class="tab" data-tab="copa">🏆 Copa</div>
+  <div class="tab" data-tab="gols">⚽ Gols</div>
+  <div class="tab" data-tab="disciplina">🟨 Disciplina</div>
+  <div class="tab" data-tab="craque">⭐ Craque</div>
+  <div class="tab" data-tab="reservas">📋 Reservas</div>
+</div>
+
+<div id="loading" class="loading">Carregando dados...</div>
+
+<div id="app" style="display:none;">
+
+  <!-- PRESENÇA -->
+  <div class="section active" id="tab-presenca">
+    <div id="presencaChurrasSection"></div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">📅 Jogo de qual terça?</div>
+      <select id="gameDateSelect" class="pos-select" style="width:100%;padding:10px;font-size:14px;"></select>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-num" id="statConfirmados">0</div><div class="stat-label">Confirmados</div></div>
+      <div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total no grupo</div></div>
+    </div>
+    <div id="presencaList"></div>
+    <div class="row-actions">
+      <button class="secondary" style="flex:1" onclick="marcarTodos(true)">Confirmar todos</button>
+      <button class="secondary" style="flex:1" onclick="marcarTodos(false)">Limpar tudo</button>
+    </div>
+  </div>
+
+  <!-- JOGADORES (protegido por PIN) -->
+  <div class="section" id="tab-jogadores">
+    <div id="jogadoresContent"></div>
+  </div>
+
+  <!-- SORTEIO -->
+  <div class="section" id="tab-sorteio">
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">Quantos times?</div>
+      <div class="num-teams-select" id="numTeamsSelect">
+        <button data-n="2" class="sel" onclick="setNumTeams(2)">2 times</button>
+        <button data-n="3" onclick="setNumTeams(3)">3 times</button>
+        <button data-n="4" onclick="setNumTeams(4)">4 times</button>
+      </div>
+      <div class="ptag" style="margin-bottom:8px;text-align:center;" id="sorteioDataInfo">Vai usar os confirmados da data selecionada na aba Presença</div>
+      <button class="primary" onclick="sortearTimes()">🔀 Sortear times</button>
+      <div class="ptag" style="margin-top:8px;text-align:center;">Sorteio balanceado por posição e nível — evita 4 zagueiros num time só</div>
+    </div>
+    <div id="teamsResult"></div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="section" id="tab-historico">
+    <div id="historyList"></div>
+  </div>
+
+  <!-- FINANCEIRO -->
+  <div class="section" id="tab-financeiro">
+    <div class="card" style="background:#0d2818;border-color:var(--green-d);">
+      <div style="font-size:12px;color:#86efac;">📢 <strong>Jogador:</strong> fez o Pix? Marca seu ✓ aqui mesmo, ninguém precisa lançar pra você.</div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:10px;font-size:15px;">💰 Regras do racha</div>
+      <div class="fin-rule"><span>Quadra (Alvorada)</span><strong>R$ 550,00</strong></div>
+      <div class="fin-rule"><span>Mensalidade linha</span><strong>R$ 65,00</strong></div>
+      <div class="fin-rule"><span>Mensalidade goleiro</span><strong>R$ 25,00</strong></div>
+      <div class="fin-rule"><span>Jogo avulso</span><strong>R$ 15,00</strong></div>
+      <div class="fin-rule"><span>Churrasco (2ª terça do mês)</span><strong>R$ 25,00</strong></div>
+      <div class="fin-rule" style="border-bottom:none;"><span>Pix</span><strong style="color:var(--green);font-size:12px;">futclc22@gmail.com</strong></div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-num" id="finPagantes">0</div><div class="stat-label">Pagantes ativos</div></div>
+      <div class="stat-box"><div class="stat-num" id="finArrecadado">R$0</div><div class="stat-label">Arrecadado (mensal)</div></div>
+    </div>
+
+    <div class="card" style="text-align:center;">
+      <div class="ptag" style="margin-bottom:4px;">Custo da quadra: R$ 550,00/mês</div>
+      <div id="finSaldo" style="font-size:24px;font-weight:800;"></div>
+      <div class="ptag" id="finSaldoLabel"></div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">Mês de referência</div>
+      <div style="display:flex;gap:6px;">
+        <select id="finMonth" class="pos-select" style="flex:1;padding:8px;font-size:13px;"></select>
+        <button class="secondary" onclick="marcarTodosPagos(true)">Marcar tudo pago</button>
+      </div>
+    </div>
+
+    <div id="finPagamentos"></div>
+
+    <div class="card" id="finChurrasCard" style="margin-top:14px;">
+      <div style="font-weight:700;margin-bottom:4px;">🍖 Churrasco do mês</div>
+      <div class="ptag" style="margin-bottom:8px;">R$ 25,00 por pessoa · 2ª terça-feira do mês</div>
+      <div style="text-align:center;background:var(--card2);border-radius:10px;padding:10px;margin-bottom:10px;">
+        <div id="finSaldoChurrasco" style="font-size:20px;font-weight:800;"></div>
+        <div class="ptag" id="finSaldoChurrascoLabel"></div>
+      </div>
+      <div style="font-weight:700;margin:10px 0 4px;font-size:13px;">Quem vai nesse churrasco?</div>
+      <div class="ptag" style="margin-bottom:6px;">Cada um marca se vai ou não — só quem confirmar aparece no pagamento</div>
+      <div id="churrasAttendanceList"></div>
+      <div style="font-weight:700;margin:14px 0 4px;font-size:13px;">Pagamento (só confirmados)</div>
+      <div id="finChurrasList"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div style="font-weight:700;margin-bottom:4px;">🧾 Despesas do mês</div>
+      <div class="ptag" style="margin-bottom:10px;">Descrição e recibo de cada gasto, pra justificar pro grupo</div>
+      <div id="expenseAdminForm"></div>
+      <div class="stat-box" style="margin-bottom:10px;">
+        <div class="stat-num" id="finTotalDespesas" style="color:var(--red);">R$0</div>
+        <div class="stat-label">Total gasto no mês</div>
+      </div>
+      <div id="expensesList"></div>
+    </div>
+  </div>
+
+  <!-- COPA -->
+  <div class="section" id="tab-copa">
+    <div class="card" style="background:linear-gradient(135deg, #0d2818, #0a1c33);border-color:var(--cup-gold);">
+      <div style="font-weight:800;font-size:16px;">🏆 Bolão da Copa CLC</div>
+      <div class="ptag">Dê seu palpite antes do jogo · quem mais acertar não paga o churras do mês</div>
+    </div>
+
+    <div class="card" id="copaRankingCard" style="text-align:center;">
+      <div style="font-weight:700;margin-bottom:8px;">🥇 Ranking de palpites</div>
+      <div id="copaRankingList"></div>
+    </div>
+
+    <div id="copaMatchesList"></div>
+  </div>
+
+  <!-- GOLS / ARTILHEIROS -->
+  <div class="section" id="tab-gols">
+    <div class="card" style="background:linear-gradient(135deg, #2a1a0d, #0d2818);border-color:var(--cup-gold);">
+      <div style="font-weight:800;font-size:16px;">⚽ Artilheiros do Ano</div>
+      <div class="ptag">Contagem de gols acumulada até o fim do ano</div>
+    </div>
+    <div id="golsRankingList"></div>
+  </div>
+
+  <!-- DISCIPLINA -->
+  <div class="section" id="tab-disciplina">
+    <div class="card" style="background:linear-gradient(135deg, #1a1a0d, #1a0d0d);border-color:var(--gold);">
+      <div style="font-weight:800;font-size:16px;">🟨 Disciplina do Grupo</div>
+      <div class="ptag">Cartões, suspensões e Tribunal do Fominha</div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:4px;">⚽ Tribunal do Fominha</div>
+      <div class="ptag" style="margin-bottom:10px;">Após o jogo, vote se alguém fomerou demais · 3ª vez = 1 semana suspenso</div>
+      <div id="fominhaVotacao"></div>
+    </div>
+    <div class="card" id="cartoesAdminCard">
+      <div style="font-weight:700;margin-bottom:4px;">🟨🟥 Cartões (só admin)</div>
+      <div class="ptag" style="margin-bottom:10px;">Amarelo = 5 min fora · Vermelho = suspenso pro próximo jogo</div>
+      <div id="cartoesAdminForm"></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">📋 Histórico</div>
+      <div id="disciplinaHistorico"></div>
+    </div>
+  </div>
+
+  <!-- RESERVAS -->
+  <div class="section" id="tab-reservas">
+    <div class="card" style="background:linear-gradient(135deg,#0d1a2e,#1a0d2e);border-color:var(--blue);">
+      <div style="font-weight:800;font-size:16px;">📋 Reservas & Convidados</div>
+      <div class="ptag">Jogadores de fora que podem entrar quando faltar alguém</div>
+    </div>
+    <div class="card" id="reservasAdminForm"></div>
+    <div id="reservasList"></div>
+  </div>
+
+  <!-- CRAQUE DA RODADA -->
+  <div class="section" id="tab-craque">
+    <div class="card" style="background:linear-gradient(135deg, #2a2200, #1a1400);border-color:var(--cup-gold);">
+      <div style="font-weight:800;font-size:16px;">⭐ Craque da Rodada</div>
+      <div class="ptag">Vote no melhor do jogo · cada um vota uma vez · resultado aparece pra todo mundo</div>
+    </div>
+    <div class="card" id="craqueVotacaoCard">
+      <div style="font-weight:700;margin-bottom:8px;">🗳️ Seu voto</div>
+      <div id="craqueVotacao"></div>
+    </div>
+    <div class="card" style="background:var(--card2);">
+      <div style="font-weight:700;margin-bottom:8px;">🏆 Resultado da rodada</div>
+      <div id="craqueResultado"></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">👑 Hall da Fama</div>
+      <div class="ptag" style="margin-bottom:8px;">Quem mais vezes foi eleito craque</div>
+      <div id="craqueHallFama"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PIN = "2008";
+
+// =====================================================================
+// CONFIGURAÇÃO DO FIREBASE — troque a URL abaixo pela sua Realtime Database
+// Exemplo: "https://resenha-clc-default-rtdb.firebaseio.com"
+// =====================================================================
+const FIREBASE_DB_URL = "https://resenha-clc-default-rtdb.firebaseio.com";
+
+// Camada de compatibilidade: reimplementa window.storage usando o Firebase
+// por baixo dos panos, via API REST simples (fetch). Isso permite manter
+// TODO o resto do código do app sem precisar mudar nada — só troca o "motor".
+window.storage = {
+  get: async (key, shared) => {
+    const res = await fetch(`${FIREBASE_DB_URL}/${key}.json`);
+    if(!res.ok) throw new Error('Firebase get failed: ' + res.status);
+    const value = await res.json();
+    if(value === null || value === undefined) throw new Error('not found');
+    return { key, value: JSON.stringify(value), shared };
+  },
+  set: async (key, value, shared) => {
+    const parsed = JSON.parse(value);
+    const res = await fetch(`${FIREBASE_DB_URL}/${key}.json`, {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(parsed)
+    });
+    if(!res.ok) throw new Error('Firebase set failed: ' + res.status);
+    return { key, value, shared };
+  }
+};
+
+let isAdmin = false;
+
+const POSICOES = ['Goleiro','Zagueiro','Lateral Direito','Lateral Esquerdo','Meio','Atacante'];
+const FISICOS = ['Leve','Médio','Pesado'];
+
+const DEFAULT_PLAYERS = [
+  {name:"MP", posicao:"Meio"},
+  {name:"Edevaldo", posicao:"Meio"},
+  {name:"Alvaro", posicao:"Meio"},
+  {name:"Beto", posicao:"Meio"},
+  {name:"Xande", posicao:"Meio"},
+  {name:"Vini", posicao:"Meio"},
+  {name:"Rafael", posicao:"Meio"},
+  {name:"Fininho", posicao:"Meio"},
+  {name:"Thiago", posicao:"Meio"},
+  {name:"Gabriel", posicao:"Meio"},
+  {name:"Samuquinha", posicao:"Meio"},
+  {name:"Victor", posicao:"Meio"},
+  {name:"Kauã", posicao:"Meio"},
+  {name:"Kawan", posicao:"Meio"},
+  {name:"Reylan", posicao:"Meio"},
+  {name:"Lucas", posicao:"Meio"},
+  {name:"Paulo", posicao:"Meio"},
+  {name:"Guilherme", posicao:"Meio"},
+  {name:"Tony", posicao:"Goleiro"},
+  {name:"Rodrigo", posicao:"Goleiro"}
+];
+
+let players = [];
+let numTeams = 2;
+let currentDraw = null;
+let paymentsCache = null;
+let churrasAttendanceCache = null;
+let expensesCache = null;
+
+// Salva no servidor com repetição automática, sem travar a interface.
+// A tela sempre reflete o estado local, mesmo que a sincronização falhe.
+async function safeStorageSet(key, value, shared, silent){
+  for(let i=0;i<3;i++){
+    try{
+      await window.storage.set(key, value, shared);
+      return true;
+    }catch(e){
+      await new Promise(r=>setTimeout(r, 350));
+    }
+  }
+  if(!silent) {} // silencioso — tenta em segundo plano sem avisar
+  return false;
+}
+
+function uid(){ return 'p_' + Math.random().toString(36).slice(2,10); }
+function isGoleiro(p){ return p.posicao === 'Goleiro'; }
+function initials(name){ return name.trim().slice(0,2).toUpperCase(); }
+
+function withTimeout(promise, ms){
+  return Promise.race([
+    promise,
+    new Promise((_, reject)=>setTimeout(()=>reject(new Error('timeout')), ms))
+  ]);
+}
+
+async function loadData(){
+  try{
+    const res = await withTimeout(window.storage.get('players', true), 6000);
+    players = JSON.parse(res.value);
+  }catch(e){
+    if(e.message === 'timeout'){
+      // não sabemos se já existem dados salvos — mais seguro pedir pra tentar de novo
+      // do que sobrescrever com os jogadores padrão e perder configuração real
+      showLoadRetry();
+      return;
+    }
+    // erro "de verdade" (ex: chave nunca criada) — seguro usar padrão aqui
+    players = DEFAULT_PLAYERS.map(p => ({
+      id: uid(), name: p.name, posicao: p.posicao, skill: 3, fisico: 'Médio', present: true, photo: null, camisa: null
+    }));
+    savePlayers();
+  }
+  document.getElementById('loading').style.display='none';
+  document.getElementById('app').style.display='block';
+  updateHeaderBanner();
+  renderAll();
+}
+
+function showLoadRetry(){
+  document.getElementById('loading').innerHTML = `
+    <div style="text-align:center;">
+      <div style="margin-bottom:12px;">⚠️ Demorou demais pra carregar.</div>
+      <button class="primary" style="width:200px;margin:0 auto;" onclick="location.reload()">🔄 Tentar de novo</button>
+    </div>`;
+}
+
+function updateHeaderBanner(){
+  const sub = document.getElementById('headerSub');
+  const title = document.getElementById('mainTitle');
+  const nextDate = getUpcomingTuesdays(1)[0];
+  if(isSecondTuesday(dateKey(nextDate))){
+    title.textContent = '🍖 Hoje é dia de Churrasco!';
+    sub.innerHTML = `<div class="card" style="background:#2a1a0d;border-color:var(--gold);margin:0;padding:10px 12px;">
+      <div style="font-weight:800;font-size:15px;">🍖 Esse dia tem Churrasco!</div>
+      <div class="ptag">R$ 25,00 por pessoa · confirma se vai na aba Presença</div>
+    </div>`;
+  } else {
+    title.textContent = '⚽ Resenha CLC';
+    sub.textContent = players.length + ' jogadores no grupo · dados de presença/pagamento compartilhados';
+  }
+}
+
+async function savePlayers(){
+  await safeStorageSet('players', JSON.stringify(players), true, true);
+}
+
+async function loadHistory(){
+  try{
+    const res = await window.storage.get('history', true);
+    return JSON.parse(res.value);
+  }catch(e){ return []; }
+}
+
+async function saveHistory(hist){
+  await safeStorageSet('history', JSON.stringify(hist), true);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+// ---------- TABS ----------
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab === 'historico') renderHistory();
+    if(tab.dataset.tab === 'financeiro') renderFinanceiro();
+    if(tab.dataset.tab === 'jogadores') renderJogadoresTab();
+    if(tab.dataset.tab === 'sorteio') updateSorteioDataInfo();
+    if(tab.dataset.tab === 'copa') renderCopa();
+    if(tab.dataset.tab === 'gols') renderGols();
+    if(tab.dataset.tab === 'disciplina') renderDisciplina();
+    if(tab.dataset.tab === 'craque') renderCraque();
+    if(tab.dataset.tab === 'reservas') renderReservas();
+  });
+});
+
+// ---------- RENDER GERAL ----------
+function renderAll(){
+  renderPresenca();
+  renderJogadoresTab();
+}
+
+let presenceByDateCache = null;
+let absenceReasonsCache = null;
+let waitlistCache = null;
+let cartoesCache = null;
+let fominhaCache = null;
+const MOTIVOS_FALTA = ['Trabalho','Saúde','Viagem','Imprevisto','Sem aviso'];
+const MAX_JOGADORES = 18; // limite antes de ir pra lista de espera
+const PRAZO_CONFIRMACAO_DIA = 1; // segunda-feira = 1
+const PRAZO_CONFIRMACAO_HORA = 20; // 20h
+let selectedGameDate = null;
+
+function getUpcomingTuesdays(n){
+  // retorna todas as terças de hoje até 31/12/2026
+  const results = [];
+  let d = new Date();
+  d.setHours(0,0,0,0);
+  while(d.getDay() !== 2){ d.setDate(d.getDate()+1); }
+  const fim = new Date(2026, 11, 31);
+  while(d <= fim){
+    results.push(new Date(d));
+    d.setDate(d.getDate()+7);
+  }
+  return results;
+}
+
+function dateKey(d){
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function formatDateLabel(d, isFirst){
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const churras = (d.getDate()>=8 && d.getDate()<=14) ? ' 🍖' : '';
+  return (isFirst ? '👉 ' : '') + dd + '/' + mm + ' (terça)' + churras;
+}
+
+function populateGameDateSelect(){
+  const sel = document.getElementById('gameDateSelect');
+  if(sel.options.length) return;
+  const dates = getUpcomingTuesdays(8); // mantém função, mas agora busca até fim do ano
+  sel.innerHTML = dates.map((d,i)=>`<option value="${dateKey(d)}">${formatDateLabel(d, i===0)}</option>`).join('');
+  selectedGameDate = dateKey(dates[0]);
+  sel.value = selectedGameDate;
+  sel.onchange = ()=>{ selectedGameDate = sel.value; renderPresenca(); };
+}
+
+async function loadPresenceByDate(){
+  if(presenceByDateCache) return presenceByDateCache;
+  try{
+    const res = await window.storage.get('presenceByDate', true);
+    presenceByDateCache = JSON.parse(res.value);
+  }catch(e){
+    presenceByDateCache = {};
+  }
+  return presenceByDateCache;
+}
+
+async function savePresenceByDate(data){
+  presenceByDateCache = data;
+  await safeStorageSet('presenceByDate', JSON.stringify(data), true);
+}
+
+// ---------- LISTA DE ESPERA ----------
+async function loadWaitlist(){
+  if(waitlistCache) return waitlistCache;
+  try{
+    const res = await window.storage.get('waitlist', true);
+    waitlistCache = JSON.parse(res.value);
+  }catch(e){ waitlistCache = {}; }
+  return waitlistCache;
+}
+async function saveWaitlist(data){
+  waitlistCache = data;
+  await safeStorageSet('waitlist', JSON.stringify(data), true);
+}
+
+// ---------- CARTÕES ----------
+async function loadCartoes(){
+  if(cartoesCache) return cartoesCache;
+  try{
+    const res = await window.storage.get('cartoes', true);
+    cartoesCache = JSON.parse(res.value);
+  }catch(e){ cartoesCache = {}; }
+  return cartoesCache;
+}
+async function saveCartoes(data){
+  cartoesCache = data;
+  await safeStorageSet('cartoes', JSON.stringify(data), true);
+}
+
+// ---------- TRIBUNAL DO FOMINHA ----------
+async function loadFominha(){
+  if(fominhaCache) return fominhaCache;
+  try{
+    const res = await window.storage.get('fominha', true);
+    fominhaCache = JSON.parse(res.value);
+  }catch(e){ fominhaCache = {}; }
+  return fominhaCache;
+}
+async function saveForminha(data){
+  fominhaCache = data;
+  await safeStorageSet('fominha', JSON.stringify(data), true);
+}
+
+// Verifica se jogador está suspenso (3+ votos fominha ou cartão vermelho ativo)
+async function isSuspenso(playerId, dateStr){
+  const cartoes = await loadCartoes();
+  const fominha = await loadFominha();
+  const playerCartoes = cartoes[playerId] || [];
+  // cartão vermelho ativo nessa data
+  const temVermelho = playerCartoes.some(c=> c.tipo==='vermelho' && c.suspAte >= dateStr);
+  if(temVermelho) return {suspenso:true, motivo:'🟥 Suspenso (cartão vermelho)'};
+  // tribunal: 3 vezes fominha → suspensão 1 semana
+  const fomsPlayer = fominha[playerId] || [];
+  if(fomsPlayer.length >= 3){
+    const ultimoFom = fomsPlayer[fomsPlayer.length-1];
+    if(ultimoFom.suspAte >= dateStr) return {suspenso:true, motivo:'⚽ Suspenso (Tribunal do Fominha)'};
+  }
+  return {suspenso:false};
+}
+
+// Conta amarelos da temporada (ano atual)
+function contaAmarelos(cartoes, playerId){
+  const year = new Date().getFullYear().toString();
+  return (cartoes[playerId]||[]).filter(c=>c.tipo==='amarelo' && c.data.startsWith(year)).length;
+}
+
+// Prazo de confirmação: segunda 20h antes da terça do jogo
+function getPrazoConfirmacao(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate()-1); // segunda antes da terça
+  d.setHours(PRAZO_CONFIRMACAO_HORA, 0, 0, 0);
+  return d;
+}
+
+function prazoPassou(dateStr){
+  return new Date() > getPrazoConfirmacao(dateStr);
+}
+
+function formatPrazo(dateStr){
+  const p = getPrazoConfirmacao(dateStr);
+  return p.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'}) + ' às ' + PRAZO_CONFIRMACAO_HORA + 'h';
+}
+
+async function loadAbsenceReasons(){
+  if(absenceReasonsCache) return absenceReasonsCache;
+  try{
+    const res = await window.storage.get('absenceReasons', true);
+    absenceReasonsCache = JSON.parse(res.value);
+  }catch(e){ absenceReasonsCache = {}; }
+  return absenceReasonsCache;
+}
+
+async function saveAbsenceReasons(data){
+  absenceReasonsCache = data;
+  await safeStorageSet('absenceReasons', JSON.stringify(data), true);
+}
+
+async function setAbsenceReason(playerId, motivo){
+  const data = await loadAbsenceReasons();
+  if(!data[selectedGameDate]) data[selectedGameDate] = {};
+  data[selectedGameDate][playerId] = data[selectedGameDate][playerId] === motivo ? null : motivo;
+  await saveAbsenceReasons(data);
+  renderPresenca();
+}
+
+function countUnjustifiedAbsences(playerId){
+  if(!presenceByDateCache) return 0;
+  const today = dateKey(new Date());
+  let count = 0;
+  Object.keys(presenceByDateCache).forEach(dk=>{
+    if(dk >= today) return; // só datas já passadas
+    if(isSecondTuesday(dk)) return; // churrasco tem fluxo próprio
+    const dayData = presenceByDateCache[dk] || {};
+    if(dayData[playerId]) return; // foi, não é falta
+    const reason = (absenceReasonsCache && absenceReasonsCache[dk]) ? absenceReasonsCache[dk][playerId] : null;
+    if(!reason) count++;
+  });
+  return count;
+}
+
+async function renderPresenca(){
+  populateGameDateSelect();
+  const churrasDay = isSecondTuesday(selectedGameDate);
+  const list = document.getElementById('presencaList');
+  const statGrid = document.querySelector('#tab-presenca .stat-grid');
+  const churrasSection = document.getElementById('presencaChurrasSection');
+
+  if(churrasDay){
+    statGrid.style.display = 'none';
+    list.innerHTML = '';
+    const monthKey = selectedGameDate.slice(0,7);
+    churrasSection.innerHTML = `
+      <div class="card" style="background:#2a1a0d;border-color:#7c4a15;margin-top:4px;">
+        <div style="font-weight:700;margin-bottom:2px;">🍖 Esse dia tem Churrasco!</div>
+        <div class="ptag">Marca uma opção: só o jogo, só o churras, ou os dois</div>
+      </div>
+      <div id="presencaChurrasList"></div>`;
+    await renderChurrasAttendanceInto('presencaChurrasList', monthKey);
+  } else {
+    statGrid.style.display = '';
+    churrasSection.innerHTML = '';
+    const data = await loadPresenceByDate();
+    const dayData = data[selectedGameDate] || {};
+    const reasonsData = await loadAbsenceReasons();
+    const dayReasons = reasonsData[selectedGameDate] || {};
+    const waitlist = await loadWaitlist();
+    const dayWaitlist = waitlist[selectedGameDate] || [];
+    const cartoes = await loadCartoes();
+    list.innerHTML = '';
+
+    // confirmados e lista de espera
+    const confirmados = players.filter(p=>dayData[p.id]).length;
+    const lotado = confirmados >= MAX_JOGADORES;
+    document.getElementById('statConfirmados').textContent = confirmados;
+    document.getElementById('statTotal').textContent = players.length;
+
+    // banner de prazo
+    const prazo = getPrazoConfirmacao(selectedGameDate);
+    const passou = prazoPassou(selectedGameDate);
+    const prazoEl = document.createElement('div');
+    prazoEl.className = 'card';
+    prazoEl.style = passou
+      ? 'background:#3a1a1a;border-color:var(--red);margin-bottom:8px;'
+      : 'background:#0d2818;border-color:var(--green-d);margin-bottom:8px;';
+    prazoEl.innerHTML = passou
+      ? `<div style="font-size:12px;color:#fca5a5;">⏰ Prazo encerrado (${formatPrazo(selectedGameDate)}) — quem não confirmou está como faltante</div>`
+      : `<div style="font-size:12px;color:#86efac;">⏰ Confirme até <strong>${formatPrazo(selectedGameDate)}</strong> para garantir sua vaga</div>`;
+    list.appendChild(prazoEl);
+
+    // banner lotação
+    if(lotado){
+      const waitEl = document.createElement('div');
+      waitEl.className = 'card';
+      waitEl.style = 'background:#1a1a3a;border-color:var(--blue);margin-bottom:8px;';
+      waitEl.innerHTML = `<div style="font-size:12px;color:#93c5fd;">🔄 Vagas esgotadas (${confirmados}/${MAX_JOGADORES}) — extras entram na lista de espera</div>`;
+      list.appendChild(waitEl);
+    }
+
+    // lista principal de jogadores
+    for(const p of players){
+      const susp = await isSuspenso(p.id, selectedGameDate);
+      const going = !!dayData[p.id];
+      const reason = dayReasons[p.id];
+      const unjustified = countUnjustifiedAbsences(p.id);
+      const amarelos = contaAmarelos(cartoes, p.id);
+      const naEspera = dayWaitlist.includes(p.id);
+      const row = document.createElement('div');
+      row.className = 'card';
+      row.style = susp.suspenso ? 'border-color:var(--red);opacity:0.8;' : '';
+
+      const badges = [
+        unjustified>=3 ? `<span class="ptag" style="color:var(--red);">⚠️${unjustified} faltas</span>` : '',
+        amarelos>0 ? `<span class="ptag" style="color:var(--gold);">🟡×${amarelos}</span>` : '',
+        susp.suspenso ? `<span class="ptag" style="color:var(--red);">${susp.motivo}</span>` : '',
+        naEspera ? `<span class="ptag" style="color:var(--blue);">🔄 Fila #${dayWaitlist.indexOf(p.id)+1}</span>` : ''
+      ].filter(Boolean).join(' ');
+
+      row.innerHTML = `
+        <div class="player-row">
+          <div class="player-info">
+            ${avatarHTML(p)}
+            <div>
+              <div class="pname">${p.name} ${badges}</div>
+              <select class="pos-select" onchange="setPosicao('${p.id}', this.value)">
+                ${POSICOES.map(pos=>`<option value="${pos}" ${pos===p.posicao?'selected':''}>${pos}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          ${susp.suspenso
+            ? `<span class="ptag" style="color:var(--red);font-weight:700;">SUSPENSO</span>`
+            : `<div class="presence-toggle ${going?'on':''}" onclick="togglePresenceForDate('${p.id}')">
+                <div class="dot"></div>
+               </div>`
+          }
+        </div>
+        ${(!going && !susp.suspenso) ? `
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
+          <div class="ptag" style="margin-bottom:6px;">Motivo da falta:</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            ${MOTIVOS_FALTA.map(motivo=>`
+              <button class="secondary" style="padding:5px 9px;font-size:11px;${reason===motivo ? 'background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700;' : ''}" onclick="setAbsenceReason('${p.id}','${motivo}')">${motivo}</button>
+            `).join('')}
+          </div>
+        </div>` : ''}`;
+      list.appendChild(row);
+    }
+
+    // lista de espera (se tiver alguém)
+    if(dayWaitlist.length > 0){
+      const waitSection = document.createElement('div');
+      waitSection.className = 'card';
+      waitSection.style = 'border-color:var(--blue);margin-top:4px;';
+      waitSection.innerHTML = `<div style="font-weight:700;margin-bottom:6px;">🔄 Lista de espera</div>
+        ${dayWaitlist.map((id,i)=>{
+          const p = players.find(x=>x.id===id);
+          return p ? `<div class="pay-row"><div class="player-info">${avatarHTML(p)}<span>${i+1}. ${p.name}</span></div></div>` : '';
+        }).join('')}`;
+      list.appendChild(waitSection);
+    }
+  }
+}
+
+function isSecondTuesday(dateStr){
+  if(!dateStr) return false;
+  const day = parseInt(dateStr.split('-')[2], 10);
+  return day >= 8 && day <= 14;
+}
+
+function avatarHTML(p){
+  const numero = p.camisa ? `<div style="position:absolute;bottom:-4px;right:-4px;background:var(--cup-gold);color:#04140a;font-size:9px;font-weight:900;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;border:1px solid #04140a;">${p.camisa}</div>` : '';
+  if(p.photo){
+    return `<div class="avatar" style="position:relative;">${numero}<img src="${p.photo}"></div>`;
+  }
+  return `<div class="avatar ${isGoleiro(p)?'goleiro':''}" style="position:relative;">${numero}${isGoleiro(p)?'🧤':initials(p.name)}</div>`;
+}
+
+function getBadges(p){
+  const badges = [];
+  const pbd = presenceByDateCache || {};
+  const abs = absenceReasonsCache || {};
+
+  // conta jogos e faltas
+  const datas = Object.keys(pbd).filter(d => d < dateKey(new Date()));
+  const totalJogos = datas.length;
+  const faltas = datas.filter(d => !pbd[d]?.[p.id]).length;
+  const presenca = totalJogos > 0 ? ((totalJogos - faltas) / totalJogos) : 1;
+  const faltasSemAviso = datas.filter(d => !pbd[d]?.[p.id] && !abs[d]?.[p.id]).length;
+
+  // gols
+  const ano = currentYearKey();
+  const gols = (golsCache?.[ano]?.[p.id]) || 0;
+
+  // craques
+  const craques = craqueCache ? Object.values(craqueCache).filter(r => {
+    if(!r.votos) return false;
+    const cnt = {};
+    Object.values(r.votos).forEach(tid => cnt[tid] = (cnt[tid]||0)+1);
+    const max = Math.max(...Object.values(cnt), 0);
+    return cnt[p.id] === max && max > 0;
+  }).length : 0;
+
+  // cartões
+  const amarelos = contaAmarelos(cartoesCache||{}, p.id);
+  const fominha = (fominhaCache?.[p.id]||[]).length;
+
+  // badges
+  if(presenca === 1 && totalJogos >= 5) badges.push('🔥 Inabalável');
+  else if(presenca >= 0.9 && totalJogos >= 5) badges.push('✅ Presença Garantida');
+  else if(faltas >= 4) badges.push('👻 Sumido');
+
+  if(faltasSemAviso === 0 && totalJogos >= 3) badges.push('📱 Sempre Avisa');
+  else if(faltasSemAviso >= 3) badges.push('😤 Some Sem Aviso');
+
+  if(gols >= 10) badges.push('⚽ Artilheiro');
+  else if(gols >= 5) badges.push('🎯 Goleador');
+
+  if(craques >= 3) badges.push('👑 Craque Recorrente');
+  else if(craques >= 1) badges.push('⭐ Já Foi Craque');
+
+  if(fominha >= 3) badges.push('🎬 Já Gravou o Vídeo');
+  else if(amarelos >= 3 || fominha >= 2) badges.push('😅 Esquentadinho');
+  if(amarelos === 0 && fominha === 0 && totalJogos >= 5) badges.push('🤝 Fair Play');
+
+  return badges;
+}
+
+
+function renderJogadoresTab(){
+  const container = document.getElementById('jogadoresContent');
+  if(!isAdmin){
+    container.innerHTML = `
+      <div class="card lock-screen">
+        <div class="lock-icon">🔒</div>
+        <div style="font-weight:700;margin-bottom:4px;">Área restrita</div>
+        <div class="ptag">Somente Maico configura jogadores, fotos e posições.</div>
+        <input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="pinInput" placeholder="PIN">
+        <button class="primary" style="width:160px;margin:0 auto;" onclick="checkPin()">Entrar</button>
+      </div>`;
+    return;
+  }
+  renderJogadoresList();
+}
+
+function checkPin(){
+  const val = document.getElementById('pinInput').value;
+  if(val === ADMIN_PIN){
+    isAdmin = true;
+    showToast('Modo admin ativado');
+    renderJogadoresTab();
+  } else {
+    showToast('PIN incorreto');
+  }
+}
+
+function renderJogadoresList(){
+  const container = document.getElementById('jogadoresContent');
+  container.innerHTML = `
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:13px;color:var(--green);">🔓 Modo admin</span>
+      <button class="secondary" onclick="isAdmin=false;renderJogadoresTab();">Sair</button>
+    </div>
+    <div class="card" style="margin-bottom:14px;">
+      <div style="font-weight:700;margin-bottom:8px;">+ Adicionar jogador</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <input id="newName" placeholder="Nome" style="flex:1;min-width:100px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;">
+        <select id="newPos" class="pos-select" style="padding:10px;">
+          ${POSICOES.map(pos=>`<option value="${pos}">${pos}</option>`).join('')}
+        </select>
+        <button class="secondary" onclick="addPlayer()">Add</button>
+      </div>
+    </div>
+    <div id="playersList"></div>
+  `;
+  renderPlayersList();
+}
+
+function renderPlayersList(){
+  const list = document.getElementById('playersList');
+  if(!list) return;
+  list.innerHTML = '';
+  players.forEach(p=>{
+    const row = document.createElement('div');
+    row.className = 'card';
+    let stars = '';
+    for(let i=1;i<=5;i++){
+      stars += `<span class="star ${i<=p.skill?'filled':''}" onclick="setSkill('${p.id}',${i})">★</span>`;
+    }
+    row.innerHTML = `
+      <div class="player-row">
+        <div class="player-info">
+          <div class="photo-upload-btn">
+            ${p.photo ? `<img src="${p.photo}">` : '📷'}
+            <input type="file" accept="image/*" onchange="uploadPhoto(event,'${p.id}')">
+          </div>
+          <div>
+            <div class="pname">${p.name}</div>
+            <span class="pos-tag pos-${p.posicao}">${p.posicao}</span>
+            ${getBadges(p).length ? `<div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:3px;">${getBadges(p).map(b=>`<span style="font-size:10px;background:var(--card2);border:1px solid var(--border);padding:2px 6px;border-radius:10px;">${b}</span>`).join('')}</div>` : ''}
+          </div>
+        </div>
+        <button class="danger" onclick="removePlayer('${p.id}')">Remover</button>
+      </div>
+      <div class="edit-block">
+        <div class="edit-row">
+          <span class="ptag" style="width:60px;">Posição</span>
+          <select class="pos-select" style="flex:1;padding:6px;" onchange="setPosicao('${p.id}', this.value)">
+            ${POSICOES.map(pos=>`<option value="${pos}" ${pos===p.posicao?'selected':''}>${pos}</option>`).join('')}
+          </select>
+        </div>
+        <div class="edit-row">
+          <span class="ptag" style="width:60px;">Físico</span>
+          <select class="pos-select" style="flex:1;padding:6px;" onchange="setFisico('${p.id}', this.value)">
+            ${FISICOS.map(f=>`<option value="${f}" ${f===(p.fisico||'Médio')?'selected':''}>${f}</option>`).join('')}
+          </select>
+        </div>
+        <div class="edit-row">
+          <span class="ptag" style="width:60px;">Camisa</span>
+          <input type="number" min="1" max="99" class="exp-input" style="width:70px;padding:6px;text-align:center;" placeholder="Nº" value="${p.camisa||''}" onblur="setCamisa('${p.id}',this.value)">
+        </div>
+        ${!isGoleiro(p) ? `<div class="edit-row"><span class="ptag" style="width:60px;">Nível</span><div class="skill-stars">${stars}</div></div>` : ''}
+      </div>`;
+    list.appendChild(row);
+  });
+}
+
+async function uploadPhoto(event, id){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e)=>{
+    const img = new Image();
+    img.onload = async ()=>{
+      const canvas = document.createElement('canvas');
+      const size = 150;
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const scale = Math.max(size/img.width, size/img.height);
+      const w = img.width*scale, h = img.height*scale;
+      ctx.drawImage(img, (size-w)/2, (size-h)/2, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+      const p = players.find(x=>x.id===id);
+      p.photo = dataUrl;
+      await savePlayers();
+      renderPlayersList();
+      renderPresenca();
+      showToast('Foto atualizada');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function setPosicao(id, posicao){
+  const p = players.find(x=>x.id===id);
+  p.posicao = posicao;
+  await savePlayers();
+  renderPlayersList();
+  renderPresenca();
+}
+
+async function setFisico(id, fisico){
+  const p = players.find(x=>x.id===id);
+  p.fisico = fisico;
+  await savePlayers();
+  showToast(`Físico de ${p.name}: ${fisico}`);
+}
+
+async function setCamisa(id, valor){  const p = players.find(x=>x.id===id);
+  const num = parseInt(valor);
+  if(valor==='' || isNaN(num)){ p.camisa = null; }
+  else {
+    // verifica se número já está em uso
+    const emUso = players.find(x=>x.id!==id && x.camisa===num);
+    if(emUso){ showToast(`Camisa ${num} já é do ${emUso.name}!`); return; }
+    p.camisa = num;
+  }
+  await savePlayers();
+  renderPlayersList();
+  renderPresenca();
+  if(p.camisa) showToast(`Camisa ${p.camisa} definida pra ${p.name}!`);
+}
+
+// ---------- ACTIONS ----------
+async function togglePresenceForDate(id){
+  const susp = await isSuspenso(id, selectedGameDate);
+  if(susp.suspenso){ showToast(susp.motivo); return; }
+
+  const data = await loadPresenceByDate();
+  if(!data[selectedGameDate]) data[selectedGameDate] = {};
+  const going = !!data[selectedGameDate][id];
+
+  if(!going){
+    // quer confirmar — checa lotação
+    const confirmados = players.filter(p=>!!data[selectedGameDate][p.id]).length;
+    if(confirmados >= MAX_JOGADORES){
+      // coloca na lista de espera
+      const waitlist = await loadWaitlist();
+      if(!waitlist[selectedGameDate]) waitlist[selectedGameDate] = [];
+      if(!waitlist[selectedGameDate].includes(id)){
+        waitlist[selectedGameDate].push(id);
+        await saveWaitlist(waitlist);
+        showToast('Vagas esgotadas — você entrou na lista de espera 🔄');
+      }
+      renderPresenca();
+      return;
+    }
+  } else {
+    // está cancelando — libera vaga e promove próximo da espera
+    data[selectedGameDate][id] = false;
+    await savePresenceByDate(data);
+    const waitlist = await loadWaitlist();
+    const dayWait = waitlist[selectedGameDate] || [];
+    if(dayWait.length > 0){
+      const proximo = dayWait.shift();
+      waitlist[selectedGameDate] = dayWait;
+      await saveWaitlist(waitlist);
+      data[selectedGameDate][proximo] = true;
+      await savePresenceByDate(data);
+      const promovido = players.find(p=>p.id===proximo);
+      if(promovido) showToast(`✅ ${promovido.name} promovido da lista de espera!`);
+    }
+    renderPresenca();
+    return;
+  }
+
+  data[selectedGameDate][id] = !going;
+  await savePresenceByDate(data);
+  renderPresenca();
+}
+
+async function marcarTodos(val){
+  const data = await loadPresenceByDate();
+  if(!data[selectedGameDate]) data[selectedGameDate] = {};
+  players.forEach(p=>{ data[selectedGameDate][p.id] = val; });
+  await savePresenceByDate(data);
+  renderPresenca();
+}
+
+async function setSkill(id, val){
+  const p = players.find(x=>x.id===id);
+  p.skill = val;
+  await savePlayers();
+  renderPlayersList();
+}
+
+async function addPlayer(){
+  const name = document.getElementById('newName').value.trim();
+  const posicao = document.getElementById('newPos').value;
+  if(!name){ showToast('Digite um nome'); return; }
+  players.push({id: uid(), name, posicao, skill:3, present:true, photo:null});
+  document.getElementById('newName').value='';
+  await savePlayers();
+  renderPlayersList();
+  renderPresenca();
+  showToast(name + ' adicionado!');
+}
+
+async function removePlayer(id){
+  players = players.filter(p=>p.id!==id);
+  await savePlayers();
+  renderPlayersList();
+  renderPresenca();
+}
+
+function updateSorteioDataInfo(){
+  const el = document.getElementById('sorteioDataInfo');
+  if(!el || !selectedGameDate) return;
+  const [y,m,d] = selectedGameDate.split('-');
+  el.textContent = `Sorteio vai usar os confirmados de ${d}/${m} (definido na aba Presença)`;
+}
+
+function setNumTeams(n){
+  numTeams = n;
+  document.querySelectorAll('#numTeamsSelect button').forEach(b=>{
+    b.classList.toggle('sel', parseInt(b.dataset.n)===n);
+  });
+}
+
+// ---------- SORTEIO (balanceado por posição + nível) ----------
+function pesoFisico(p){
+  const f = p.fisico || 'Médio';
+  return f === 'Pesado' ? 2 : f === 'Médio' ? 1 : 0;
+}
+
+function snakeDistribute(list, teams){
+  // ordena por skill desc + peso físico pra distribuir equilibrado
+  const sorted = [...list].sort((a,b)=>{
+    const diff = (b.skill + pesoFisico(b)*0.3) - (a.skill + pesoFisico(a)*0.3);
+    return diff + (Math.random()-0.5)*0.2; // pequena aleatoriedade
+  });
+  let dir = 1, idx = 0;
+  sorted.forEach(p=>{
+    teams[idx].players.push(p);
+    teams[idx].totalSkill += p.skill;
+    teams[idx].totalFisico = (teams[idx].totalFisico||0) + pesoFisico(p);
+    idx += dir;
+    if(idx === numTeams){ idx = numTeams-1; dir = -1; }
+    else if(idx === -1){ idx = 0; dir = 1; }
+  });
+}
+
+async function sortearTimes(){
+  let present;
+  if(isSecondTuesday(selectedGameDate)){
+    const monthKey = selectedGameDate.slice(0,7);
+    const churrasAttendance = await loadChurrasAttendance();
+    const monthAttendance = churrasAttendance[monthKey] || {};
+    present = players.filter(p=>['jogo','ambos'].includes(monthAttendance[p.id]));
+  } else {
+    const data = await loadPresenceByDate();
+    const dayData = data[selectedGameDate] || {};
+    present = players.filter(p=>dayData[p.id]);
+  }
+  const goleiros = present.filter(isGoleiro);
+  const linha = present.filter(p=>!isGoleiro(p));
+
+  if(linha.length < numTeams){
+    showToast('Poucos confirmados nessa data pra ' + numTeams + ' times. Confirma presença na aba Presença primeiro.');
+    return;
+  }
+
+  const teams = Array.from({length:numTeams}, ()=>({players:[], goleiro:null, totalSkill:0}));
+
+  // distribui posição por posição, pra ninguém ficar com 4 zagueiros e outro time com 0
+  const categorias = ['Zagueiro','Lateral','Meio','Atacante'];
+  categorias.forEach(cat=>{
+    const grupo = linha.filter(p=>p.posicao===cat);
+    if(grupo.length) snakeDistribute(grupo, teams);
+  });
+
+  // goleiros embaralhados, um por time
+  const shuffledGK = [...goleiros].sort(()=>Math.random()-0.5);
+  teams.forEach((t,i)=>{ t.goleiro = shuffledGK[i] || null; });
+
+  currentDraw = teams;
+  renderTeams(teams);
+  fireConfetti();
+}
+
+function renderTeams(teams){
+  const container = document.getElementById('teamsResult');
+  container.innerHTML = '';
+  const teamColors = ['var(--cup-green)','var(--cup-gold)','var(--blue)','var(--red)'];
+  const teamIcons = ['🟢','🟡','🔵','🔴'];
+
+  teams.forEach((t,i)=>{
+    const box = document.createElement('div');
+    box.className = 'team-box';
+    box.style.borderLeftColor = teamColors[i % teamColors.length];
+    box.style.animationDelay = (i*0.1)+'s';
+    const avgSkill = t.players.length ? (t.totalSkill/t.players.length).toFixed(1) : '-';
+    const pesoTotal = t.totalFisico || 0;
+    const pesoLabel = pesoTotal >= t.players.length*1.5 ? '⚡Pesado' : pesoTotal <= t.players.length*0.5 ? '🪶Leve' : '⚖️Médio';
+    const contagem = {};
+    t.players.forEach(p=>{ contagem[p.posicao] = (contagem[p.posicao]||0)+1; });
+    const resumoPos = Object.entries(contagem).map(([pos,n])=>`${pos.slice(0,3)}:${n}`).join(' · ');
+    const allTeamPlayers = t.goleiro ? [t.goleiro, ...t.players] : t.players;
+    box.innerHTML = `
+      <div class="team-title">
+        <span>${teamIcons[i % teamIcons.length]} Time ${i+1}</span>
+        <span class="team-badge">nível ${avgSkill} · ${pesoLabel} · ${resumoPos}</span>
+      </div>
+      <div class="ptag" style="margin-bottom:6px;">Toca num jogador pra marcar o capitão 👑</div>
+      ${t.goleiro ? `<div class="team-player" style="font-weight:700;color:var(--gold);cursor:pointer;" onclick="setCaptain(${i},'${t.goleiro.id}')">${t.captainId===t.goleiro.id?'👑 ':''}${avatarHTML(t.goleiro)} ${t.goleiro.name} (goleiro)</div>` : `<div class="team-player" style="color:var(--muted)">sem goleiro</div>`}
+      ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span> <span style="flex:1;margin-left:8px;">${p.name}</span><span class="pos-tag pos-${p.posicao}">${p.posicao}</span></div>`).join('')}
+    `;
+    container.appendChild(box);
+  });
+
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'primary';
+  saveBtn.style.marginTop = '8px';
+  saveBtn.textContent = '💾 Salvar esse sorteio no histórico';
+  saveBtn.onclick = salvarSorteio;
+  container.appendChild(saveBtn);
+}
+
+function fireConfetti(){
+  const colors = ['#ffd700','#009c3b','#ffdf00','#002776','#ffffff'];
+  for(let i=0; i<40; i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random()*100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDuration = (2 + Math.random()*1.5) + 's';
+    piece.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(), 4000);
+  }
+}
+
+function setCaptain(teamIndex, playerId){
+  const t = currentDraw[teamIndex];
+  t.captainId = t.captainId === playerId ? null : playerId;
+  renderTeams(currentDraw);
+}
+
+async function salvarSorteio(){
+  const hist = await loadHistory();
+  hist.unshift({
+    date: new Date().toISOString(),
+    teams: currentDraw.map(t=>{
+      const allPlayers = t.goleiro ? [t.goleiro, ...t.players] : t.players;
+      const capitao = allPlayers.find(p=>p.id===t.captainId);
+      return {
+        goleiro: t.goleiro ? t.goleiro.name : null,
+        capitao: capitao ? capitao.name : null,
+        placar: null,
+        players: t.players.map(p=>p.name+' ('+p.posicao+')')
+      };
+    })
+  });
+  await saveHistory(hist);
+  showToast('Sorteio salvo no histórico!');
+}
+
+// ---------- HISTÓRICO ----------
+async function renderHistory(){
+  const hist = await loadHistory();
+  const list = document.getElementById('historyList');
+  list.innerHTML = '';
+
+  if(hist.length === 0){
+    list.innerHTML = '<div class="empty">Nenhum sorteio salvo ainda.<br>Vá em "Sorteio" e salve o primeiro racha.</div>';
+    return;
+  }
+
+  hist.forEach((h,i)=>{
+    const d = new Date(h.date);
+    const dateStr = d.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'}) + ' às ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    const item = document.createElement('div');
+    item.className = 'history-item';
+
+    // todos os jogadores desse jogo (nome → id pra lookup)
+    const allNamesInGame = h.teams.flatMap(t=>[
+      ...(t.goleiro ? [t.goleiro] : []),
+      ...t.players.map(p=> typeof p === 'string' ? p.replace(/ \(.*\)$/, '') : p)
+    ]);
+
+    const todosPlacaresPreenchidos = h.teams.every(t=>t.placar!=null && t.placar!=='');
+    let resultadoHtml = '';
+    if(todosPlacaresPreenchidos){
+      const maxPlacar = Math.max(...h.teams.map(t=>Number(t.placar)));
+      const vencedores = h.teams.filter(t=>Number(t.placar)===maxPlacar);
+      const empate = vencedores.length > 1;
+      resultadoHtml = `<div class="ptag" style="margin-top:6px;color:var(--cup-gold);font-weight:700;">
+        ${empate ? '🤝 Empate!' : '🏆 Time ' + (h.teams.indexOf(vencedores[0])+1) + ' venceu!'}
+      </div>`;
+    }
+
+    // gols desse jogo
+    const golsJogo = h.gols || {}; // {playerId: qtd}
+    const golsHtml = isAdmin ? `
+      <details style="margin-top:10px;">
+        <summary style="cursor:pointer;font-size:13px;font-weight:700;color:var(--cup-gold);">⚽ Lançar gols do jogo</summary>
+        <div style="margin-top:8px;">
+          ${allNamesInGame.map(nome=>{
+            const p = players.find(x=>x.name===nome);
+            if(!p) return '';
+            const qtd = golsJogo[p.id] || 0;
+            return `<div class="pay-row">
+              <div class="player-info">${avatarHTML(p)}<span class="pname" style="font-size:13px;">${p.name}</span></div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <button class="secondary" style="padding:4px 10px;" onclick="setGolJogo(${i},'${p.id}',-1)">-</button>
+                <span style="font-weight:800;color:var(--cup-gold);min-width:20px;text-align:center;">${qtd}</span>
+                <button class="secondary" style="padding:4px 10px;" onclick="setGolJogo(${i},'${p.id}',1)">+</button>
+              </div>
+            </div>`;
+          }).filter(Boolean).join('')}
+        </div>
+      </details>` : `
+      ${Object.keys(golsJogo).length > 0 ? `<div class="ptag" style="margin-top:6px;">⚽ Gols: ${
+        Object.entries(golsJogo).map(([pid,qtd])=>{
+          const p = players.find(x=>x.id===pid);
+          return p ? `${p.name} (${qtd})` : '';
+        }).filter(Boolean).join(', ')
+      }</div>` : ''}`;
+
+    item.innerHTML = `
+      <div class="history-date">📅 ${dateStr}</div>
+      ${h.teams.map((t,ti)=>`
+        <div style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="flex:1;">
+            <strong>Time ${ti+1}</strong>${t.goleiro ? ' (🧤 '+t.goleiro+')' : ''}${t.capitao ? ' 👑 '+t.capitao : ''}:
+            <span style="color:var(--muted)">${t.players.join(', ')}</span>
+          </div>
+          ${isAdmin
+            ? `<input class="exp-input" style="width:44px;padding:5px;text-align:center;flex-shrink:0;" type="number" min="0" placeholder="0" value="${t.placar!=null?t.placar:''}" onblur="setPlacar(${i},${ti},this.value)">`
+            : `<span style="font-weight:800;color:var(--cup-gold);flex-shrink:0;">${t.placar!=null && t.placar!=='' ? t.placar : '-'}</span>`
+          }
+        </div>
+      `).join('')}
+      ${resultadoHtml}
+      ${golsHtml}
+      ${isAdmin ? `<button class="danger" style="margin-top:8px;" onclick="deleteHistoryItem(${i})">Excluir</button>` : ''}
+    `;
+    list.appendChild(item);
+  });
+}
+
+async function setGolJogo(histIndex, playerId, delta){
+  const hist = await loadHistory();
+  if(!hist[histIndex]) return; // segurança: índice inválido
+  if(!hist[histIndex].gols) hist[histIndex].gols = {};
+  const atual = hist[histIndex].gols[playerId] || 0;
+  const novo = Math.max(0, atual + delta);
+  if(novo === 0) delete hist[histIndex].gols[playerId];
+  else hist[histIndex].gols[playerId] = novo;
+  await saveHistory(hist);
+
+  // recalcula o ranking anual de gols baseado em TODOS os jogos do histórico
+  await recalcularGolsAnual(hist);
+  renderHistory();
+}
+
+async function recalcularGolsAnual(hist){
+  const ano = currentYearKey();
+  const totais = {};
+  hist.forEach(h=>{
+    if(!h.gols) return;
+    const dataJogo = h.date ? h.date.slice(0,4) : ano;
+    if(dataJogo !== ano) return;
+    Object.entries(h.gols).forEach(([pid, qtd])=>{
+      totais[pid] = (totais[pid]||0) + qtd;
+    });
+  });
+  const data = await loadGols();
+  data[ano] = totais;
+  await saveGols(data);
+}
+
+async function setPlacar(histIndex, teamIndex, value){
+  const hist = await loadHistory();
+  const val = value.trim();
+  hist[histIndex].teams[teamIndex].placar = val === '' ? null : Math.max(0, parseInt(val)||0);
+  await saveHistory(hist);
+  renderHistory();
+}
+
+async function deleteHistoryItem(i){
+  const hist = await loadHistory();
+  hist.splice(i,1);
+  await saveHistory(hist);
+  await recalcularGolsAnual(hist); // recalcula ao excluir jogo
+  renderHistory();
+}
+
+// ---------- FINANCEIRO ----------
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function currentMonthKey(d = new Date()){
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+}
+
+function populateMonthSelect(){
+  const sel = document.getElementById('finMonth');
+  if(sel.options.length) return;
+  const now = new Date();
+  const opts = [];
+  // de janeiro/2026 até dezembro/2026
+  for(let m=0; m<=11; m++){
+    const d = new Date(2026, m, 1);
+    const key = currentMonthKey(d);
+    opts.push(`<option value="${key}">${MESES[d.getMonth()]} ${d.getFullYear()}</option>`);
+  }
+  sel.innerHTML = opts.join('');
+  sel.value = currentMonthKey(now);
+  sel.onchange = renderFinanceiro;
+}
+
+async function loadPayments(){
+  if(paymentsCache) return paymentsCache;
+  try{
+    const res = await window.storage.get('payments', true);
+    paymentsCache = JSON.parse(res.value);
+  }catch(e){
+    paymentsCache = {};
+  }
+  return paymentsCache;
+}
+
+async function savePayments(data){
+  paymentsCache = data;
+  await safeStorageSet('payments', JSON.stringify(data), true);
+}
+
+async function loadChurrasAttendance(){
+  if(churrasAttendanceCache) return churrasAttendanceCache;
+  try{
+    const res = await window.storage.get('churrasAttendance', true);
+    churrasAttendanceCache = JSON.parse(res.value);
+  }catch(e){
+    churrasAttendanceCache = {};
+  }
+  return churrasAttendanceCache;
+}
+
+async function saveChurrasAttendance(data){
+  churrasAttendanceCache = data;
+  await safeStorageSet('churrasAttendance', JSON.stringify(data), true);
+}
+
+let churrasqueirosCache = null;
+async function loadChurrasqueiros(){
+  if(churrasqueirosCache) return churrasqueirosCache;
+  try{
+    const res = await window.storage.get('churrasqueiros', true);
+    churrasqueirosCache = JSON.parse(res.value);
+  }catch(e){ churrasqueirosCache = {}; }
+  return churrasqueirosCache;
+}
+async function saveChurrasqueiros(data){
+  churrasqueirosCache = data;
+  await safeStorageSet('churrasqueiros', JSON.stringify(data), true);
+}
+async function toggleChurrasqueiro(monthKey, playerId){
+  const data = await loadChurrasqueiros();
+  if(!data[monthKey]) data[monthKey] = [];
+  if(data[monthKey].includes(playerId)){
+    data[monthKey] = data[monthKey].filter(id=>id!==playerId);
+  } else {
+    data[monthKey].push(playerId);
+  }
+  await saveChurrasqueiros(data);
+  renderFinanceiro();
+  renderPresenca();
+}
+
+async function setChurrasAttendance(monthKey, playerId, value){
+  const data = await loadChurrasAttendance();
+  if(!data[monthKey]) data[monthKey] = {};
+  data[monthKey][playerId] = value;
+  await saveChurrasAttendance(data);
+  renderFinanceiro();
+  renderPresenca();
+}
+
+async function renderChurrasAttendanceInto(containerId, monthKey){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const churrasAttendance = await loadChurrasAttendance();
+  const monthAttendance = churrasAttendance[monthKey] || {};
+  const churrasqueiros = await loadChurrasqueiros();
+  const monthChurrasqueiros = churrasqueiros[monthKey] || [];
+
+  const validStates = ['jogo','churras','ambos'];
+  const pendentes = players.filter(p=>!validStates.includes(monthAttendance[p.id]));
+  let html = '';
+
+  if(pendentes.length){
+    html += `<div class="card" style="background:#3a1a1a;border-color:var(--red);margin-bottom:8px;">
+      <div style="font-weight:700;color:#fca5a5;margin-bottom:4px;">⚠️ Ainda falta responder</div>
+      <div class="ptag" style="color:#fca5a5;">${pendentes.map(p=>p.name).join(', ')}</div>
+    </div>`;
+  }
+
+  if(monthChurrasqueiros.length){
+    const nomes = players.filter(p=>monthChurrasqueiros.includes(p.id)).map(p=>p.name).join(', ');
+    html += `<div class="card" style="background:#2a1a0d;border-color:var(--cup-gold);margin-bottom:8px;text-align:center;">
+      <div style="font-weight:700;">🔥 Assando a carne: ${nomes}</div>
+    </div>`;
+  }
+
+  const btnStyle = (active, color) => active ? `background:${color};color:#04140a;border-color:${color};font-weight:700;` : '';
+
+  players.forEach(p=>{
+    const status = validStates.includes(monthAttendance[p.id]) ? monthAttendance[p.id] : null;
+    const podeAssar = status === 'churras' || status === 'ambos';
+    const isChurrasqueiro = monthChurrasqueiros.includes(p.id);
+    html += `
+      <div class="card" style="padding:10px 14px;">
+        <div class="player-row" style="margin-bottom:8px;">
+          <div class="player-info">
+            ${avatarHTML(p)}
+            <div>
+              <div class="pname">${p.name} ${isChurrasqueiro ? '🔥' : ''}</div>
+              ${!status ? '<span class="ptag" style="color:#fca5a5;">⚠️ pendente</span>' : ''}
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:5px;">
+          <button class="secondary" style="flex:1;padding:7px 4px;font-size:11px;${btnStyle(status==='jogo', 'var(--blue)')}" onclick="setChurrasAttendance('${monthKey}','${p.id}','jogo')">⚽ Só Jogo</button>
+          <button class="secondary" style="flex:1;padding:7px 4px;font-size:11px;${btnStyle(status==='churras', 'var(--gold)')}" onclick="setChurrasAttendance('${monthKey}','${p.id}','churras')">🍖 Só Churras</button>
+          <button class="secondary" style="flex:1;padding:7px 4px;font-size:11px;${btnStyle(status==='ambos', 'var(--green)')}" onclick="setChurrasAttendance('${monthKey}','${p.id}','ambos')">⚽🍖 Ambos</button>
+        </div>
+        ${podeAssar ? `<button class="secondary" style="width:100%;margin-top:6px;padding:6px;font-size:11px;${isChurrasqueiro ? 'background:var(--cup-gold);color:#04140a;font-weight:700;' : ''}" onclick="toggleChurrasqueiro('${monthKey}','${p.id}')">🔥 ${isChurrasqueiro ? 'Vou assar a carne' : 'Quero assar a carne'}</button>` : ''}
+      </div>`;
+  });
+
+  const totalJogo = players.filter(p=>['jogo','ambos'].includes(monthAttendance[p.id])).length;
+  const totalChurras = players.filter(p=>['churras','ambos'].includes(monthAttendance[p.id])).length;
+  html += `<div class="card" style="text-align:center;background:var(--card2);border-color:var(--green);">
+    <div style="display:flex;justify-content:center;gap:24px;">
+      <div><div style="font-size:22px;font-weight:800;color:var(--blue);">${totalJogo}</div><div class="ptag">vão jogar</div></div>
+      <div><div style="font-size:22px;font-weight:800;color:var(--gold);">${totalChurras}</div><div class="ptag">confirmados pro churras</div></div>
+    </div>
+    ${pendentes.length ? `<div class="ptag" style="margin-top:6px;">${pendentes.length} ainda não responderam</div>` : ''}
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+async function renderFinanceiro(){
+  populateMonthSelect();
+  const monthKey = document.getElementById('finMonth').value;
+  const payments = await loadPayments();
+  const monthData = payments[monthKey] || {mensalidade:{}, churrasco:{}};
+
+  const linha = players.filter(p=>!isGoleiro(p));
+  const goleiros = players.filter(isGoleiro);
+  document.getElementById('finPagantes').textContent = linha.length + goleiros.length;
+
+  const pagosLinha = linha.filter(p=>monthData.mensalidade[p.id]).length;
+  const pagosGoleiro = goleiros.filter(p=>monthData.mensalidade[p.id]).length;
+  const arrecadado = pagosLinha*65 + pagosGoleiro*25;
+  document.getElementById('finArrecadado').textContent = 'R$' + arrecadado;
+
+  const CUSTO_QUADRA = 550;
+  const saldo = arrecadado - CUSTO_QUADRA;
+  const saldoEl = document.getElementById('finSaldo');
+  const saldoLabelEl = document.getElementById('finSaldoLabel');
+  saldoEl.textContent = (saldo >= 0 ? '+' : '') + 'R$ ' + saldo.toFixed(2).replace('.', ',');
+  saldoEl.style.color = saldo >= 0 ? 'var(--green)' : 'var(--red)';
+  if(saldo >= 0){
+    saldoLabelEl.textContent = 'Quadra coberta — sobra R$' + saldo.toFixed(2).replace('.',',') + ' pro grupo';
+  } else {
+    saldoLabelEl.textContent = `Faltam R$${Math.abs(saldo).toFixed(2).replace('.',',')} pra cobrir a quadra`;
+  }
+
+  const list = document.getElementById('finPagamentos');
+  list.innerHTML = '<div style="font-weight:700;margin:10px 0 6px;">Mensalidade — quem já pagou</div>';
+  [...linha, ...goleiros].forEach(p=>{
+    const paid = !!monthData.mensalidade[p.id];
+    const valor = isGoleiro(p) ? 'R$25' : 'R$65';
+    const row = document.createElement('div');
+    row.className = 'card';
+    row.style.padding = '6px 14px';
+    row.innerHTML = `
+      <div class="pay-row">
+        <div class="player-info">
+          ${avatarHTML(p)}
+          <div>
+            <div class="pname">${p.name}</div>
+            <span class="ptag">${valor}</span>
+          </div>
+        </div>
+        <div class="pay-check ${paid?'paid':''}" onclick="togglePayment('${monthKey}','mensalidade','${p.id}')">${paid?'✓':''}</div>
+      </div>`;
+    list.appendChild(row);
+  });
+
+  await renderChurrasAttendanceInto('churrasAttendanceList', monthKey);
+
+  const churrasAttendance = await loadChurrasAttendance();
+  const monthAttendance = churrasAttendance[monthKey] || {};
+  const confirmadosChurras = [...linha, ...goleiros].filter(p=>['churras','ambos'].includes(monthAttendance[p.id]));
+
+  const churrasList = document.getElementById('finChurrasList');
+  churrasList.innerHTML = '';
+  let pagosChurrasco = 0;
+  if(confirmadosChurras.length === 0){
+    churrasList.innerHTML = '<div class="ptag" style="text-align:center;padding:10px;">Ninguém confirmou presença ainda.</div>';
+  }
+  confirmadosChurras.forEach(p=>{
+    const paid = !!monthData.churrasco[p.id];
+    if(paid) pagosChurrasco++;
+    const row = document.createElement('div');
+    row.className = 'pay-row';
+    row.innerHTML = `
+      <span style="font-size:14px;">${p.name}</span>
+      <div class="pay-check ${paid?'paid':''}" onclick="togglePayment('${monthKey}','churrasco','${p.id}')">${paid?'✓':''}</div>`;
+    churrasList.appendChild(row);
+  });
+
+  const arrecadadoChurrasco = pagosChurrasco * 25;
+  const expensesAll = await loadExpenses();
+  const despesasMes = (expensesAll[monthKey]||[]).reduce((sum,e)=>sum+e.value,0);
+  const saldoChurrasco = arrecadadoChurrasco - despesasMes;
+  const scEl = document.getElementById('finSaldoChurrasco');
+  const scLabelEl = document.getElementById('finSaldoChurrascoLabel');
+  scEl.textContent = (saldoChurrasco>=0?'+':'') + 'R$ ' + saldoChurrasco.toFixed(2).replace('.',',');
+  scEl.style.color = saldoChurrasco>=0 ? 'var(--green)' : 'var(--red)';
+  scLabelEl.textContent = `Arrecadado R$${arrecadadoChurrasco.toFixed(2).replace('.',',')} − Gasto R$${despesasMes.toFixed(2).replace('.',',')}`;
+
+  renderExpenseForm(monthKey);
+
+  // tabela admin — resumo financeiro completo separado
+  if(isAdmin){
+    const adminTable = document.createElement('div');
+    adminTable.className = 'card';
+    adminTable.style = 'border-color:var(--cup-gold);margin-top:14px;';
+    const pagosLinhaAdmin = linha.filter(p=>monthData.mensalidade[p.id]).length;
+    const pagosGoleiroAdmin = goleiros.filter(p=>monthData.mensalidade[p.id]).length;
+    const arrecadadoMens = pagosLinhaAdmin*65 + pagosGoleiroAdmin*25;
+    const churrasAttendance = await loadChurrasAttendance();
+    const monthAttendance = churrasAttendance[monthKey] || {};
+    const confirmadosChurrasAdmin = players.filter(p=>['churras','ambos'].includes(monthAttendance[p.id]));
+    const pagosChurrasAdmin = confirmadosChurrasAdmin.filter(p=>monthData.churrasco?.[p.id]).length;
+    const arrecadadoChurrasAdmin = pagosChurrasAdmin * 25;
+    const expensesAll = await loadExpenses();
+    const despesasMesAdmin = (expensesAll[monthKey]||[]).reduce((sum,e)=>sum+e.value,0);
+    const saldoQuadra = arrecadadoMens - 550;
+    const saldoChurrasAdmin = arrecadadoChurrasAdmin - despesasMesAdmin;
+    const totalEntradas = arrecadadoMens + arrecadadoChurrasAdmin;
+    const totalSaidas = 550 + despesasMesAdmin;
+    const saldoGeral = totalEntradas - totalSaidas;
+
+    adminTable.innerHTML = `
+      <div style="font-weight:800;font-size:15px;margin-bottom:10px;color:var(--cup-gold);">📊 Resumo Financeiro — Admin</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Visível só pra você</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;color:var(--muted);">Mensalidade arrecadada</td>
+          <td style="text-align:right;font-weight:700;color:var(--green);">R$ ${arrecadadoMens.toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;color:var(--muted);">  └ Linha (${pagosLinhaAdmin}×R$65)</td>
+          <td style="text-align:right;">R$ ${(pagosLinhaAdmin*65).toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;color:var(--muted);">  └ Goleiros (${pagosGoleiroAdmin}×R$25)</td>
+          <td style="text-align:right;">R$ ${(pagosGoleiroAdmin*25).toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;color:var(--muted);">Custo da quadra</td>
+          <td style="text-align:right;font-weight:700;color:var(--red);">− R$ 550,00</td>
+        </tr>
+        <tr style="border-bottom:2px solid var(--border);">
+          <td style="padding:8px 0;font-weight:700;">Saldo quadra</td>
+          <td style="text-align:right;font-weight:800;color:${saldoQuadra>=0?'var(--green)':'var(--red)'};">${saldoQuadra>=0?'+':''}R$ ${saldoQuadra.toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;color:var(--muted);">Churrasco arrecadado</td>
+          <td style="text-align:right;font-weight:700;color:var(--green);">R$ ${arrecadadoChurrasAdmin.toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;color:var(--muted);">Despesas do mês</td>
+          <td style="text-align:right;font-weight:700;color:var(--red);">− R$ ${despesasMesAdmin.toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr style="border-bottom:2px solid var(--border);">
+          <td style="padding:8px 0;font-weight:700;">Saldo churrasco</td>
+          <td style="text-align:right;font-weight:800;color:${saldoChurrasAdmin>=0?'var(--green)':'var(--red)'};">${saldoChurrasAdmin>=0?'+':''}R$ ${saldoChurrasAdmin.toFixed(2).replace('.',',')}</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 0;font-weight:800;font-size:15px;">💰 Saldo Geral</td>
+          <td style="text-align:right;font-weight:900;font-size:18px;color:${saldoGeral>=0?'var(--green)':'var(--red)'};">${saldoGeral>=0?'+':''}R$ ${saldoGeral.toFixed(2).replace('.',',')}</td>
+        </tr>
+      </table>`;
+    document.getElementById('expenseAdminForm').parentNode.insertBefore(adminTable, document.getElementById('expenseAdminForm').parentNode.firstChild);
+  }
+  await renderExpensesList(monthKey);
+}
+
+async function togglePayment(monthKey, type, playerId){
+  const payments = await loadPayments();
+  if(!payments[monthKey]) payments[monthKey] = {mensalidade:{}, churrasco:{}};
+  payments[monthKey][type][playerId] = !payments[monthKey][type][playerId];
+  await savePayments(payments);
+  renderFinanceiro();
+}
+
+async function marcarTodosPagos(val){
+  const monthKey = document.getElementById('finMonth').value;
+  const payments = await loadPayments();
+  if(!payments[monthKey]) payments[monthKey] = {mensalidade:{}, churrasco:{}};
+  players.forEach(p=>{ payments[monthKey].mensalidade[p.id] = val; });
+  await savePayments(payments);
+  renderFinanceiro();
+  showToast(val ? 'Todos marcados como pagos' : 'Pagamentos limpos');
+}
+
+// ---------- DESPESAS ----------
+let pendingReceiptPhoto = null;
+
+async function loadExpenses(){
+  if(expensesCache) return expensesCache;
+  try{
+    const res = await window.storage.get('expenses', true);
+    expensesCache = JSON.parse(res.value);
+  }catch(e){
+    expensesCache = {};
+  }
+  return expensesCache;
+}
+
+async function saveExpenses(data){
+  expensesCache = data;
+  await safeStorageSet('expenses', JSON.stringify(data), true);
+}
+
+function renderExpenseForm(monthKey){
+  const el = document.getElementById('expenseAdminForm');
+  if(!isAdmin){
+    el.innerHTML = '';
+    return;
+  }
+  el.innerHTML = `
+    <div class="card" style="background:var(--card2);margin-bottom:10px;">
+      <div style="font-weight:700;margin-bottom:8px;font-size:13px;">+ Lançar despesa</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <input id="expDesc" class="exp-input" placeholder="Descrição (ex: Carne)">
+        <input id="expValue" class="exp-input" type="number" placeholder="Valor (ex: 300)">
+        <div style="display:flex;gap:6px;align-items:center;">
+          <label class="photo-upload-btn" style="border-radius:8px;">
+            📎<input type="file" accept="image/*" onchange="captureReceipt(event)">
+          </label>
+          <span class="ptag" id="receiptStatus">Sem recibo anexado</span>
+        </div>
+        <button class="primary" onclick="addExpense('${monthKey}')">Salvar despesa</button>
+      </div>
+    </div>`;
+}
+
+function captureReceipt(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const canvas = document.createElement('canvas');
+      const maxW = 500;
+      const scale = Math.min(1, maxW/img.width);
+      canvas.width = img.width*scale;
+      canvas.height = img.height*scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      pendingReceiptPhoto = canvas.toDataURL('image/jpeg', 0.6);
+      document.getElementById('receiptStatus').textContent = '✅ Recibo anexado';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addExpense(monthKey){
+  const desc = document.getElementById('expDesc').value.trim();
+  const value = parseFloat(document.getElementById('expValue').value);
+  if(!desc || !value){ showToast('Preencha descrição e valor'); return; }
+
+  const expenses = await loadExpenses();
+  if(!expenses[monthKey]) expenses[monthKey] = [];
+  expenses[monthKey].push({
+    id: uid(),
+    desc, value,
+    photo: pendingReceiptPhoto,
+    date: new Date().toISOString()
+  });
+  await saveExpenses(expenses);
+  pendingReceiptPhoto = null;
+  showToast('Despesa lançada');
+  renderFinanceiro();
+}
+
+async function deleteExpense(monthKey, id){
+  const expenses = await loadExpenses();
+  expenses[monthKey] = (expenses[monthKey]||[]).filter(e=>e.id!==id);
+  await saveExpenses(expenses);
+  renderFinanceiro();
+}
+
+async function renderExpensesList(monthKey){
+  const expenses = await loadExpenses();
+  const items = expenses[monthKey] || [];
+  const total = items.reduce((sum,e)=>sum+e.value, 0);
+  document.getElementById('finTotalDespesas').textContent = 'R$' + total.toFixed(2).replace('.',',');
+
+  const list = document.getElementById('expensesList');
+  if(items.length === 0){
+    list.innerHTML = '<div class="ptag" style="text-align:center;padding:10px;">Nenhuma despesa lançada neste mês.</div>';
+    return;
+  }
+  list.innerHTML = items.map(e=>`
+    <div class="expense-item">
+      ${e.photo
+        ? `<img class="expense-thumb" src="${e.photo}" onclick="window.open('${e.photo}','_blank')">`
+        : `<div class="expense-thumb-empty">🧾</div>`}
+      <div class="expense-desc">
+        <div class="pname" style="font-size:14px;">${e.desc}</div>
+        <div class="ptag">${new Date(e.date).toLocaleDateString('pt-BR')}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="expense-value">R$${e.value.toFixed(2).replace('.',',')}</div>
+        ${isAdmin ? `<button class="danger" style="margin-top:4px;" onclick="deleteExpense('${monthKey}','${e.id}')">Excluir</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---------- COPA ----------
+const COPA_MATCHES = [
+  {id:'m1', teamA:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra', teamB:'🇨🇩 Congo RD', kickoff:'01/07 · 13h'},
+  {id:'m2', teamA:'🇧🇪 Bélgica', teamB:'🇸🇳 Senegal', kickoff:'01/07 · 17h'},
+  {id:'m3', teamA:'🇺🇸 Estados Unidos', teamB:'🇧🇦 Bósnia', kickoff:'01/07 · 21h'},
+  {id:'m4', teamA:'🇪🇸 Espanha', teamB:'🇦🇹 Áustria', kickoff:'02/07 · 16h'},
+  {id:'m5', teamA:'🇵🇹 Portugal', teamB:'🇭🇷 Croácia', kickoff:'02/07 · 20h'},
+  {id:'m6', teamA:'🇨🇭 Suíça', teamB:'🇩🇿 Argélia', kickoff:'03/07 · 00h'},
+  {id:'m7', teamA:'🇦🇺 Austrália', teamB:'🇪🇬 Egito', kickoff:'03/07 · 15h'},
+  {id:'m8', teamA:'🇦🇷 Argentina', teamB:'🇨🇻 Cabo Verde', kickoff:'03/07 · 19h'},
+  {id:'m9', teamA:'🇨🇴 Colômbia', teamB:'🇬🇭 Gana', kickoff:'03/07 · 22h30'},
+  {id:'m10', teamA:'🇨🇦 Canadá', teamB:'🇲🇦 Marrocos', kickoff:'04/07 · 14h'}
+];
+
+let palpitesCache = null;
+let resultadosCache = null;
+
+async function loadPalpites(){
+  if(palpitesCache) return palpitesCache;
+  try{
+    const res = await window.storage.get('palpites', true);
+    palpitesCache = JSON.parse(res.value);
+  }catch(e){ palpitesCache = {}; }
+  return palpitesCache;
+}
+async function savePalpites(data){
+  palpitesCache = data;
+  await safeStorageSet('palpites', JSON.stringify(data), true);
+}
+
+async function loadResultadosCopa(){
+  if(resultadosCache) return resultadosCache;
+  try{
+    const res = await window.storage.get('resultadosCopa', true);
+    resultadosCache = JSON.parse(res.value);
+  }catch(e){ resultadosCache = {}; }
+  return resultadosCache;
+}
+async function saveResultadosCopa(data){
+  resultadosCache = data;
+  await safeStorageSet('resultadosCopa', JSON.stringify(data), true);
+}
+
+function parsePalpite(str){
+  const m = String(str).trim().match(/^(\d+)\D+(\d+)$/);
+  if(!m) return null;
+  return m[1] + 'x' + m[2];
+}
+
+async function setPalpite(matchId, playerId, value){
+  const parsed = parsePalpite(value);
+  if(value.trim() !== '' && !parsed){ showToast('Formato inválido, use ex: 2x1'); return; }
+  const data = await loadPalpites();
+  if(!data[matchId]) data[matchId] = {};
+  data[matchId][playerId] = parsed || '';
+  await savePalpites(data);
+  renderCopa();
+}
+
+async function setResultadoCopa(matchId, value){
+  const parsed = parsePalpite(value);
+  if(value.trim() !== '' && !parsed){ showToast('Formato inválido, use ex: 2x1'); return; }
+  const data = await loadResultadosCopa();
+  data[matchId] = parsed || '';
+  await saveResultadosCopa(data);
+  renderCopa();
+  showToast('Resultado atualizado');
+}
+
+async function renderCopa(){
+  const palpites = await loadPalpites();
+  const resultados = await loadResultadosCopa();
+
+  // ranking
+  const pontos = {};
+  players.forEach(p=>{ pontos[p.id] = 0; });
+  COPA_MATCHES.forEach(m=>{
+    const real = resultados[m.id];
+    if(!real) return;
+    players.forEach(p=>{
+      const palpite = (palpites[m.id]||{})[p.id];
+      if(palpite && palpite === real) pontos[p.id] = (pontos[p.id]||0) + 1;
+    });
+  });
+  const ranking = players.map(p=>({p, pts: pontos[p.id]||0}))
+    .filter(r=>r.pts>0)
+    .sort((a,b)=>b.pts-a.pts);
+
+  const rankList = document.getElementById('copaRankingList');
+  if(ranking.length === 0){
+    rankList.innerHTML = '<div class="ptag">Ainda sem palpites certeiros — aguardando os jogos rolarem</div>';
+  } else {
+    const maxPts = ranking[0].pts;
+    rankList.innerHTML = ranking.slice(0,10).map((r,i)=>`
+      <div class="pay-row">
+        <div class="player-info">
+          ${avatarHTML(r.p)}
+          <div class="pname">${i===0 && r.pts===maxPts ? '👑 ' : ''}${r.p.name}</div>
+        </div>
+        <div style="font-weight:800;color:var(--cup-gold);">${r.pts} pt${r.pts>1?'s':''}</div>
+      </div>`).join('');
+    if(maxPts>0){
+      rankList.innerHTML += `<div class="ptag" style="margin-top:8px;color:var(--cup-gold);font-weight:700;">🏆 ${ranking.filter(r=>r.pts===maxPts).map(r=>r.p.name).join(' e ')} não paga(m) o churras esse mês!</div>`;
+    }
+  }
+
+  // jogos
+  const list = document.getElementById('copaMatchesList');
+  list.innerHTML = COPA_MATCHES.map(m=>{
+    const real = resultados[m.id];
+    const matchPalpites = palpites[m.id] || {};
+    const respondidos = players.filter(p=>matchPalpites[p.id]).length;
+    return `
+      <div class="card" style="border-left:4px solid ${real ? 'var(--cup-gold)' : 'var(--border)'};">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div style="font-weight:700;font-size:14px;">${m.teamA} x ${m.teamB}</div>
+          <span class="ptag">${m.kickoff}</span>
+        </div>
+        ${real
+          ? `<div class="ptag" style="color:var(--cup-gold);font-weight:700;margin-bottom:8px;">Resultado final: ${real.replace('x',' x ')}</div>`
+          : `<div class="ptag" style="margin-bottom:8px;">${respondidos}/${players.length} já palpitaram</div>`
+        }
+        ${isAdmin ? `
+          <div style="display:flex;gap:6px;align-items:center;margin-bottom:10px;">
+            <span class="ptag">Resultado real:</span>
+            <input class="exp-input" style="width:70px;padding:6px;" placeholder="2x1" value="${real||''}" onblur="setResultadoCopa('${m.id}', this.value)">
+          </div>` : ''}
+        <details>
+          <summary style="cursor:pointer;font-size:13px;color:var(--muted);">Ver/editar palpites de todos</summary>
+          <div style="margin-top:8px;">
+            ${players.map(p=>{
+              const val = matchPalpites[p.id] || '';
+              const acertou = real && val === real;
+              return `
+                <div class="pay-row">
+                  <div class="player-info">${avatarHTML(p)}<span class="pname" style="font-size:13px;">${p.name}</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    ${acertou ? '<span style="color:var(--cup-gold);">✅</span>' : ''}
+                    <input class="exp-input" style="width:60px;padding:5px;text-align:center;" placeholder="2x1" value="${val}" onblur="setPalpite('${m.id}','${p.id}', this.value)">
+                  </div>
+                </div>`;
+            }).join('')}
+          </div>
+        </details>
+      </div>`;
+  }).join('');
+}
+
+// ---------- GOLS / ARTILHEIROS ----------
+let golsCache = null;
+function currentYearKey(){ return String(new Date().getFullYear()); }
+
+async function loadGols(){
+  if(golsCache) return golsCache;
+  try{
+    const res = await window.storage.get('gols', true);
+    golsCache = JSON.parse(res.value);
+  }catch(e){ golsCache = {}; }
+  return golsCache;
+}
+async function saveGols(data){
+  golsCache = data;
+  await safeStorageSet('gols', JSON.stringify(data), true);
+}
+
+async function addGol(playerId, delta){
+  const data = await loadGols();
+  const year = currentYearKey();
+  if(!data[year]) data[year] = {};
+  data[year][playerId] = Math.max(0, (data[year][playerId]||0) + delta);
+  await saveGols(data);
+  renderGols();
+}
+
+async function renderGols(){
+  const data = await loadGols();
+  const year = currentYearKey();
+  const yearGols = data[year] || {};
+
+  const ranking = players
+    .map(p=>({p, gols: yearGols[p.id]||0}))
+    .sort((a,b)=>b.gols-a.gols);
+  const maxGols = ranking.length ? ranking[0].gols : 0;
+
+  const list = document.getElementById('golsRankingList');
+  list.innerHTML = ranking.map((r,i)=>`
+    <div class="card" style="padding:10px 14px;">
+      <div class="player-row">
+        <div class="player-info">
+          ${avatarHTML(r.p)}
+          <div class="pname">${(i===0 && maxGols>0) ? '👑 ' : ''}${r.p.name}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:20px;font-weight:800;color:var(--cup-gold);min-width:28px;text-align:center;">${r.gols}</div>
+          ${isAdmin ? `
+            <div style="display:flex;gap:4px;">
+              <button class="secondary" style="padding:4px 10px;font-size:14px;" onclick="addGol('${r.p.id}',-1)">-</button>
+              <button class="secondary" style="padding:4px 10px;font-size:14px;" onclick="addGol('${r.p.id}',1)">+</button>
+            </div>` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+
+  if(!isAdmin){
+    list.innerHTML += `<div class="ptag" style="text-align:center;margin-top:10px;">Só o admin lança gols (evita brincadeira) — desbloqueia na aba Jogadores</div>`;
+  }
+}
+
+// ---------- DISCIPLINA ----------
+
+function nextDateKey(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate()+7);
+  return dateKey(d);
+}
+
+async function darCartao(playerId, tipo){
+  const cartoes = await loadCartoes();
+  if(!cartoes[playerId]) cartoes[playerId] = [];
+  const today = dateKey(new Date());
+  const suspAte = tipo === 'vermelho' ? nextDateKey(selectedGameDate || today) : '';
+  cartoes[playerId].push({ tipo, data: today, jogo: selectedGameDate || today, suspAte });
+  await saveCartoes(cartoes);
+  showToast(tipo === 'amarelo' ? '🟨 Cartão amarelo registrado' : '🟥 Cartão vermelho — suspenso pro próximo jogo');
+  renderDisciplina();
+}
+
+async function removerCartao(playerId, idx){
+  const cartoes = await loadCartoes();
+  if(cartoes[playerId]) cartoes[playerId].splice(idx, 1);
+  await saveCartoes(cartoes);
+  renderDisciplina();
+}
+
+async function votarFominha(matchDate, targetId){
+  const deviceId = getDeviceId();
+  const fominha = await loadFominha();
+  if(!fominha._votos) fominha._votos = {};
+  if(!fominha._votos[matchDate]) fominha._votos[matchDate] = {};
+
+  const votoAtual = fominha._votos[matchDate][deviceId];
+
+  if(votoAtual === targetId){
+    // desfaz
+    delete fominha._votos[matchDate][deviceId];
+    await saveForminha(fominha);
+    showToast('Voto desfeito!');
+    renderDisciplina();
+    return;
+  }
+
+  fominha._votos[matchDate][deviceId] = targetId;
+
+  // conta votos pro alvo nesse jogo
+  const votosAlvo = Object.values(fominha._votos[matchDate]).filter(v=>v===targetId).length;
+  const totalConfirmados = players.length; // simplificação — poderia ser só quem jogou
+  const maioria = Math.floor(totalConfirmados / 2) + 1;
+
+  if(votosAlvo >= maioria){
+    // maioria votou — registra ocorrência de fominha
+    if(!fominha[targetId]) fominha[targetId] = [];
+    const jaContou = fominha[targetId].some(f=>f.jogo===matchDate);
+    if(!jaContou){
+      let suspAte = '';
+      const total = fominha[targetId].length + 1;
+      if(total >= 3){
+        // suspensão de 1 semana a partir do próximo jogo
+        suspAte = nextDateKey(matchDate);
+      }
+      fominha[targetId].push({ jogo: matchDate, data: dateKey(new Date()), suspAte, votos: votosAlvo });
+      const alvo = players.find(p=>p.id===targetId);
+      if(alvo){
+        if(total >= 3) showToast(`🚨 ${alvo.name} atingiu 3x — SUSPENSO + deve gravar o vídeo de fomera! 🎬`);
+        else showToast(`⚽ Tribunal: ${alvo.name} levou ocorrência de fomera (${total}/3)`);
+      }
+    }
+  }
+
+  await saveForminha(fominha);
+  renderDisciplina();
+}
+
+async function renderDisciplina(){
+  const cartoes = await loadCartoes();
+  const fominha = await loadFominha();
+  const today = dateKey(new Date());
+
+  // --- TRIBUNAL DO FOMINHA ---
+  const votacaoEl = document.getElementById('fominhaVotacao');
+  // pega o último jogo (mais recente nas últimas 2 semanas)
+  const datas = getUpcomingTuesdays(0); // datas passadas
+  const lastMatch = selectedGameDate || today;
+
+  const votosJogo = (fominha._votos && fominha._votos[lastMatch]) || {};
+  const meuVoto = votosJogo; // sem auth real, mostra o estado geral
+
+  const deviceId = getDeviceId();
+  const meuVotoFominha = votosJogo[deviceId];
+
+  votacaoEl.innerHTML = `
+    <div class="ptag" style="margin-bottom:8px;">Jogo de referência: <strong>${lastMatch ? lastMatch.split('-').reverse().join('/') : '-'}</strong></div>
+    ${meuVotoFominha ? `<div class="ptag" style="margin-bottom:8px;color:var(--red);">Seu voto: <strong>${players.find(p=>p.id===meuVotoFominha)?.name || '?'}</strong> · toca nele de novo pra desfazer</div>` : ''}
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      ${players.map(p=>{
+        const votos = Object.values(votosJogo).filter(v=>v===p.id).length;
+        const foms = (fominha[p.id]||[]).length;
+        const meuVotoAqui = meuVotoFominha === p.id;
+        const corVoto = meuVotoAqui ? '#fff' : 'var(--red)';
+        return `<button class="secondary" style="padding:6px 10px;font-size:12px;${meuVotoAqui?'background:var(--red);color:#fff;border-color:var(--red);':''}" onclick="votarFominha('${lastMatch}','${p.id}')">
+          ${p.name} ${votos>0?`<span style="color:${corVoto};">(${votos}👎)</span>`:''} ${foms>0?`🔴×${foms}`:''}
+        </button>`;
+      }).join('')}
+    </div>
+    <div class="ptag" style="margin-top:8px;">Toca no nome de quem fomerou · toca de novo pra desfazer</div>`;
+
+  // --- CARTÕES ADMIN ---
+  const cartoesEl = document.getElementById('cartoesAdminCard');
+  const formEl = document.getElementById('cartoesAdminForm');
+  if(!isAdmin){
+    formEl.innerHTML = '<div class="ptag">Somente o admin registra cartões — desbloqueia na aba Jogadores.</div>';
+  } else {
+    formEl.innerHTML = `
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+        <select id="cartaoJogador" class="pos-select" style="flex:1;padding:8px;">
+          ${players.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}
+        </select>
+        <button class="secondary" onclick="darCartao(document.getElementById('cartaoJogador').value,'amarelo')" style="background:#3a2e00;color:var(--gold);border-color:var(--gold);">🟨 Amarelo</button>
+        <button class="secondary" onclick="darCartao(document.getElementById('cartaoJogador').value,'vermelho')" style="background:#3a0000;color:var(--red);border-color:var(--red);">🟥 Vermelho</button>
+      </div>`;
+  }
+
+  // --- HISTÓRICO ---
+  const histEl = document.getElementById('disciplinaHistorico');
+  const rows = [];
+  players.forEach(p=>{
+    const pCartoes = cartoes[p.id] || [];
+    const pFoms = (fominha[p.id]||[]);
+    if(pCartoes.length === 0 && pFoms.length === 0) return;
+    const amarelos = pCartoes.filter(c=>c.tipo==='amarelo').length;
+    const vermelhos = pCartoes.filter(c=>c.tipo==='vermelho').length;
+    const susp = pCartoes.some(c=>c.tipo==='vermelho' && c.suspAte>=today) || pFoms.some(f=>f.suspAte>=today);
+    rows.push(`
+      <div class="pay-row">
+        <div class="player-info">${avatarHTML(p)}<div>
+          <div class="pname">${p.name} ${susp?'🚫':''}</div>
+          <div class="ptag">
+            ${amarelos>0?`🟨×${amarelos} `:''} ${vermelhos>0?`🟥×${vermelhos} `:''} ${pFoms.length>0?`⚽ Fominha ×${pFoms.length}`:''}
+          </div>
+        </div></div>
+        ${isAdmin ? `<button class="danger" onclick="removerCartao('${p.id}',${pCartoes.length-1})" style="font-size:10px;padding:4px 8px;">Remover último</button>` : ''}
+      </div>`);
+  });
+
+  histEl.innerHTML = rows.length > 0
+    ? rows.join('')
+    : '<div class="ptag" style="text-align:center;padding:10px;">Nenhuma ocorrência registrada ainda.</div>';
+}
+
+// ---------- CRAQUE DA RODADA ----------
+let craqueCache = null;
+
+async function loadCraque(){
+  if(craqueCache) return craqueCache;
+  try{
+    const res = await window.storage.get('craque', true);
+    craqueCache = JSON.parse(res.value);
+  }catch(e){ craqueCache = {}; }
+  return craqueCache;
+}
+
+async function saveCraque(data){
+  craqueCache = data;
+  await safeStorageSet('craque', JSON.stringify(data), true);
+}
+
+// ID único por dispositivo — salvo no localStorage pra persistir entre sessões
+function getDeviceId(){
+  let id = localStorage.getItem('resenha_device_id');
+  if(!id){
+    id = 'dev_' + Math.random().toString(36).slice(2,12);
+    localStorage.setItem('resenha_device_id', id);
+  }
+  return id;
+}
+
+async function votarCraque(rodada, targetId){
+  const deviceId = getDeviceId();
+  const data = await loadCraque();
+  if(!data[rodada]) data[rodada] = { votos: {} };
+  const votoAtual = data[rodada].votos[deviceId];
+  if(votoAtual === targetId){
+    // desfaz o voto
+    delete data[rodada].votos[deviceId];
+    await saveCraque(data);
+    showToast('Voto desfeito!');
+  } else {
+    if(deviceId === targetId){ showToast('Não pode votar em si mesmo 😄'); return; }
+    data[rodada].votos[deviceId] = targetId;
+    await saveCraque(data);
+    showToast(votoAtual ? '✅ Voto alterado!' : '✅ Voto registrado!');
+  }
+  renderCraque();
+}
+
+async function renderCraque(){
+  const data = await loadCraque();
+  // rodada = data do jogo mais recente (selectedGameDate ou hoje)
+  const rodada = selectedGameDate || dateKey(new Date());
+  const rodadaData = data[rodada] || { votos: {} };
+  const votos = rodadaData.votos;
+
+  // conta votos por jogador
+  const contagem = {};
+  players.forEach(p => contagem[p.id] = 0);
+  Object.values(votos).forEach(targetId => {
+    if(contagem[targetId] !== undefined) contagem[targetId]++;
+  });
+
+  const totalVotos = Object.keys(votos).length;
+  const maxVotos = Math.max(...Object.values(contagem), 0);
+  const craque = maxVotos > 0 ? players.find(p => contagem[p.id] === maxVotos) : null;
+
+  // votação
+  const votacaoEl = document.getElementById('craqueVotacao');
+  const deviceId = getDeviceId();
+  const meuVoto = votos[deviceId];
+  const [d,m,y] = rodada.split('-');
+  votacaoEl.innerHTML = `
+    <div class="ptag" style="margin-bottom:10px;">Jogo de <strong>${d}/${m}</strong> · ${totalVotos} voto${totalVotos!==1?'s':''} registrado${totalVotos!==1?'s':''}</div>
+    ${meuVoto ? `<div class="ptag" style="margin-bottom:8px;color:var(--cup-gold);">Seu voto: <strong>${players.find(p=>p.id===meuVoto)?.name || '?'}</strong> · toca nele de novo pra desfazer</div>` : ''}
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      ${players.map(p=>{
+        const qtd = contagem[p.id] || 0;
+        const eoCraque = craque && p.id === craque.id && maxVotos > 0;
+        const meuVotoAqui = meuVoto === p.id;
+        return `
+          <div onclick="votarCraque('${rodada}','${p.id}')"
+            style="cursor:pointer;background:${meuVotoAqui?'linear-gradient(135deg,#003a00,#001a00)':eoCraque?'linear-gradient(135deg,#3a2e00,#2a1a00)':'var(--card2)'};
+            border:2px solid ${meuVotoAqui?'var(--green)':eoCraque?'var(--cup-gold)':'var(--border)'};
+            border-radius:12px;padding:10px 12px;text-align:center;min-width:70px;transition:all .2s;position:relative;">
+            ${meuVotoAqui ? `<div style="position:absolute;top:-6px;right:-6px;background:var(--green);border-radius:50%;width:16px;height:16px;font-size:10px;display:flex;align-items:center;justify-content:center;">✓</div>` : ''}
+            ${avatarHTML(p)}
+            <div style="font-size:12px;font-weight:700;margin-top:4px;">${p.name.split(' ')[0]}</div>
+            <div style="font-size:18px;font-weight:800;color:${meuVotoAqui?'var(--green)':eoCraque?'var(--cup-gold)':'var(--muted)'};">${qtd}</div>
+          </div>`;
+      }).join('')}
+    </div>
+    <div class="ptag" style="margin-top:8px;">Toca no jogador pra votar · toca de novo pra desfazer</div>`;
+
+  // resultado
+  const resultadoEl = document.getElementById('craqueResultado');
+  if(maxVotos === 0){
+    resultadoEl.innerHTML = '<div class="ptag" style="text-align:center;padding:10px;">Aguardando votos...</div>';
+  } else {
+    const empate = players.filter(p=>contagem[p.id]===maxVotos).length > 1;
+    resultadoEl.innerHTML = `
+      <div style="text-align:center;padding:10px 0;">
+        ${empate
+          ? `<div style="font-size:16px;font-weight:700;">🤝 Empate! Muitos brilharam hoje</div>`
+          : `<div style="font-size:32px;margin-bottom:4px;">⭐</div>
+             <div style="font-size:22px;font-weight:800;color:var(--cup-gold);">${craque.name}</div>
+             <div class="ptag" style="margin-top:4px;">${maxVotos} voto${maxVotos!==1?'s':''} · Craque da rodada de ${d}/${m}</div>`
+        }
+      </div>`;
+  }
+
+  // hall da fama — conta total de vezes eleito craque por rodada
+  const hallFama = {};
+  players.forEach(p => hallFama[p.id] = 0);
+  Object.entries(data).forEach(([rod, rodData])=>{
+    const votosRod = rodData.votos || {};
+    const cnt = {};
+    players.forEach(p => cnt[p.id] = 0);
+    Object.values(votosRod).forEach(tid => { if(cnt[tid]!==undefined) cnt[tid]++; });
+    const maxV = Math.max(...Object.values(cnt), 0);
+    if(maxV > 0){
+      const craqueRod = players.find(p => cnt[p.id] === maxV);
+      if(craqueRod) hallFama[craqueRod.id]++;
+    }
+  });
+
+  const ranking = players
+    .map(p => ({ p, vezes: hallFama[p.id] || 0 }))
+    .filter(r => r.vezes > 0)
+    .sort((a,b) => b.vezes - a.vezes);
+
+  const hallEl = document.getElementById('craqueHallFama');
+  if(ranking.length === 0){
+    hallEl.innerHTML = '<div class="ptag" style="text-align:center;">Nenhum craque eleito ainda.</div>';
+  } else {
+    hallEl.innerHTML = ranking.map((r,i) => `
+      <div class="pay-row">
+        <div class="player-info">
+          ${avatarHTML(r.p)}
+          <div class="pname">${i===0?'👑 ':''}${r.p.name}</div>
+        </div>
+        <div style="font-weight:800;color:var(--cup-gold);">${r.vezes}x ⭐</div>
+      </div>`).join('');
+  }
+}
+
+// ---------- RESERVAS ----------
+let reservasCache = null;
+
+async function loadReservas(){
+  if(reservasCache) return reservasCache;
+  try{
+    const res = await window.storage.get('reservas', true);
+    reservasCache = JSON.parse(res.value);
+  }catch(e){ reservasCache = []; }
+  return reservasCache;
+}
+
+async function saveReservas(data){
+  reservasCache = data;
+  await safeStorageSet('reservas', JSON.stringify(data), true);
+}
+
+async function adicionarReserva(){
+  const nome = document.getElementById('resNome').value.trim();
+  const whatsapp = document.getElementById('resWhatsapp').value.trim();
+  const nascimento = document.getElementById('resNascimento').value.trim();
+  const posicao = document.getElementById('resPosicao').value;
+  const nivel = parseInt(document.getElementById('resNivel').value) || 3;
+  if(!nome){ showToast('Digite o nome'); return; }
+  const reservas = await loadReservas();
+  reservas.push({ id: uid(), nome, whatsapp, nascimento, posicao, nivel, disponivel: true, dataCadastro: dateKey(new Date()) });
+  await saveReservas(reservas);
+  document.getElementById('resNome').value = '';
+  document.getElementById('resWhatsapp').value = '';
+  document.getElementById('resNascimento').value = '';
+  showToast('✅ Reserva cadastrado!');
+  renderReservas();
+}
+
+async function toggleDisponivel(id){
+  const reservas = await loadReservas();
+  const r = reservas.find(x=>x.id===id);
+  if(r) r.disponivel = !r.disponivel;
+  await saveReservas(reservas);
+  renderReservas();
+}
+
+async function removerReserva(id){
+  const reservas = await loadReservas();
+  const idx = reservas.findIndex(x=>x.id===id);
+  if(idx>=0) reservas.splice(idx,1);
+  await saveReservas(reservas);
+  renderReservas();
+}
+
+function calcIdade(nascimento){
+  if(!nascimento) return '';
+  const [d,m,y] = nascimento.split('/');
+  if(!y) return '';
+  const nasc = new Date(parseInt(y), parseInt(m)-1, parseInt(d));
+  const hoje = new Date();
+  let idade = hoje.getFullYear() - nasc.getFullYear();
+  if(hoje < new Date(hoje.getFullYear(), nasc.getMonth(), nasc.getDate())) idade--;
+  return idade + ' anos';
+}
+
+async function renderReservas(){
+  const reservas = await loadReservas();
+  const formEl = document.getElementById('reservasAdminForm');
+  const listEl = document.getElementById('reservasList');
+
+  // form admin
+  if(isAdmin){
+    formEl.innerHTML = `
+      <div style="font-weight:700;margin-bottom:8px;">+ Cadastrar reserva</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <input id="resNome" class="exp-input" placeholder="Nome completo" style="width:100%;">
+        <input id="resWhatsapp" class="exp-input" placeholder="WhatsApp (ex: 47999999999)" style="width:100%;" type="tel">
+        <input id="resNascimento" class="exp-input" placeholder="Nascimento (DD/MM/AAAA)" style="width:100%;">
+        <div style="display:flex;gap:6px;">
+          <select id="resPosicao" class="pos-select" style="flex:1;padding:8px;">
+            ${POSICOES.map(p=>`<option value="${p}">${p}</option>`).join('')}
+          </select>
+          <select id="resNivel" class="pos-select" style="padding:8px;">
+            ${[1,2,3,4,5].map(n=>`<option value="${n}" ${n===3?'selected':''}>${n}⭐</option>`).join('')}
+          </select>
+        </div>
+        <button class="primary" onclick="adicionarReserva()">Cadastrar</button>
+      </div>`;
+  } else {
+    formEl.innerHTML = '';
+  }
+
+  // lista
+  if(reservas.length === 0){
+    listEl.innerHTML = '<div class="empty">Nenhum reserva cadastrado ainda.</div>';
+    return;
+  }
+
+  const disponiveis = reservas.filter(r=>r.disponivel);
+  const indisponiveis = reservas.filter(r=>!r.disponivel);
+
+  let html = '';
+  if(disponiveis.length){
+    html += `<div class="ptag" style="margin:8px 0 4px;font-weight:700;color:var(--green);">✅ Disponíveis (${disponiveis.length})</div>`;
+    disponiveis.forEach(r => html += reservaCardHTML(r));
+  }
+  if(indisponiveis.length){
+    html += `<div class="ptag" style="margin:12px 0 4px;font-weight:700;color:var(--muted);">❌ Indisponíveis (${indisponiveis.length})</div>`;
+    indisponiveis.forEach(r => html += reservaCardHTML(r));
+  }
+  listEl.innerHTML = html;
+}
+
+function reservaCardHTML(r){
+  const idade = calcIdade(r.nascimento);
+  const msgWhatsApp = r.whatsapp
+    ? `https://wa.me/55${r.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(`Ei ${r.nome.split(' ')[0]}! 👋 Temos uma vaga no racha hoje (terça 19h, Alvorada). Topa? ⚽`)}`
+    : null;
+
+  return `<div class="card" style="border-left:4px solid ${r.disponivel?'var(--green)':'var(--border)'};">
+    <div class="player-row">
+      <div class="player-info">
+        <div class="avatar" style="background:var(--card2);font-size:13px;font-weight:700;">${r.nome.slice(0,2).toUpperCase()}</div>
+        <div>
+          <div class="pname">${r.nome}</div>
+          <div class="ptag">${r.posicao} · ${'⭐'.repeat(r.nivel)} ${idade ? '· '+idade : ''}</div>
+          ${r.whatsapp ? `<div class="ptag" style="color:var(--green);">📱 ${r.whatsapp}</div>` : ''}
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
+        ${msgWhatsApp ? `<a href="${msgWhatsApp}" target="_blank" style="background:var(--green);color:#04140a;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;text-decoration:none;">📲 Chamar</a>` : ''}
+        <button class="secondary" style="font-size:10px;padding:4px 8px;" onclick="toggleDisponivel('${r.id}')">${r.disponivel?'Marcar indisponível':'Marcar disponível'}</button>
+        ${isAdmin ? `<button class="danger" style="font-size:10px;padding:4px 8px;" onclick="removerReserva('${r.id}')">Remover</button>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+loadData();
+</script>
+</body>
+</html>
