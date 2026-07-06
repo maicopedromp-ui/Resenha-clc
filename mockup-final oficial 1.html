@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resenha CLC — Mockup Final</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0a0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 60px;
+  gap: 16px;
+  min-height: 100vh;
+}
+h1 {
+  color: #555;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.phone {
+  width: 390px;
+  min-height: 844px;
+  border-radius: 44px;
+  overflow: hidden;
+  border: 2px solid #222;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 1px #111;
+  background: #080c10;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 70px;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 22px 18px;
+  background: #080c10;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #111;
+}
+.greeting { font-size: 12px; color: #444; }
+.name { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: -0.3px; }
+.admin-badge {
+  background: linear-gradient(135deg, #c8a000, #ffdf00);
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.hero {
+  margin: 16px 16px 0;
+  background: linear-gradient(140deg, #0d2a0d 0%, #1a1400 60%, #080c10 100%);
+  border: 1px solid rgba(200,160,0,0.2);
+  border-radius: 24px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '⚽';
+  position: absolute;
+  right: -8px; bottom: -12px;
+  font-size: 100px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+.hero-tag {
+  font-size: 9px;
+  color: #c8a000;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hero-day { font-size: 30px; font-weight: 900; color: #fff; line-height: 1.1; }
+.hero-meta { font-size: 12px; color: #555; margin-top: 4px; }
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.pill {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.pill b { color: #fff; font-weight: 700; }
+.eu-vou {
+  margin-top: 16px;
+  background: #22c55e;
+  color: #04140a;
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 900;
+  display: block;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.nao-vou {
+  margin-top: 8px;
+  background: transparent;
+  color: #444;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  padding: 11px;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  text-align: center;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 16px 0;
+}
+.stat-card {
+  background: #0f1318;
+  border: 1px solid #1a2030;
+  border-radius: 18px;
+  padding: 16px;
+}
+.stat-card.gold {
+  border-color: rgba(200,160,0,0.25);
+  background: linear-gradient(135deg, #1a1400, #0f1318);
+}
+.stat-icon { font-size: 20px; margin-bottom: 8px; }
+.stat-num { font-size: 24px; font-weight: 900; color: #fff; line-height: 1; }
+.stat-card.gold .stat-num { color: #c8a000; }
+.stat-lbl { font-size: 10px; color: #444; margin-top: 4px; }
+.section { padding: 18px 16px 0; }
+.sec-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sec-title { font-size: 11px; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
+.sec-link { font-size: 11px; color: #22c55e; font-weight: 700; }
+.player-card {
+  background: #0f1318;
+  border: 1px solid #1a2030;
+  border-radius: 14px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.av {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: #1c2a1c;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: #22c55e;
+  flex-shrink: 0;
+}
+.av.gk { background: #2a2200; color: #c8a000; }
+.pinfo { flex: 1; }
+.pname { font-size: 14px; font-weight: 700; color: #e0e0e0; }
+.ppos { font-size: 11px; color: #444; margin-top: 2px; }
+.tog-on {
+  width: 40px; height: 24px; border-radius: 12px;
+  background: #22c55e; position: relative; flex-shrink: 0;
+}
+.tog-on::after {
+  content: '';
+  position: absolute;
+  right: 3px; top: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%; background: #fff;
+}
+.tog-off {
+  width: 40px; height: 24px; border-radius: 12px;
+  background: #1a2030; position: relative; flex-shrink: 0;
+  border: 1px solid #222;
+}
+.tog-off::after {
+  content: '';
+  position: absolute;
+  left: 3px; top: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%; background: #2a3040;
+}
+.rank-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #0f1318;
+}
+.rank-pos { font-size: 14px; font-weight: 900; color: #333; width: 20px; text-align: center; }
+.rank-pos.top1 { color: #c8a000; }
+.rank-pos.top2 { color: #aaa; }
+.rank-pos.top3 { color: #c87533; }
+.rank-av {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #1c2330;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #888;
+}
+.rank-name { flex: 1; font-size: 13px; color: #ccc; }
+.rank-val { font-size: 13px; font-weight: 800; color: #c8a000; }
+.bottom-nav {
+  display: flex;
+  background: #080c10;
+  border-top: 1px solid #111;
+  padding: 10px 0 8px;
+  position: sticky;
+  bottom: 0;
+}
+.nav-item {
+  flex: 1; text-align: center;
+  font-size: 9px; color: #444;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.nav-item.act { color: #22c55e; }
+.nav-icon { font-size: 20px; }
+.spacer { height: 16px; }
+</style>
+</head>
+<body>
+<h1>Resenha CLC — Mockup Final</h1>
+
+<div class="phone">
+  <div class="scroll-area">
+
+    <div class="top-bar">
+      <div>
+        <div class="greeting">Bom dia,</div>
+        <div class="name">Maico 👋</div>
+      </div>
+      <div class="admin-badge">Admin</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-tag">Próximo Jogo</div>
+      <div class="hero-day">Terça · 08/07</div>
+      <div class="hero-meta">19h · Quadra Alvorada · Joinville</div>
+      <div class="hero-pills">
+        <div class="pill">✅ <b>13</b> confirmados</div>
+        <div class="pill">⏰ <b>seg 20h</b> prazo</div>
+        <div class="pill">🔄 <b>5</b> pendentes</div>
+      </div>
+      <div class="eu-vou">✅ EU VOU</div>
+      <div class="nao-vou">✗ Não vou dessa vez</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card gold">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-num">MP</div>
+        <div class="stat-lbl">Craque da rodada</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚽</div>
+        <div class="stat-num">12</div>
+        <div class="stat-lbl">Gols em 2026</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-num">18</div>
+        <div class="stat-lbl">Jogos no ano</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🟨</div>
+        <div class="stat-num">1</div>
+        <div class="stat-lbl">Suspenso ativo</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-row">
+        <div class="sec-title">Quem vai jogar</div>
+        <div class="sec-link">Ver todos →</div>
+      </div>
+      <div class="player-card">
+        <div class="av">MP</div>
+        <div class="pinfo"><div class="pname">MP</div><div class="ppos">Meio · ⭐⭐⭐⭐</div></div>
+        <div class="tog-on"></div>
+      </div>
+      <div class="player-card">
+        <div class="av">ED</div>
+        <div class="pinfo"><div class="pname">Edevaldo</div><div class="ppos">Atacante · ⭐⭐⭐</div></div>
+        <div class="tog-on"></div>
+      </div>
+      <div class="player-card">
+        <div class="av">BE</div>
+        <div class="pinfo"><div class="pname">Beto</div><div class="ppos">Zagueiro · ⭐⭐⭐⭐</div></div>
+        <div class="tog-off"></div>
+      </div>
+      <div class="player-card">
+        <div class="av gk">🧤</div>
+        <div class="pinfo"><div class="pname">Tony</div><div class="ppos">Goleiro</div></div>
+        <div class="tog-on"></div>
+      </div>
+      <div class="player-card">
+        <div class="av">VI</div>
+        <div class="pinfo"><div class="pname">Vini</div><div class="ppos">Meio · ⭐⭐⭐</div></div>
+        <div class="tog-on"></div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:6px;">
+      <div class="sec-row">
+        <div class="sec-title">🏆 Artilheiros</div>
+        <div class="sec-link">Ver ranking →</div>
+      </div>
+      <div class="rank-row"><div class="rank-pos top1">1</div><div class="rank-av">MP</div><div class="rank-name">MP</div><div class="rank-val">12 ⚽</div></div>
+      <div class="rank-row"><div class="rank-pos top2">2</div><div class="rank-av">VI</div><div class="rank-name">Vini</div><div class="rank-val">9 ⚽</div></div>
+      <div class="rank-row"><div class="rank-pos top3">3</div><div class="rank-av">RA</div><div class="rank-name">Rafael</div><div class="rank-val">7 ⚽</div></div>
+    </div>
+
+    <div class="spacer"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item act"><div class="nav-icon">🏠</div>Home</div>
+    <div class="nav-item"><div class="nav-icon">👥</div>Jogadores</div>
+    <div class="nav-item"><div class="nav-icon">🔀</div>Sorteio</div>
+    <div class="nav-item"><div class="nav-icon">💰</div>Financeiro</div>
+    <div class="nav-item"><div class="nav-icon">⋯</div>Mais</div>
+  </div>
+</div>
+
+</body>
+</html>
