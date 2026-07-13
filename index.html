@@ -20,7 +20,7 @@ h1{font-family:'Sora','Inter',-apple-system,sans-serif;font-size:23px;margin:0 0
 .subtitle{color:var(--muted);font-size:13px;margin-bottom:18px;}
 .tabs{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .25s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.tab{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;position:relative;flex-shrink:0;transition:all .25s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}.chat-badge-dot{position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:var(--red);border:2px solid var(--bg);animation:badge-pulse 1.8s ease-in-out infinite;}@keyframes badge-pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,84,112,.6);}50%{box-shadow:0 0 0 5px rgba(255,84,112,0);}}
 .tab:hover{color:var(--text);border-color:rgba(255,255,255,.22);}
 .tab.active{background:linear-gradient(115deg,var(--green),var(--cup-blue));color:#04140a;border-color:transparent;box-shadow:0 4px 18px rgba(34,224,138,.35),0 0 0 1px rgba(255,255,255,.08) inset;transform:translateY(-1px);}
 .section{display:none;}
@@ -300,6 +300,7 @@ function renderAll(){
  renderJogadoresTab();
  popularChatSender();
  chatSilenciado = localStorage.getItem('resenha_chat_silenciado') === 'true';
+ startChatWatcher();
 }
 let presenceByDateCache = null;
 let absenceReasonsCache = null;
@@ -2243,6 +2244,7 @@ async function admAddGol(playerId, delta){
 let chatCache = null;
 let chatSilenciado = false;
 let chatUltimaMsg = 0;
+let chatLastSeen = parseInt(localStorage.getItem('resenha_chat_last_seen')) || 0;
 let chatPolling = null;
 
 function popularChatSender(){
@@ -2284,6 +2286,29 @@ function enviarNotificacao(nome, msg){
   });
 }
 
+function isChatTabActive(){
+  const chatTab = document.querySelector('.tab[data-tab="chat"]');
+  return !!(chatTab && chatTab.classList.contains('active'));
+}
+function showChatBadge(){
+  const chatTab = document.querySelector('.tab[data-tab="chat"]');
+  if(chatTab && !chatTab.querySelector('.chat-badge-dot')){
+    const dot = document.createElement('span');
+    dot.className = 'chat-badge-dot';
+    chatTab.appendChild(dot);
+  }
+}
+function hideChatBadge(){
+  const chatTab = document.querySelector('.tab[data-tab="chat"]');
+  const dot = chatTab && chatTab.querySelector('.chat-badge-dot');
+  if(dot) dot.remove();
+}
+function markChatSeen(ts){
+  chatLastSeen = ts;
+  localStorage.setItem('resenha_chat_last_seen', String(ts));
+  hideChatBadge();
+}
+
 async function loadChat(){
   try{
     const res = await window.storage.get('chat', true);
@@ -2309,6 +2334,7 @@ async function sendChat(){
   msgs.push(novaMsg);
   if(msgs.length > 200) msgs.splice(0, msgs.length-200);
   chatUltimaMsg = novaMsg.ts;
+  markChatSeen(novaMsg.ts);
   await safeStorageSet('chat', JSON.stringify(msgs), true);
   input.value = '';
   renderChatMsgs(msgs);
@@ -2332,32 +2358,38 @@ function renderChatMsgs(msgs){
   el.scrollTop = el.scrollHeight;
 }
 
+async function checkChatUpdates(){
+  const msgs = await loadChat();
+  if(msgs.length === 0) return;
+  const ultima = msgs[msgs.length-1];
+  const ts = ultima.ts || 0;
+  if(ts <= chatUltimaMsg) return;
+  const isFirstCheck = chatUltimaMsg === 0;
+  chatUltimaMsg = ts;
+  if(isChatTabActive()){
+    renderChatMsgs(msgs);
+    markChatSeen(ts);
+  } else {
+    if(ts > chatLastSeen) showChatBadge();
+    if(!isFirstCheck) enviarNotificacao(ultima.nome, ultima.msg);
+  }
+}
+
+function startChatWatcher(){
+  checkChatUpdates();
+  if(chatPolling) clearInterval(chatPolling);
+  chatPolling = setInterval(checkChatUpdates, 5000);
+}
+
 async function renderChat(){
   popularChatSender();
-  await solicitarNotificacao();
+  solicitarNotificacao();
   const msgs = await loadChat();
-  if(msgs.length > 0) chatUltimaMsg = msgs[msgs.length-1].ts || 0;
   renderChatMsgs(msgs);
-
-  // polling a cada 5s pra novas mensagens
-  if(chatPolling) clearInterval(chatPolling);
-  chatPolling = setInterval(async()=>{
-    const novas = await loadChat();
-    if(novas.length > 0){
-      const ultima = novas[novas.length-1];
-      if((ultima.ts||0) > chatUltimaMsg){
-        chatUltimaMsg = ultima.ts;
-        enviarNotificacao(ultima.nome, ultima.msg);
-        // mostra badge na aba
-        const chatTab = document.querySelector('.tab[data-tab="chat"]');
-        if(chatTab && !chatTab.classList.contains('active')){
-          chatTab.style.background = 'var(--blue)';
-          chatTab.style.color = '#fff';
-        }
-        renderChatMsgs(novas);
-      }
-    }
-  }, 5000);
+  if(msgs.length > 0){
+    chatUltimaMsg = msgs[msgs.length-1].ts || 0;
+    markChatSeen(chatUltimaMsg);
+  }
 }
 
 function toggleSilenciarChat(){
