@@ -969,7 +969,7 @@ async function sortearTimes(){
  return;
  }
  const teams = Array.from({length:numTeams}, ()=>({players:[], goleiro:null, totalSkill:0}));
- const categorias = ['Zagueiro','Lateral','Meio','Atacante'];
+ const categorias = ['Zagueiro','Lateral Direito','Lateral Esquerdo','Meio','Atacante'];
  categorias.forEach(cat=>{
  const grupo = linha.filter(p=>p.posicao===cat);
  if(grupo.length) snakeDistribute(grupo, teams);
