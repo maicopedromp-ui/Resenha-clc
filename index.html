@@ -654,7 +654,7 @@ function renderPlayersList(){
  row.innerHTML = `
 <div class="player-row"><div class="player-info"><div class="photo-upload-btn">
  ${p.photo ? `<img src="${p.photo}">` : '📷'}
-<input type="file" accept="image/*" onchange="uploadPhoto(event,'${p.id}')"></div><div><div class="pname">${p.name}</div><span class="pos-tag pos-${p.posicao}">${p.posicao}</span>
+<input type="file" accept="image/*" onchange="uploadPhoto(event,'${p.id}')"></div><div><div class="pname">${p.name}</div><span class="pos-tag pos-${p.posicao.replace(/ /g,'-')}">${p.posicao}</span>
  ${getBadges(p).length ? `<div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:3px;">${getBadges(p).map(b=>`<span style="font-size:10px;background:var(--card2);border:1px solid var(--border);padding:2px 6px;border-radius:10px;">${b}</span>`).join('')}</div>` : ''}
 </div></div><button class="danger" onclick="removePlayer('${p.id}')">Remover</button></div><div class="edit-block"><div class="edit-row"><span class="ptag" style="width:60px;">Posição 1</span><select class="pos-select" style="flex:1;min-width:0;padding:6px;" onchange="setPosicao('${p.id}', this.value)">
  ${POSICOES.map(pos=>`<option value="${pos}" ${pos===p.posicao?'selected':''}>${pos}</option>`).join('')}
@@ -1002,7 +1002,7 @@ function renderTeams(teams){
  box.innerHTML = `
 <div class="team-title"><span>${teamIcons[i % teamIcons.length]} Time ${i+1}</span><span class="team-badge">nível ${avgSkill} · ${pesoLabel} · ${resumoPos}</span></div><div class="ptag" style="margin-bottom:6px;">Toca num jogador pra marcar o capitão 👑</div>
  ${t.goleiro ? `<div class="team-player" style="font-weight:700;color:var(--gold);cursor:pointer;" onclick="setCaptain(${i},'${t.goleiro.id}')">${t.captainId===t.goleiro.id?'👑 ':''}${avatarHTML(t.goleiro)} ${t.goleiro.name} (goleiro)</div>` : `<div class="team-player" style="color:var(--muted)">sem goleiro</div>`}
- ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span><span style="flex:1;margin-left:8px;">${p.name}</span><span class="pos-tag pos-${p.posicao}">${p.posicao}</span></div>`).join('')}
+ ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span><span style="flex:1;margin-left:8px;">${p.name}</span><span class="pos-tag pos-${p.posicao.replace(/ /g,'-')}">${p.posicao}</span></div>`).join('')}
  `;
  container.appendChild(box);
  });
@@ -1057,6 +1057,12 @@ async function renderHistory(){
  list.innerHTML = '<div class="empty">Nenhum sorteio salvo ainda.<br>Vá em "Sorteio" e salve o primeiro racha.</div>';
  return;
  }
+ const teamColors = ['var(--cup-green)','var(--cup-gold)','var(--blue)','var(--red)'];
+ const teamIcons = ['🟢','🟡','🔵','🔴'];
+ function avatarByName(nome){
+ const p = players.find(x=>x.name===nome);
+ return p ? avatarHTML(p) : `<div class="avatar">${initials(nome)}</div>`;
+ }
  hist.forEach((h,i)=>{
  const d = new Date(h.date);
  const dateStr = d.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'}) + ' às ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
@@ -1076,7 +1082,7 @@ async function renderHistory(){
  ${empate ? '🤝 Empate!' : '🏆 Time ' + (h.teams.indexOf(vencedores[0])+1) + ' venceu!'}
 </div>`;
  }
- const golsJogo = h.gols || {}; 
+ const golsJogo = h.gols || {};
  const golsHtml = isAdmin ? `
 <details style="margin-top:10px;"><summary style="cursor:pointer;font-size:13px;font-weight:700;color:var(--cup-gold);">⚽ Lançar gols do jogo</summary><div style="margin-top:8px;">
  ${allNamesInGame.map(nome=>{
@@ -1092,17 +1098,24 @@ async function renderHistory(){
  return p ? `${p.name} (${qtd})` : '';
  }).filter(Boolean).join(', ')
  }</div>` : ''}`;
+ const teamsHtml = h.teams.map((t,ti)=>{
+ const placarHtml = isAdmin
+ ? `<input class="exp-input" style="width:44px;padding:5px;text-align:center;flex-shrink:0;" type="number" min="0" placeholder="0" value="${t.placar!=null?t.placar:''}" onblur="setPlacar(${i},${ti},this.value)">`
+ : `<span style="font-weight:800;color:var(--cup-gold);flex-shrink:0;">${t.placar!=null && t.placar!=='' ? t.placar : '-'}</span>`;
+ return `<div class="team-box" style="border-left-color:${teamColors[ti % teamColors.length]};margin-bottom:8px;">
+<div class="team-title"><span>${teamIcons[ti % teamIcons.length]} Time ${ti+1}${t.capitao ? ' · 👑 '+t.capitao : ''}</span>${placarHtml}</div>
+ ${t.goleiro ? `<div class="team-player" style="font-weight:700;color:var(--gold);"><span style="display:flex;align-items:center;gap:8px;">${avatarByName(t.goleiro)}${t.goleiro}</span><span class="pos-tag pos-Goleiro">goleiro</span></div>` : ''}
+ ${t.players.map(pStr=>{
+ const m = typeof pStr === 'string' ? pStr.match(/^(.*) \((.*)\)$/) : null;
+ const nome = m ? m[1] : pStr;
+ const pos = m ? m[2] : '';
+ return `<div class="team-player"><span style="display:flex;align-items:center;gap:8px;">${avatarByName(nome)}${nome}</span>${pos ? `<span class="pos-tag pos-${pos.replace(/ /g,'-')}">${pos}</span>` : ''}</div>`;
+ }).join('')}
+</div>`;
+ }).join('');
  item.innerHTML = `
 <div class="history-date">📅 ${dateStr}</div>
- ${h.teams.map((t,ti)=>`
-<div style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="flex:1;"><strong>Time ${ti+1}</strong>${t.goleiro ? ' (🧤 '+t.goleiro+')' : ''}${t.capitao ? ' 👑 '+t.capitao : ''}:
-<span style="color:var(--muted)">${t.players.join(', ')}</span></div>
- ${isAdmin
- ? `<input class="exp-input" style="width:44px;padding:5px;text-align:center;flex-shrink:0;" type="number" min="0" placeholder="0" value="${t.placar!=null?t.placar:''}" onblur="setPlacar(${i},${ti},this.value)">`
- : `<span style="font-weight:800;color:var(--cup-gold);flex-shrink:0;">${t.placar!=null && t.placar!=='' ? t.placar : '-'}</span>`
- }
-</div>
- `).join('')}
+ ${teamsHtml}
  ${resultadoHtml}
  ${golsHtml}
  ${isAdmin ? `<button class="danger" style="margin-top:8px;" onclick="deleteHistoryItem(${i})">Excluir</button>` : ''}
