@@ -980,6 +980,15 @@ async function sortearTimes(){
  renderTeams(teams);
  fireConfetti();
 }
+function moverJogadorDraw(fromTeamIdx, playerId, toTeamIdx){
+ if(fromTeamIdx === toTeamIdx || !currentDraw) return;
+ const fromTeam = currentDraw[fromTeamIdx];
+ const idx = fromTeam.players.findIndex(p=>p.id===playerId);
+ if(idx === -1) return;
+ const [player] = fromTeam.players.splice(idx,1);
+ currentDraw[toTeamIdx].players.push(player);
+ renderTeams(currentDraw);
+}
 function renderTeams(teams){
  const container = document.getElementById('teamsResult');
  container.innerHTML = '';
@@ -1002,7 +1011,7 @@ function renderTeams(teams){
  box.innerHTML = `
 <div class="team-title"><span>${teamIcons[i % teamIcons.length]} Time ${i+1}</span><span class="team-badge">nível ${avgSkill} · ${pesoLabel} · ${resumoPos}</span></div><div class="ptag" style="margin-bottom:6px;">Toca num jogador pra marcar o capitão 👑</div>
  ${t.goleiro ? `<div class="team-player" style="font-weight:700;color:var(--gold);cursor:pointer;" onclick="setCaptain(${i},'${t.goleiro.id}')">${t.captainId===t.goleiro.id?'👑 ':''}${avatarHTML(t.goleiro)} ${t.goleiro.name} (goleiro)</div>` : `<div class="team-player" style="color:var(--muted)">sem goleiro</div>`}
- ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span><span style="flex:1;margin-left:8px;">${p.name}</span><span class="pos-tag pos-${p.posicao.replace(/ /g,'-')}">${p.posicao}</span></div>`).join('')}
+ ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span><span style="flex:1;margin-left:8px;">${p.name}</span><span style="display:flex;align-items:center;gap:6px;"><span class="pos-tag pos-${p.posicao.replace(/ /g,'-')}">${p.posicao}</span>${isAdmin && teams.length>1 ? `<select class="pos-select" style="font-size:10px;padding:2px 4px;" onclick="event.stopPropagation()" onchange="event.stopPropagation();if(this.value!=='')moverJogadorDraw(${i},'${p.id}',parseInt(this.value))"><option value="">↔ mover</option>${teams.map((_,ti)=> ti===i?'':`<option value="${ti}">Time ${ti+1}</option>`).join('')}</select>` : ''}</span></div>`).join('')}
  `;
  container.appendChild(box);
  });
@@ -1048,6 +1057,22 @@ async function salvarSorteio(){
  });
  await saveHistory(hist);
  showToast('Sorteio salvo no histórico!');
+}
+async function moverJogadorHistorico(histIdx, fromTeamIdx, nome, toTeamIdx){
+ if(fromTeamIdx === toTeamIdx) return;
+ const hist = await loadHistory();
+ const entry = hist[histIdx];
+ if(!entry) return;
+ const idx = entry.teams[fromTeamIdx].players.findIndex(pStr=>{
+ const m = typeof pStr === 'string' ? pStr.match(/^(.*) \((.*)\)$/) : null;
+ const n = m ? m[1] : pStr;
+ return n === nome;
+ });
+ if(idx === -1) return;
+ const [playerStr] = entry.teams[fromTeamIdx].players.splice(idx,1);
+ entry.teams[toTeamIdx].players.push(playerStr);
+ await saveHistory(hist);
+ renderHistory();
 }
 async function renderHistory(){
  const hist = await loadHistory();
@@ -1109,7 +1134,8 @@ async function renderHistory(){
  const m = typeof pStr === 'string' ? pStr.match(/^(.*) \((.*)\)$/) : null;
  const nome = m ? m[1] : pStr;
  const pos = m ? m[2] : '';
- return `<div class="team-player"><span style="display:flex;align-items:center;gap:8px;">${avatarByName(nome)}${nome}</span>${pos ? `<span class="pos-tag pos-${pos.replace(/ /g,'-')}">${pos}</span>` : ''}</div>`;
+ const moverSelect = (isAdmin && h.teams.length>1) ? `<select class="pos-select" style="font-size:10px;padding:2px 4px;" onchange="if(this.value!=='')moverJogadorHistorico(${i},${ti},'${nome.replace(/'/g,"\\'")}',parseInt(this.value))"><option value="">↔ mover</option>${h.teams.map((_,tj)=> tj===ti?'':`<option value="${tj}">Time ${tj+1}</option>`).join('')}</select>` : '';
+ return `<div class="team-player"><span style="display:flex;align-items:center;gap:8px;">${avatarByName(nome)}${nome}</span><span style="display:flex;align-items:center;gap:6px;">${pos ? `<span class="pos-tag pos-${pos.replace(/ /g,'-')}">${pos}</span>` : ''}${moverSelect}</span></div>`;
  }).join('')}
 </div>`;
  }).join('');
