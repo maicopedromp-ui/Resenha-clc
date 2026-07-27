@@ -794,10 +794,14 @@ async function addPlayer(){
  showToast(name + ' adicionado!');
 }
 async function removePlayer(id){
- players = players.filter(p=>p.id!==id);
+ const p = players.find(x=>x.id===id);
+ const nome = p ? p.name : 'esse jogador';
+ if(!confirm('Remover ' + nome + ' do cadastro? Isso apaga o jogador de vez (presenças, sorteios e financeiro passados continuam com o nome, mas ele some da lista atual). Tem certeza?')) return;
+ players = players.filter(x=>x.id!==id);
  await savePlayers();
  renderPlayersList();
  renderPresenca();
+ showToast(nome + ' removido');
 }
 function updateSorteioDataInfo(){
  const el = document.getElementById('sorteioDataInfo');
