@@ -239,10 +239,15 @@ async function loadData(){
  showLoadRetry();
  return;
  }
+ if(e.message === 'not found'){
  players = DEFAULT_PLAYERS.map(p => ({
  id: uid(), name: p.name, posicao: p.posicao, posicao2: null, skill: 3, fisico: 'Médio', peso: 75, idade: 25, present: true, photo: null, camisa: null
  }));
- savePlayers();
+ await savePlayers();
+ } else {
+ showLoadRetry();
+ return;
+ }
  }
  await loadSettings();
  document.getElementById('loading').style.display='none';
@@ -529,7 +534,7 @@ async function renderPresenca(){
  }
 </div>
  ${(!going && !susp.suspenso) ? `
-<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);"><div class="ptag" style="margin-bottom:6px;">Motivo da falta:</div><div style="display:flex;gap:5px;flex-wrap:wrap;">
+<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);"><div class="ptag" style="margin-bottom:6px;color:#fca5a5;">✗ Marcado como "não vou" — qual o motivo? <span style="color:var(--muted);">(opcional)</span></div><div style="display:flex;gap:5px;flex-wrap:wrap;">
  ${MOTIVOS_FALTA.map(motivo=>`
 <button class="secondary" style="padding:5px 9px;font-size:11px;${reason===motivo ? 'background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700;' : ''}" onclick="setAbsenceReason('${p.id}','${motivo}')">${motivo}</button>
  `).join('')}
