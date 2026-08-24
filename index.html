@@ -102,12 +102,12 @@ input.exp-input{background:rgba(255,255,255,.05);border:1px solid var(--border);
 
 
 body{padding:16px;padding-bottom:60px;}
-</style><div id="homeScreen" style="display:none;"><div class="home-top-bar"><div><div class="home-greeting">Bem-vindo,</div><div class="home-name" id="homeTitle">Resenha CLC 👋</div></div><div class="home-admin-badge" id="homeAdminBadge" style="display:none;">Admin</div></div><div class="home-hero"><div class="home-hero-tag">Próximo Jogo</div><div class="home-hero-day" id="homeJogoDay">—</div><div class="home-hero-meta">19h · Quadra Alvorada · Joinville</div><div class="home-pills"><div class="home-pill">✅ <b id="homeConfirmados">0</b> confirmados</div><div class="home-pill">⏰ <b id="homePrazo">seg 20h</b> prazo</div><div class="home-pill">🔄 <b id="homePendentes">0</b> pendentes</div></div><button class="home-eu-vou" onclick="homeTogglePresenca(true)">✅ EU VOU</button><button class="home-nao-vou" onclick="homeTogglePresenca(false)">✗ Não vou dessa vez</button></div><div class="home-stats-grid"><div class="home-stat-card gold"><div class="home-stat-icon">⭐</div><div class="home-stat-num" id="homeCraque">—</div><div class="home-stat-lbl">Craque da rodada</div></div><div class="home-stat-card"><div class="home-stat-icon">⚽</div><div class="home-stat-num" id="homeGols">0</div><div class="home-stat-lbl">Gols em 2026</div></div><div class="home-stat-card"><div class="home-stat-icon">📅</div><div class="home-stat-num" id="homeJogos">0</div><div class="home-stat-lbl">Jogos no grupo</div></div><div class="home-stat-card"><div class="home-stat-icon">🟨</div><div class="home-stat-num" id="homeSuspensos">0</div><div class="home-stat-lbl">Suspenso ativo</div></div></div><div class="home-section"><div class="home-sec-row"><div class="home-sec-title">Quem vai jogar</div><button class="home-sec-link" onclick="navTo('presenca')">Ver todos →</button></div><div id="homePlayerList"></div></div><div class="home-section" style="margin-top:6px;padding-bottom:14px;"><div class="home-sec-row"><div class="home-sec-title">🏆 Artilheiros</div><button class="home-sec-link" onclick="navTo('gols')">Ver ranking →</button></div><div id="homeRanking"></div></div></div><div class="tabs"><div class="tab active" data-tab="presenca">Presença</div><div class="tab" data-tab="chat">💬 Chat</div><div class="tab" data-tab="sorteio">Sorteio</div><div class="tab" data-tab="historico">Histórico</div><div class="tab" data-tab="craque">⭐ Craque</div><div class="tab" data-tab="copa">🏆 Copa</div><div class="tab" data-tab="disciplina">🟨 Disciplina</div><div class="tab" data-tab="figurinhas">🃏 Figurinhas</div><div class="tab" data-tab="jogadores">Jogadores 🔒</div><div class="tab" data-tab="financeiro">💰 Financeiro 🔒</div><div class="tab" data-tab="adm">⚙️ ADM 🔒</div></div><div class="bottom-nav"><button class="bottom-nav-item act" onclick="navTo('home')" id="nav-home"><div class="bottom-nav-icon">🏠</div>Home
+</style><div id="homeScreen" style="display:none;"><div class="home-top-bar"><div><div class="home-greeting">Bem-vindo,</div><div class="home-name" id="homeTitle">Resenha CLC 👋</div></div><div class="home-admin-badge" id="homeAdminBadge" style="display:none;">Admin</div></div><div class="home-hero"><div class="home-hero-tag">Próximo Jogo</div><div class="home-hero-day" id="homeJogoDay">—</div><div class="home-hero-meta">19h · Quadra Alvorada · Joinville</div><div class="home-pills"><div class="home-pill">✅ <b id="homeConfirmados">0</b> confirmados</div><div class="home-pill">⏰ <b id="homePrazo">seg 20h</b> prazo</div><div class="home-pill">🔄 <b id="homePendentes">0</b> pendentes</div></div><button class="home-eu-vou" onclick="homeTogglePresenca(true)">✅ EU VOU</button><button class="home-nao-vou" onclick="homeTogglePresenca(false)">✗ Não vou dessa vez</button></div><div class="home-stats-grid"><div class="home-stat-card gold"><div class="home-stat-icon">⭐</div><div class="home-stat-num" id="homeCraque">—</div><div class="home-stat-lbl">Craque da rodada</div></div><div class="home-stat-card"><div class="home-stat-icon">⚽</div><div class="home-stat-num" id="homeGols">0</div><div class="home-stat-lbl">Gols em 2026</div></div><div class="home-stat-card"><div class="home-stat-icon">📅</div><div class="home-stat-num" id="homeJogos">0</div><div class="home-stat-lbl">Jogos no grupo</div></div><div class="home-stat-card"><div class="home-stat-icon">🟨</div><div class="home-stat-num" id="homeSuspensos">0</div><div class="home-stat-lbl">Suspenso ativo</div></div></div><div class="home-section"><div class="home-sec-row"><div class="home-sec-title">Quem vai jogar</div><button class="home-sec-link" onclick="navTo('presenca')">Ver todos →</button></div><div id="homePlayerList"></div></div><div class="home-section" style="margin-top:6px;padding-bottom:14px;"><div class="home-sec-row"><div class="home-sec-title">🏆 Artilheiros</div><button class="home-sec-link" onclick="navTo('gols')">Ver ranking →</button></div><div id="homeRanking"></div></div></div><div class="tabs"><div class="tab active" data-tab="presenca">Presença</div><div class="tab" data-tab="chat">💬 Chat</div><div class="tab" data-tab="sorteio">Sorteio</div><div class="tab" data-tab="historico">Histórico</div><div class="tab" data-tab="craque">⭐ Craque</div><div class="tab" data-tab="disciplina">🟨 Disciplina</div><div class="tab" data-tab="figurinhas">🃏 Figurinhas</div><div class="tab" data-tab="jogadores">Jogadores 🔒</div><div class="tab" data-tab="financeiro">💰 Financeiro 🔒</div><div class="tab" data-tab="adm">⚙️ ADM 🔒</div></div><div class="bottom-nav"><button class="bottom-nav-item act" onclick="navTo('home')" id="nav-home"><div class="bottom-nav-icon">🏠</div>Home
 </button><button class="bottom-nav-item" onclick="navTo('presenca')" id="nav-presenca"><div class="bottom-nav-icon">✅</div>Presença
 </button><button class="bottom-nav-item" onclick="navTo('sorteio')" id="nav-sorteio"><div class="bottom-nav-icon">🔀</div>Sorteio
 </button><button class="bottom-nav-item" onclick="navTo('financeiro')" id="nav-financeiro"><div class="bottom-nav-icon">💰</div>Financeiro
 </button><button class="bottom-nav-item" onclick="navTo('mais')" id="nav-mais"><div class="bottom-nav-icon">⋯</div>Mais
-</button></div><div id="maisDrawer" style="display:none;position:fixed;bottom:64px;left:0;right:0;background:var(--card);border-top:1px solid var(--border);z-index:25;padding:12px 16px;display:none;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><button class="secondary" onclick="navTo('jogadores');closeMais()">👥 Jogadores</button><button class="secondary" onclick="navTo('historico');closeMais()">📋 Histórico</button><button class="secondary" onclick="navTo('copa');closeMais()">🏆 Copa</button><button class="secondary" onclick="navTo('gols');closeMais()">⚽ Gols</button><button class="secondary" onclick="navTo('disciplina');closeMais()">🟨 Disciplina</button><button class="secondary" onclick="navTo('craque');closeMais()">⭐ Craque</button><button class="secondary" onclick="navTo('reservas');closeMais()">📋 Reservas</button><button class="secondary" onclick="navTo('chat');closeMais()">💬 Chat</button><button id="golsMenuBtn" class="secondary" style="display:none;" onclick="navTo('gols');closeMais()">⚽ Gols</button></div></div><div id="loading" class="loading">Carregando dados...</div><div id="app" style="display:none;"><div class="section active" id="tab-presenca"><div id="presencaChurrasSection"></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">📅 Jogo de qual terça?</div><select id="gameDateSelect" class="pos-select" style="width:100%;padding:10px;font-size:14px;"></select></div><div class="stat-grid"><div class="stat-box"><div class="stat-num" id="statConfirmados">0</div><div class="stat-label">Confirmados</div></div><div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total no grupo</div></div></div><div id="presencaList"></div></div><div class="section" id="tab-jogadores"><div id="jogadoresContent"></div></div><div class="section" id="tab-sorteio"><div class="card"><div style="font-weight:700;margin-bottom:8px;">Quantos times?</div><div class="num-teams-select" id="numTeamsSelect"><button data-n="2" class="sel" onclick="setNumTeams(2)">2 times</button><button data-n="3" onclick="setNumTeams(3)">3 times</button><button data-n="4" onclick="setNumTeams(4)">4 times</button></div><div class="ptag" style="margin-bottom:8px;text-align:center;" id="sorteioDataInfo">Vai usar os confirmados da data selecionada na aba Presença</div><button class="primary" onclick="sortearTimes()">🔀 Sortear times</button><button class="secondary" style="margin-top:8px;width:100%;" onclick="gerarOpcoesSorteio()">🎯 Gerar 3 opções pra comparar</button><div class="ptag" style="margin-top:8px;text-align:center;">Sorteio balanceado por posição e nível — evita 4 zagueiros num time só</div></div><div id="teamsResult"></div></div><div class="section" id="tab-historico"><div id="historyList"></div></div><div class="section" id="tab-financeiro"><div id="financeiroLock" style="display:none;"><div class="card lock-screen"><div class="lock-icon">🔒</div><div style="font-weight:700;margin-bottom:4px;">Área restrita</div><div class="ptag">Financeiro é só pra administração.</div><input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="finPinInput" placeholder="PIN"><button class="primary" style="width:160px;margin:0 auto;" onclick="checkFinPin()">Entrar</button></div></div><div id="financeiroInner"><div class="card" style="background:rgba(34,224,138,.08);border-color:var(--green-d);"><div style="font-size:12px;color:#86efac;">📢 Marque aqui quem já fez o Pix — só a administração vê e mexe nessa aba.</div></div><div class="card"><div style="font-weight:700;margin-bottom:10px;font-size:15px;">💰 Regras do racha</div><div class="fin-rule"><span id="ruleQuadraLabel">Quadra</span><strong id="ruleQuadraVal">R$ 550,00</strong></div><div class="fin-rule"><span>Mensalidade linha</span><strong id="ruleMensLinhaVal">R$ 65,00</strong></div><div class="fin-rule"><span>Mensalidade goleiro</span><strong id="ruleMensGoleiroVal">R$ 25,00</strong></div><div class="fin-rule"><span>Jogo avulso</span><strong id="ruleAvulsoVal">R$ 15,00</strong></div><div class="fin-rule"><span>Churrasco (2ª terça do mês)</span><strong id="ruleChurrascoVal">R$ 25,00</strong></div><div class="fin-rule" style="border-bottom:none;"><span>Pix</span><strong id="rulePixVal" style="color:var(--green);font-size:12px;">futclc22@gmail.com</strong></div></div><div class="stat-grid"><div class="stat-box"><div class="stat-num" id="finPagantes">0</div><div class="stat-label">Pagantes ativos</div></div><div class="stat-box"><div class="stat-num" id="finArrecadado">R$0</div><div class="stat-label">Arrecadado (mensal)</div></div></div><div class="card" style="text-align:center;"><div class="ptag" style="margin-bottom:4px;" id="finCustoQuadraLabel">Custo da quadra: R$ 550,00/mês</div><div id="finSaldo" style="font-size:24px;font-weight:800;"></div><div class="ptag" id="finSaldoLabel"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">Mês de referência</div><div style="display:flex;gap:6px;"><select id="finMonth" class="pos-select" style="flex:1;min-width:0;padding:8px;font-size:13px;"></select><button class="secondary" onclick="marcarTodosPagos(true)">Marcar tudo pago</button></div></div><div id="finPagamentos"></div><div class="card" id="finChurrasCard" style="margin-top:14px;"><div style="font-weight:700;margin-bottom:4px;">🍖 Churrasco do mês</div><div class="ptag" style="margin-bottom:8px;" id="finChurrascoInfo">R$ 25,00 por pessoa · 2ª terça-feira do mês</div><div style="text-align:center;background:var(--card2);border-radius:10px;padding:10px;margin-bottom:10px;"><div id="finSaldoChurrasco" style="font-size:20px;font-weight:800;"></div><div class="ptag" id="finSaldoChurrascoLabel"></div></div><div style="font-weight:700;margin:10px 0 4px;font-size:13px;">Quem vai nesse churrasco?</div><div class="ptag" style="margin-bottom:6px;">Cada um marca se vai ou não — só quem confirmar aparece no pagamento</div><div id="churrasAttendanceList"></div><div style="font-weight:700;margin:14px 0 4px;font-size:13px;">Pagamento (só confirmados)</div><div id="finChurrasList"></div></div><div class="card" style="margin-top:14px;"><div style="font-weight:700;margin-bottom:4px;">🧾 Despesas do mês</div><div class="ptag" style="margin-bottom:10px;">Descrição e recibo de cada gasto, pra justificar pro grupo</div><div id="expenseAdminForm"></div><div class="stat-box" style="margin-bottom:10px;"><div class="stat-num" id="finTotalDespesas" style="color:var(--red);">R$0</div><div class="stat-label">Total gasto no mês</div></div><div id="expensesList"></div></div></div></div><div class="section" id="tab-copa"><div class="card" style="background:linear-gradient(135deg,rgba(34,224,138,.14),rgba(59,109,255,.14));border-color:var(--cup-gold);"><div style="font-weight:800;font-size:16px;">🏆 Copa do Mundo 2026</div><div class="ptag">Quem vai ser o Campeão? Vote no seu favorito!</div></div><div class="card" id="copaChampionCard"><div style="font-weight:700;margin-bottom:8px;">🗳️ Vote no Campeão</div><div id="copaChampionVoting"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">📊 Placar dos votos</div><div id="copaChampionResults"></div></div></div><div class="section" id="tab-gols"><div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.14),rgba(34,224,138,.12));border-color:var(--cup-gold);"><div style="font-weight:800;font-size:16px;">⚽ Artilheiros do Ano</div><div class="ptag">Só o admin vê isso — surpresa pro grupo!</div></div><div id="golsRankingList"></div></div><div class="section" id="tab-chat"><div class="card" style="background:linear-gradient(135deg,rgba(59,109,255,.16),rgba(10,12,22,.5));border-color:var(--blue);"><div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-weight:800;font-size:16px;">💬 Chat da Resenha</div><div class="ptag">Fala direto com a galera sem sair do app</div></div><button id="chatSilenciarBtn" class="secondary" style="font-size:11px;padding:6px 10px;" onclick="toggleSilenciarChat()">🔔 Notificações</button></div></div><div id="chatMessages" style="min-height:40vh;max-height:60vh;overflow-y:auto;margin-bottom:8px;padding-bottom:78px;"></div><div class="card" style="position:fixed;left:16px;right:16px;bottom:16px;z-index:20;box-shadow:0 10px 34px -8px rgba(0,0,0,.6);"><div style="display:flex;gap:8px;"><select id="chatSender" class="pos-select" style="flex:0 0 110px;padding:8px;"></select><input id="chatInput" class="exp-input" placeholder="Mensagem..." style="flex:1;min-width:0;" onkeydown="if(event.key==='Enter')sendChat()"><button class="primary" style="width:50px;padding:10px;" onclick="sendChat()">➤</button></div></div></div><div class="section" id="tab-disciplina"><div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.12),rgba(255,84,112,.1));border-color:var(--gold);"><div style="font-weight:800;font-size:16px;">🟨 Disciplina do Grupo</div><div class="ptag">Cartões, suspensões e Tribunal do Fominha</div></div><div class="card"><div style="font-weight:700;margin-bottom:4px;">⚽ Tribunal do Fominha</div><div class="ptag" style="margin-bottom:10px;">Após o jogo, vote se alguém fomerou demais · 3ª vez = 1 semana suspenso</div><div id="fominhaVotacao"></div></div><div class="card" id="cartoesAdminCard"><div style="font-weight:700;margin-bottom:4px;">🟨🟥 Cartões (só admin)</div><div class="ptag" style="margin-bottom:10px;">Amarelo = 5 min fora · Vermelho = suspenso pro próximo jogo</div><div id="cartoesAdminForm"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">📋 Histórico</div><div id="disciplinaHistorico"></div></div></div><div class="section" id="tab-reservas"><div class="card" style="background:linear-gradient(135deg,rgba(59,109,255,.14),rgba(157,78,255,.12));border-color:var(--blue);"><div style="font-weight:800;font-size:16px;">📋 Reservas & Convidados</div><div class="ptag">Jogadores de fora que podem entrar quando faltar alguém</div></div><div class="card" id="reservasAdminForm"></div><div id="reservasList"></div></div><div class="section" id="tab-craque"><div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.18),rgba(255,140,3,.1));border-color:var(--cup-gold);"><div style="font-weight:800;font-size:16px;">⭐ Craque da Rodada</div><div class="ptag">Vote no melhor do jogo · cada um vota uma vez · resultado aparece pra todo mundo</div></div><div class="card" id="craqueVotacaoCard"><div style="font-weight:700;margin-bottom:8px;">🗳️ Seu voto</div><div id="craqueVotacao"></div></div><div class="card" style="background:var(--card2);"><div style="font-weight:700;margin-bottom:8px;">🏆 Resultado da rodada</div><div id="craqueResultado"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">👑 Hall da Fama</div><div class="ptag" style="margin-bottom:8px;">Quem mais vezes foi eleito craque</div><div id="craqueHallFama"></div></div></div><div class="section" id="tab-adm"><div id="admContent"></div></div>
+</button></div><div id="maisDrawer" style="display:none;position:fixed;bottom:64px;left:0;right:0;background:var(--card);border-top:1px solid var(--border);z-index:25;padding:12px 16px;display:none;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><button class="secondary" onclick="navTo('jogadores');closeMais()">👥 Jogadores</button><button class="secondary" onclick="navTo('historico');closeMais()">📋 Histórico</button><button class="secondary" onclick="navTo('gols');closeMais()">⚽ Gols</button><button class="secondary" onclick="navTo('disciplina');closeMais()">🟨 Disciplina</button><button class="secondary" onclick="navTo('craque');closeMais()">⭐ Craque</button><button class="secondary" onclick="navTo('reservas');closeMais()">📋 Reservas</button><button class="secondary" onclick="navTo('chat');closeMais()">💬 Chat</button><button id="golsMenuBtn" class="secondary" style="display:none;" onclick="navTo('gols');closeMais()">⚽ Gols</button></div></div><div id="loading" class="loading">Carregando dados...</div><div id="app" style="display:none;"><div class="section active" id="tab-presenca"><div id="presencaChurrasSection"></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">📅 Jogo de qual terça?</div><select id="gameDateSelect" class="pos-select" style="width:100%;padding:10px;font-size:14px;"></select></div><div class="stat-grid"><div class="stat-box"><div class="stat-num" id="statConfirmados">0</div><div class="stat-label">Confirmados</div></div><div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total no grupo</div></div></div><div id="presencaList"></div></div><div class="section" id="tab-jogadores"><div id="jogadoresContent"></div></div><div class="section" id="tab-sorteio"><div class="card"><div class="ptag" style="margin-bottom:8px;text-align:center;" id="sorteioDataInfo">Vai usar os confirmados da data selecionada na aba Presença · sempre 2 times, ⚪ Branco x ⚫ Preto</div><button class="primary" onclick="sortearTimes()">🔀 Sortear times</button><button class="secondary" style="margin-top:8px;width:100%;" onclick="gerarOpcoesSorteio()">🎯 Gerar 3 opções pra comparar</button><button class="secondary" style="margin-top:8px;width:100%;" onclick="iniciarMontagemManual()">🖐️ Montar times manualmente</button><div class="ptag" style="margin-top:8px;text-align:center;">Sorteio balanceado por posição e nível — evita 4 zagueiros num time só</div></div><div id="teamsResult"></div></div><div class="section" id="tab-historico"><div id="historyList"></div></div><div class="section" id="tab-financeiro"><div id="financeiroLock" style="display:none;"><div class="card lock-screen"><div class="lock-icon">🔒</div><div style="font-weight:700;margin-bottom:4px;">Área restrita</div><div class="ptag">Financeiro é só pra administração.</div><input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="finPinInput" placeholder="PIN"><button class="primary" style="width:160px;margin:0 auto;" onclick="checkFinPin()">Entrar</button></div></div><div id="financeiroInner"><div class="card" style="background:rgba(34,224,138,.08);border-color:var(--green-d);"><div style="font-size:12px;color:#86efac;">📢 Marque aqui quem já fez o Pix — só a administração vê e mexe nessa aba.</div></div><div class="card"><div style="font-weight:700;margin-bottom:10px;font-size:15px;">💰 Regras do racha</div><div class="fin-rule"><span id="ruleQuadraLabel">Quadra</span><strong id="ruleQuadraVal">R$ 550,00</strong></div><div class="fin-rule"><span>Mensalidade linha</span><strong id="ruleMensLinhaVal">R$ 65,00</strong></div><div class="fin-rule"><span>Mensalidade goleiro</span><strong id="ruleMensGoleiroVal">R$ 25,00</strong></div><div class="fin-rule"><span>Jogo avulso</span><strong id="ruleAvulsoVal">R$ 15,00</strong></div><div class="fin-rule"><span>Churrasco (2ª terça do mês)</span><strong id="ruleChurrascoVal">R$ 25,00</strong></div><div class="fin-rule" style="border-bottom:none;"><span>Pix</span><strong id="rulePixVal" style="color:var(--green);font-size:12px;">futclc22@gmail.com</strong></div></div><div class="stat-grid"><div class="stat-box"><div class="stat-num" id="finPagantes">0</div><div class="stat-label">Pagantes ativos</div></div><div class="stat-box"><div class="stat-num" id="finArrecadado">R$0</div><div class="stat-label">Arrecadado (mensal)</div></div></div><div class="card" style="text-align:center;"><div class="ptag" style="margin-bottom:4px;" id="finCustoQuadraLabel">Custo da quadra: R$ 550,00/mês</div><div id="finSaldo" style="font-size:24px;font-weight:800;"></div><div class="ptag" id="finSaldoLabel"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">Mês de referência</div><div style="display:flex;gap:6px;"><select id="finMonth" class="pos-select" style="flex:1;min-width:0;padding:8px;font-size:13px;"></select><button class="secondary" onclick="marcarTodosPagos(true)">Marcar tudo pago</button></div></div><div id="finPagamentos"></div><div class="card" id="finChurrasCard" style="margin-top:14px;"><div style="font-weight:700;margin-bottom:4px;">🍖 Churrasco do mês</div><div class="ptag" style="margin-bottom:8px;" id="finChurrascoInfo">R$ 25,00 por pessoa · 2ª terça-feira do mês</div><div style="text-align:center;background:var(--card2);border-radius:10px;padding:10px;margin-bottom:10px;"><div id="finSaldoChurrasco" style="font-size:20px;font-weight:800;"></div><div class="ptag" id="finSaldoChurrascoLabel"></div></div><div style="font-weight:700;margin:10px 0 4px;font-size:13px;">Quem vai nesse churrasco?</div><div class="ptag" style="margin-bottom:6px;">Cada um marca se vai ou não — só quem confirmar aparece no pagamento</div><div id="churrasAttendanceList"></div><div style="font-weight:700;margin:14px 0 4px;font-size:13px;">Pagamento (só confirmados)</div><div id="finChurrasList"></div></div><div class="card" style="margin-top:14px;"><div style="font-weight:700;margin-bottom:4px;">🧾 Despesas do mês</div><div class="ptag" style="margin-bottom:10px;">Descrição e recibo de cada gasto, pra justificar pro grupo</div><div id="expenseAdminForm"></div><div class="stat-box" style="margin-bottom:10px;"><div class="stat-num" id="finTotalDespesas" style="color:var(--red);">R$0</div><div class="stat-label">Total gasto no mês</div></div><div id="expensesList"></div></div></div></div><div class="section" id="tab-gols"><div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.14),rgba(34,224,138,.12));border-color:var(--cup-gold);"><div style="font-weight:800;font-size:16px;">⚽ Artilheiros do Ano</div><div class="ptag">Só o admin vê isso — surpresa pro grupo!</div></div><div id="golsRankingList"></div></div><div class="section" id="tab-chat"><div class="card" style="background:linear-gradient(135deg,rgba(59,109,255,.16),rgba(10,12,22,.5));border-color:var(--blue);"><div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-weight:800;font-size:16px;">💬 Chat da Resenha</div><div class="ptag">Fala direto com a galera sem sair do app</div></div><button id="chatSilenciarBtn" class="secondary" style="font-size:11px;padding:6px 10px;" onclick="toggleSilenciarChat()">🔔 Notificações</button></div></div><div id="chatMessages" style="min-height:40vh;max-height:60vh;overflow-y:auto;margin-bottom:8px;padding-bottom:78px;"></div><div class="card" style="position:fixed;left:16px;right:16px;bottom:16px;z-index:20;box-shadow:0 10px 34px -8px rgba(0,0,0,.6);"><div style="display:flex;gap:8px;"><select id="chatSender" class="pos-select" style="flex:0 0 110px;padding:8px;"></select><input id="chatInput" class="exp-input" placeholder="Mensagem..." style="flex:1;min-width:0;" onkeydown="if(event.key==='Enter')sendChat()"><button class="primary" style="width:50px;padding:10px;" onclick="sendChat()">➤</button></div></div></div><div class="section" id="tab-disciplina"><div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.12),rgba(255,84,112,.1));border-color:var(--gold);"><div style="font-weight:800;font-size:16px;">🟨 Disciplina do Grupo</div><div class="ptag">Cartões, suspensões e Tribunal do Fominha</div></div><div class="card"><div style="font-weight:700;margin-bottom:4px;">⚽ Tribunal do Fominha</div><div class="ptag" style="margin-bottom:10px;">Após o jogo, vote se alguém fomerou demais · 3ª vez = 1 semana suspenso</div><div id="fominhaVotacao"></div></div><div class="card" id="cartoesAdminCard"><div style="font-weight:700;margin-bottom:4px;">🟨🟥 Cartões (só admin)</div><div class="ptag" style="margin-bottom:10px;">Amarelo = 5 min fora · Vermelho = suspenso pro próximo jogo</div><div id="cartoesAdminForm"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">📋 Histórico</div><div id="disciplinaHistorico"></div></div></div><div class="section" id="tab-reservas"><div class="card" style="background:linear-gradient(135deg,rgba(59,109,255,.14),rgba(157,78,255,.12));border-color:var(--blue);"><div style="font-weight:800;font-size:16px;">📋 Reservas & Convidados</div><div class="ptag">Jogadores de fora que podem entrar quando faltar alguém</div></div><div class="card" id="reservasAdminForm"></div><div id="reservasList"></div></div><div class="section" id="tab-craque"><div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.18),rgba(255,140,3,.1));border-color:var(--cup-gold);"><div style="font-weight:800;font-size:16px;">⭐ Craque da Rodada</div><div class="ptag">Vote no melhor do jogo · cada um vota uma vez · resultado aparece pra todo mundo</div></div><div class="card" id="craqueVotacaoCard"><div style="font-weight:700;margin-bottom:8px;">🗳️ Seu voto</div><div id="craqueVotacao"></div></div><div class="card" style="background:var(--card2);"><div style="font-weight:700;margin-bottom:8px;">🏆 Resultado da rodada</div><div id="craqueResultado"></div></div><div class="card"><div style="font-weight:700;margin-bottom:8px;">👑 Hall da Fama</div><div class="ptag" style="margin-bottom:8px;">Quem mais vezes foi eleito craque</div><div id="craqueHallFama"></div></div></div><div class="section" id="tab-adm"><div id="admContent"></div></div>
 <div class="section" id="tab-figurinhas">
   <div class="card" style="background:linear-gradient(135deg,rgba(255,183,3,.14),rgba(59,109,255,.12));border-color:var(--cup-gold);">
     <div style="font-weight:800;font-size:16px;">🃏 Figurinhas da Resenha CLC</div>
@@ -290,7 +290,6 @@ document.querySelectorAll('.tab').forEach(tab=>{
  if(tab.dataset.tab === 'financeiro') renderFinanceiro();
  if(tab.dataset.tab === 'jogadores') renderJogadoresTab();
  if(tab.dataset.tab === 'sorteio') updateSorteioDataInfo();
- if(tab.dataset.tab === 'copa') renderCopa();
  if(tab.dataset.tab === 'adm') renderAdm();
  if(tab.dataset.tab === 'figurinhas') renderFigurinhas();
  if(tab.dataset.tab === 'gols') renderGols();
@@ -313,9 +312,9 @@ let waitlistCache = null;
 let cartoesCache = null;
 let fominhaCache = null;
 const MOTIVOS_FALTA = ['Trabalho','Saúde','Viagem','Imprevisto','Sem aviso'];
-const MAX_JOGADORES = 18; 
-const PRAZO_CONFIRMACAO_DIA = 1; 
-const PRAZO_CONFIRMACAO_HORA = 20; 
+const MAX_JOGADORES = 20; 
+const PRAZO_CONFIRMACAO_DIA = 0; 
+const PRAZO_CONFIRMACAO_HORA = 10; 
 let selectedGameDate = null;
 function getUpcomingTuesdays(n){
  const results = [];
@@ -416,7 +415,7 @@ function contaAmarelos(cartoes, playerId){
 }
 function getPrazoConfirmacao(dateStr){
  const d = new Date(dateStr + 'T00:00:00');
- d.setDate(d.getDate()-1); 
+ d.setDate(d.getDate() - PRAZO_CONFIRMACAO_DIA);
  d.setHours(PRAZO_CONFIRMACAO_HORA, 0, 0, 0);
  return d;
 }
@@ -814,12 +813,6 @@ function updateSorteioDataInfo(){
  const [y,m,d] = selectedGameDate.split('-');
  el.textContent = `Sorteio vai usar os confirmados de ${d}/${m} (definido na aba Presença)`;
 }
-function setNumTeams(n){
- numTeams = n;
- document.querySelectorAll('#numTeamsSelect button').forEach(b=>{
- b.classList.toggle('sel', parseInt(b.dataset.n)===n);
- });
-}
 function pesoFisico(p){
  const f = p.fisico || 'Médio';
  return f === 'Pesado' ? 2 : f === 'Médio' ? 1 : 0;
@@ -832,23 +825,26 @@ function scoreJogador(p){
  return p.skill + pesoFisico(p)*0.4 + bonusPeso;
 }
 
-function snakeDistribute(list, teams){
+const TEAM_JERSEY = ['Branco','Preto'];
+const TEAM_ICON = ['⚪','⚫'];
+const TEAM_COLOR = ['#f4f6f8','#6b7280'];
+function teamTitle(i){ return 'Time ' + (i+1) + ' · ' + TEAM_JERSEY[i % TEAM_JERSEY.length]; }
+function snakeDistribute(list, teams, state){
  const sorted = [...list].sort((a,b)=> scoreJogador(b) - scoreJogador(a) + (Math.random()-0.5)*0.3);
- let dir = 1, idx = 0;
  sorted.forEach(p=>{
-   teams[idx].players.push(p);
-   teams[idx].totalSkill += p.skill;
-   teams[idx].totalPeso = (teams[idx].totalPeso||0) + (p.peso||75);
-   teams[idx].totalFisico = (teams[idx].totalFisico||0) + pesoFisico(p);
-   idx += dir;
-   if(idx === numTeams){ idx = numTeams-1; dir = -1; }
-   else if(idx === -1){ idx = 0; dir = 1; }
+   teams[state.idx].players.push(p);
+   teams[state.idx].totalSkill += p.skill;
+   teams[state.idx].totalPeso = (teams[state.idx].totalPeso||0) + (p.peso||75);
+   teams[state.idx].totalFisico = (teams[state.idx].totalFisico||0) + pesoFisico(p);
+   state.idx += state.dir;
+   if(state.idx === numTeams){ state.idx = numTeams-1; state.dir = -1; }
+   else if(state.idx === -1){ state.idx = 0; state.dir = 1; }
  });
 }
 
 function renderConfrontoCard(teams){
- const tc = ['#22e08a','#ffb703','#4f8dff','#ff5470'];
- const tn = ['TIME 1','TIME 2','TIME 3','TIME 4'];
+ const tc = ['#f4f6f8','#cbd5e1','#4f8dff','#ff5470'];
+ const tn = ['TIME 1 · BRANCO','TIME 2 · PRETO','TIME 3','TIME 4'];
 
  if(teams.length === 2){
    const allP0 = teams[0].goleiro ? [teams[0].goleiro,...teams[0].players] : teams[0].players;
@@ -962,9 +958,10 @@ function montarUmSorteio(present){
  const linha = present.filter(p=>!isGoleiro(p));
  const teams = Array.from({length:numTeams}, ()=>({players:[], goleiro:null, totalSkill:0}));
  const categorias = ['Zagueiro','Lateral Direito','Lateral Esquerdo','Meio','Atacante'];
+ const state = {idx:0, dir:1};
  categorias.forEach(cat=>{
  const grupo = linha.filter(p=>p.posicao===cat);
- if(grupo.length) snakeDistribute(grupo, teams);
+ if(grupo.length) snakeDistribute(grupo, teams, state);
  });
  const shuffledGK = [...goleiros].sort(()=>Math.random()-0.5);
  teams.forEach((t,i)=>{ t.goleiro = shuffledGK[i] || null; });
@@ -997,15 +994,14 @@ function nivelTimes(teams){
 }
 function renderOpcoesSorteio(opcoes){
  const container = document.getElementById('teamsResult');
- const teamColors = ['var(--cup-green)','var(--cup-gold)','var(--blue)','var(--red)'];
- const teamIcons = ['🟢','🟡','🔵','🔴'];
  container.innerHTML = '<div class="ptag" style="text-align:center;margin-bottom:8px;">Compare as 3 opções e escolha a que ficar mais equilibrada</div>' + opcoes.map((teams,oi)=>{
  const niveis = nivelTimes(teams);
  const diff = (Math.max(...niveis) - Math.min(...niveis)).toFixed(1);
  const teamsHtml = teams.map((t,ti)=>{
  const avgSkill = t.players.length ? (t.totalSkill/t.players.length).toFixed(1) : '-';
  const nomes = t.players.map(p=>p.name).join(', ');
- return '<div style="margin-top:6px;"><strong>'+teamIcons[ti % teamIcons.length]+' Time '+(ti+1)+'</strong> <span class="ptag">(nível '+avgSkill+(t.goleiro?' · 🧤 '+t.goleiro.name:'')+')</span><br><span class="ptag">'+nomes+'</span></div>';
+ const goleiroLine = t.goleiro ? '<div style="font-weight:800;color:var(--gold);margin-top:4px;">🧤 '+t.goleiro.name+'</div>' : '<div class="ptag">sem goleiro</div>';
+ return '<div style="margin-top:8px;"><strong>'+TEAM_ICON[ti % TEAM_ICON.length]+' '+teamTitle(ti)+'</strong> <span class="ptag">(nível '+avgSkill+')</span>' + goleiroLine + '<span class="ptag">'+nomes+'</span></div>';
  }).join('');
  return '<div class="card" style="border-color:var(--cup-gold);margin-bottom:10px;">' +
  '<div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-weight:800;font-size:15px;">🎲 Opção '+(oi+1)+'</div><div class="ptag">⚖️ diferença de nível: '+diff+'</div></div>' +
@@ -1031,17 +1027,74 @@ function moverJogadorDraw(fromTeamIdx, playerId, toTeamIdx){
  currentDraw[toTeamIdx].players.push(player);
  renderTeams(currentDraw);
 }
+
+let montagemManual = null;
+async function iniciarMontagemManual(){
+ const present = await getPresentesParaSorteio();
+ const linha = present.filter(p=>!isGoleiro(p));
+ if(linha.length < 2){
+ showToast('Poucos confirmados nessa data. Confirma presença na aba Presença primeiro.');
+ return;
+ }
+ montagemManual = { present, assign: {} };
+ renderMontagemManual();
+}
+function setAssignManual(playerId, team){
+ if(!montagemManual) return;
+ montagemManual.assign[playerId] = montagemManual.assign[playerId] === team ? undefined : team;
+ renderMontagemManual();
+}
+function renderMontagemManual(){
+ const container = document.getElementById('teamsResult');
+ if(!montagemManual){ container.innerHTML = ''; return; }
+ const present = montagemManual.present;
+ const goleiros = present.filter(isGoleiro);
+ const linha = present.filter(p=>!isGoleiro(p));
+ const assign = montagemManual.assign;
+ const countT = [0,1].map(t=> Object.values(assign).filter(v=>v===t).length);
+ let html = '<div class="card"><div style="font-weight:800;font-size:15px;margin-bottom:4px;">🖐️ Montagem manual</div><div class="ptag" style="margin-bottom:10px;">Toca no time pra escalar cada jogador — toca de novo pra tirar</div>';
+ html += '<div class="ptag" style="margin-bottom:10px;font-weight:700;">' + TEAM_ICON[0] + ' ' + teamTitle(0) + ': ' + countT[0] + ' · ' + TEAM_ICON[1] + ' ' + teamTitle(1) + ': ' + countT[1] + '</div>';
+ [...goleiros, ...linha].forEach(p=>{
+ const cur = assign[p.id];
+ html += '<div class="player-row" style="margin-bottom:8px;"><div class="player-info">' + avatarHTML(p) + '<div><div class="pname">' + p.name + (isGoleiro(p)?' 🧤':'') + '</div><span class="pos-tag pos-' + p.posicao.replace(/ /g,'-') + '">' + p.posicao + '</span></div></div><div style="display:flex;gap:4px;flex-shrink:0;">' +
+ '<button class="secondary" style="padding:7px 10px;font-size:11px;' + (cur===0?'background:'+TEAM_COLOR[0]+';color:#111;font-weight:800;border-color:'+TEAM_COLOR[0]+';':'') + '" onclick="setAssignManual(\'' + p.id + '\',0)">' + TEAM_ICON[0] + ' T1</button>' +
+ '<button class="secondary" style="padding:7px 10px;font-size:11px;' + (cur===1?'background:'+TEAM_COLOR[1]+';color:#111;font-weight:800;border-color:'+TEAM_COLOR[1]+';':'') + '" onclick="setAssignManual(\'' + p.id + '\',1)">' + TEAM_ICON[1] + ' T2</button>' +
+ '</div></div>';
+ });
+ html += '<button class="primary" style="margin-top:10px;" onclick="confirmarMontagemManual()">✅ Confirmar times</button></div>';
+ container.innerHTML = html;
+}
+async function confirmarMontagemManual(){
+ const present = montagemManual.present;
+ const teams = [{players:[],goleiro:null,totalSkill:0},{players:[],goleiro:null,totalSkill:0}];
+ let faltando = 0;
+ present.forEach(p=>{
+ const t = montagemManual.assign[p.id];
+ if(t === undefined){ faltando++; return; }
+ if(isGoleiro(p)){
+ teams[t].goleiro = p;
+ } else {
+ teams[t].players.push(p);
+ teams[t].totalSkill += p.skill;
+ teams[t].totalPeso = (teams[t].totalPeso||0) + (p.peso||75);
+ teams[t].totalFisico = (teams[t].totalFisico||0) + pesoFisico(p);
+ }
+ });
+ if(faltando > 0 && !confirm(faltando + ' jogador(es) ainda não foram escalados em nenhum time. Continuar mesmo assim?')) return;
+ currentDraw = teams;
+ montagemManual = null;
+ renderTeams(currentDraw);
+ fireConfetti();
+}
 function renderTeams(teams){
  const container = document.getElementById('teamsResult');
  container.innerHTML = '';
  // card de confronto estilo Champions
  container.innerHTML = renderConfrontoCard(teams);
- const teamColors = ['var(--cup-green)','var(--cup-gold)','var(--blue)','var(--red)'];
- const teamIcons = ['🟢','🟡','🔵','🔴'];
  teams.forEach((t,i)=>{
  const box = document.createElement('div');
  box.className = 'team-box';
- box.style.borderLeftColor = teamColors[i % teamColors.length];
+ box.style.borderLeftColor = TEAM_COLOR[i % TEAM_COLOR.length];
  box.style.animationDelay = (i*0.1)+'s';
  const avgSkill = t.players.length ? (t.totalSkill/t.players.length).toFixed(1) : '-';
  const pesoTotal = t.totalFisico || 0;
@@ -1051,9 +1104,9 @@ function renderTeams(teams){
  const resumoPos = Object.entries(contagem).map(([pos,n])=>`${pos.slice(0,3)}:${n}`).join(' · ');
  const allTeamPlayers = t.goleiro ? [t.goleiro, ...t.players] : t.players;
  box.innerHTML = `
-<div class="team-title"><span>${teamIcons[i % teamIcons.length]} Time ${i+1}</span><span class="team-badge">nível ${avgSkill} · ${pesoLabel} · ${resumoPos}</span></div><div class="ptag" style="margin-bottom:6px;">Toca num jogador pra marcar o capitão 👑</div>
- ${t.goleiro ? `<div class="team-player" style="font-weight:700;color:var(--gold);cursor:pointer;" onclick="setCaptain(${i},'${t.goleiro.id}')">${t.captainId===t.goleiro.id?'👑 ':''}${avatarHTML(t.goleiro)} ${t.goleiro.name} (goleiro)</div>` : `<div class="team-player" style="color:var(--muted)">sem goleiro</div>`}
- ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span><span style="flex:1;margin-left:8px;">${p.name}</span><span style="display:flex;align-items:center;gap:6px;"><span class="pos-tag pos-${p.posicao.replace(/ /g,'-')}">${p.posicao}</span>${isAdmin && teams.length>1 ? `<select class="pos-select" style="font-size:10px;padding:2px 4px;" onclick="event.stopPropagation()" onchange="event.stopPropagation();if(this.value!=='')moverJogadorDraw(${i},'${p.id}',parseInt(this.value))"><option value="">↔ mover</option>${teams.map((_,ti)=> ti===i?'':`<option value="${ti}">Time ${ti+1}</option>`).join('')}</select>` : ''}</span></div>`).join('')}
+<div class="team-title"><span>${TEAM_ICON[i % TEAM_ICON.length]} ${teamTitle(i)}</span><span class="team-badge">nível ${avgSkill} · ${pesoLabel} · ${resumoPos}</span></div><div class="ptag" style="margin-bottom:6px;">Toca num jogador pra marcar o capitão 👑</div>
+ ${t.goleiro ? `<div class="team-player" style="font-weight:800;font-size:15px;color:var(--gold);cursor:pointer;" onclick="setCaptain(${i},'${t.goleiro.id}')">${t.captainId===t.goleiro.id?'👑 ':''}${avatarHTML(t.goleiro)} 🧤 ${t.goleiro.name}</div>` : `<div class="team-player" style="color:var(--muted)">sem goleiro</div>`}
+ ${t.players.map(p=>`<div class="team-player" style="cursor:pointer;" onclick="setCaptain(${i},'${p.id}')"><span style="display:flex;align-items:center;gap:4px;">${t.captainId===p.id?'👑':''}${avatarHTML(p)}</span><span style="flex:1;margin-left:8px;">${p.name}</span><span style="display:flex;align-items:center;gap:6px;"><span class="pos-tag pos-${p.posicao.replace(/ /g,'-')}">${p.posicao}</span>${isAdmin && teams.length>1 ? `<select class="pos-select" style="font-size:10px;padding:2px 4px;" onclick="event.stopPropagation()" onchange="event.stopPropagation();if(this.value!=='')moverJogadorDraw(${i},'${p.id}',parseInt(this.value))"><option value="">↔ mover</option>${teams.map((_,ti)=> ti===i?'':`<option value="${ti}">${teamTitle(ti)}</option>`).join('')}</select>` : ''}</span></div>`).join('')}
  `;
  container.appendChild(box);
  });
@@ -1124,8 +1177,6 @@ async function renderHistory(){
  list.innerHTML = '<div class="empty">Nenhum sorteio salvo ainda.<br>Vá em "Sorteio" e salve o primeiro racha.</div>';
  return;
  }
- const teamColors = ['var(--cup-green)','var(--cup-gold)','var(--blue)','var(--red)'];
- const teamIcons = ['🟢','🟡','🔵','🔴'];
  function avatarByName(nome){
  const p = players.find(x=>x.name===nome);
  return p ? avatarHTML(p) : `<div class="avatar">${initials(nome)}</div>`;
@@ -1169,27 +1220,37 @@ async function renderHistory(){
  const placarHtml = isAdmin
  ? `<input class="exp-input" style="width:44px;padding:5px;text-align:center;flex-shrink:0;" type="number" min="0" placeholder="0" value="${t.placar!=null?t.placar:''}" onblur="setPlacar(${i},${ti},this.value)">`
  : `<span style="font-weight:800;color:var(--cup-gold);flex-shrink:0;">${t.placar!=null && t.placar!=='' ? t.placar : '-'}</span>`;
- return `<div class="team-box" style="border-left-color:${teamColors[ti % teamColors.length]};margin-bottom:8px;">
-<div class="team-title"><span>${teamIcons[ti % teamIcons.length]} Time ${ti+1}${t.capitao ? ' · 👑 '+t.capitao : ''}</span>${placarHtml}</div>
+ return `<div class="team-box" style="border-left-color:${TEAM_COLOR[ti % TEAM_COLOR.length]};margin-bottom:8px;">
+<div class="team-title"><span>${TEAM_ICON[ti % TEAM_ICON.length]} ${teamTitle(ti)}${t.capitao ? ' · 👑 '+t.capitao : ''}</span>${placarHtml}</div>
  ${t.goleiro ? `<div class="team-player" style="font-weight:700;color:var(--gold);"><span style="display:flex;align-items:center;gap:8px;">${avatarByName(t.goleiro)}${t.goleiro}</span><span class="pos-tag pos-Goleiro">goleiro</span></div>` : ''}
  ${t.players.map(pStr=>{
  const m = typeof pStr === 'string' ? pStr.match(/^(.*) \((.*)\)$/) : null;
  const nome = m ? m[1] : pStr;
  const pos = m ? m[2] : '';
- const moverSelect = (isAdmin && h.teams.length>1) ? `<select class="pos-select" style="font-size:10px;padding:2px 4px;" onchange="if(this.value!=='')moverJogadorHistorico(${i},${ti},'${nome.replace(/'/g,"\\'")}',parseInt(this.value))"><option value="">↔ mover</option>${h.teams.map((_,tj)=> tj===ti?'':`<option value="${tj}">Time ${tj+1}</option>`).join('')}</select>` : '';
+ const moverSelect = (isAdmin && h.teams.length>1) ? `<select class="pos-select" style="font-size:10px;padding:2px 4px;" onchange="if(this.value!=='')moverJogadorHistorico(${i},${ti},'${nome.replace(/'/g,"\\'")}',parseInt(this.value))"><option value="">↔ mover</option>${h.teams.map((_,tj)=> tj===ti?'':`<option value="${tj}">${teamTitle(tj)}</option>`).join('')}</select>` : '';
  return `<div class="team-player"><span style="display:flex;align-items:center;gap:8px;">${avatarByName(nome)}${nome}</span><span style="display:flex;align-items:center;gap:6px;">${pos ? `<span class="pos-tag pos-${pos.replace(/ /g,'-')}">${pos}</span>` : ''}${moverSelect}</span></div>`;
  }).join('')}
 </div>`;
  }).join('');
  item.innerHTML = `
-<div class="history-date">📅 ${dateStr}</div>
+<div class="history-date" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="toggleHistDetail(${i})">📅 ${dateStr}<span id="hist-arrow-${i}" style="color:var(--muted);">▸</span></div>
+ <div id="hist-detail-${i}" style="display:none;margin-top:8px;">
  ${teamsHtml}
  ${resultadoHtml}
  ${golsHtml}
  ${isAdmin ? `<button class="danger" style="margin-top:8px;" onclick="deleteHistoryItem(${i})">Excluir</button>` : ''}
+ </div>
  `;
  list.appendChild(item);
  });
+}
+function toggleHistDetail(i){
+ const el = document.getElementById('hist-detail-' + i);
+ const arrow = document.getElementById('hist-arrow-' + i);
+ if(!el) return;
+ const isHidden = el.style.display === 'none';
+ el.style.display = isHidden ? 'block' : 'none';
+ if(arrow) arrow.textContent = isHidden ? '▾' : '▸';
 }
 async function setGolJogo(histIndex, playerId, delta){
  const hist = await loadHistory();
@@ -1569,121 +1630,6 @@ async function renderExpensesList(monthKey){
  ${isAdmin ? `<button class="danger" style="margin-top:4px;" onclick="deleteExpense('${monthKey}','${e.id}')">Excluir</button>` : ''}
 </div></div>
  `).join('');
-}
-const COPA_MATCHES = [
- {id:'m1', teamA:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra', teamB:'🇨🇩 Congo RD', kickoff:'01/07 · 13h'},
- {id:'m2', teamA:'🇧🇪 Bélgica', teamB:'🇸🇳 Senegal', kickoff:'01/07 · 17h'},
- {id:'m3', teamA:'🇺🇸 Estados Unidos', teamB:'🇧🇦 Bósnia', kickoff:'01/07 · 21h'},
- {id:'m4', teamA:'🇪🇸 Espanha', teamB:'🇦🇹 Áustria', kickoff:'02/07 · 16h'},
- {id:'m5', teamA:'🇵🇹 Portugal', teamB:'🇭🇷 Croácia', kickoff:'02/07 · 20h'},
- {id:'m6', teamA:'🇨🇭 Suíça', teamB:'🇩🇿 Argélia', kickoff:'03/07 · 00h'},
- {id:'m7', teamA:'🇦🇺 Austrália', teamB:'🇪🇬 Egito', kickoff:'03/07 · 15h'},
- {id:'m8', teamA:'🇦🇷 Argentina', teamB:'🇨🇻 Cabo Verde', kickoff:'03/07 · 19h'},
- {id:'m9', teamA:'🇨🇴 Colômbia', teamB:'🇬🇭 Gana', kickoff:'03/07 · 22h30'},
- {id:'m10', teamA:'🇨🇦 Canadá', teamB:'🇲🇦 Marrocos', kickoff:'04/07 · 14h'}
-];
-let palpitesCache = null;
-let resultadosCache = null;
-async function loadPalpites(){
- if(palpitesCache) return palpitesCache;
- try{
- const res = await window.storage.get('palpites', true);
- palpitesCache = JSON.parse(res.value);
- }catch(e){ palpitesCache = {}; }
- return palpitesCache;
-}
-async function savePalpites(data){
- palpitesCache = data;
- await safeStorageSet('palpites', JSON.stringify(data), true);
-}
-async function loadResultadosCopa(){
- if(resultadosCache) return resultadosCache;
- try{
- const res = await window.storage.get('resultadosCopa', true);
- resultadosCache = JSON.parse(res.value);
- }catch(e){ resultadosCache = {}; }
- return resultadosCache;
-}
-async function saveResultadosCopa(data){
- resultadosCache = data;
- await safeStorageSet('resultadosCopa', JSON.stringify(data), true);
-}
-function parsePalpite(str){
- const m = String(str).trim().match(/^(\d+)\D+(\d+)$/);
- if(!m) return null;
- return m[1] + 'x' + m[2];
-}
-async function setPalpite(matchId, playerId, value){
- const parsed = parsePalpite(value);
- if(value.trim() !== '' && !parsed){ showToast('Formato inválido, use ex: 2x1'); return; }
- const data = await loadPalpites();
- if(!data[matchId]) data[matchId] = {};
- data[matchId][playerId] = parsed || '';
- await savePalpites(data);
- renderCopa();
-}
-async function setResultadoCopa(matchId, value){
- const parsed = parsePalpite(value);
- if(value.trim() !== '' && !parsed){ showToast('Formato inválido, use ex: 2x1'); return; }
- const data = await loadResultadosCopa();
- data[matchId] = parsed || '';
- await saveResultadosCopa(data);
- renderCopa();
- showToast('Resultado atualizado');
-}
-async function renderCopa(){
- const palpites = await loadPalpites();
- const resultados = await loadResultadosCopa();
- const pontos = {};
- players.forEach(p=>{ pontos[p.id] = 0; });
- COPA_MATCHES.forEach(m=>{
- const real = resultados[m.id];
- if(!real) return;
- players.forEach(p=>{
- const palpite = (palpites[m.id]||{})[p.id];
- if(palpite && palpite === real) pontos[p.id] = (pontos[p.id]||0) + 1;
- });
- });
- const ranking = players.map(p=>({p, pts: pontos[p.id]||0}))
- .filter(r=>r.pts>0)
- .sort((a,b)=>b.pts-a.pts);
- const rankList = document.getElementById('copaRankingList');
- if(ranking.length === 0){
- rankList.innerHTML = '<div class="ptag">Ainda sem palpites certeiros — aguardando os jogos rolarem</div>';
- } else {
- const maxPts = ranking[0].pts;
- rankList.innerHTML = ranking.slice(0,10).map((r,i)=>`
-<div class="pay-row"><div class="player-info">
- ${avatarHTML(r.p)}
-<div class="pname">${i===0 && r.pts===maxPts ? '👑 ' : ''}${r.p.name}</div></div><div style="font-weight:800;color:var(--cup-gold);">${r.pts} pt${r.pts>1?'s':''}</div></div>`).join('');
- if(maxPts>0){
- rankList.innerHTML += `<div class="ptag" style="margin-top:8px;color:var(--cup-gold);font-weight:700;">🏆 ${ranking.filter(r=>r.pts===maxPts).map(r=>r.p.name).join(' e ')} não paga(m) o churras esse mês!</div>`;
- }
- }
- const list = document.getElementById('copaMatchesList');
- list.innerHTML = COPA_MATCHES.map(m=>{
- const real = resultados[m.id];
- const matchPalpites = palpites[m.id] || {};
- const respondidos = players.filter(p=>matchPalpites[p.id]).length;
- return `
-<div class="card" style="border-left:4px solid ${real ? 'var(--cup-gold)' : 'var(--border)'};"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><div style="font-weight:700;font-size:14px;">${m.teamA} x ${m.teamB}</div><span class="ptag">${m.kickoff}</span></div>
- ${real
- ? `<div class="ptag" style="color:var(--cup-gold);font-weight:700;margin-bottom:8px;">Resultado final: ${real.replace('x',' x ')}</div>`
- : `<div class="ptag" style="margin-bottom:8px;">${respondidos}/${players.length} já palpitaram</div>`
- }
- ${isAdmin ? `
-<div style="display:flex;gap:6px;align-items:center;margin-bottom:10px;"><span class="ptag">Resultado real:</span><input class="exp-input" style="width:70px;padding:6px;" placeholder="2x1" value="${real||''}" onblur="setResultadoCopa('${m.id}', this.value)"></div>` : ''}
-<details><summary style="cursor:pointer;font-size:13px;color:var(--muted);">Ver/editar palpites de todos</summary><div style="margin-top:8px;">
- ${players.map(p=>{
- const val = matchPalpites[p.id] || '';
- const acertou = real && val === real;
- return `
-<div class="pay-row"><div class="player-info">${avatarHTML(p)}<span class="pname" style="font-size:13px;">${p.name}</span></div><div style="display:flex;align-items:center;gap:6px;">
- ${acertou ? '<span style="color:var(--cup-gold);">✅</span>' : ''}
-<input class="exp-input" style="width:60px;padding:5px;text-align:center;" placeholder="2x1" value="${val}" onblur="setPalpite('${m.id}','${p.id}', this.value)"></div></div>`;
- }).join('')}
-</div></details></div>`;
- }).join('');
 }
 let golsCache = null;
 function currentYearKey(){ return String(new Date().getFullYear()); }
@@ -2088,7 +2034,6 @@ function navTo(tab){
  if(tab === 'financeiro') renderFinanceiro();
  if(tab === 'jogadores') renderJogadoresTab();
  if(tab === 'sorteio') updateSorteioDataInfo();
- if(tab === 'copa') renderCopa();
  if(tab === 'gols') renderGols();
  if(tab === 'disciplina') renderDisciplina();
  if(tab === 'craque') renderCraque();
@@ -2485,50 +2430,6 @@ function renderChatHeader(){
   if(el) el.textContent = chatSilenciado ? '🔕 Silenciado' : '🔔 Notificações';
 }
 
-
-// ---------- COPA CAMPEÃO ----------
-const COPA_TIMES = ['🇧🇷 Brasil','🇦🇷 Argentina','🇫🇷 França','🇩🇪 Alemanha','🇪🇸 Espanha','🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra','🇵🇹 Portugal','🇳🇱 Holanda','🇮🇹 Itália','🇺🇾 Uruguai','🇨🇴 Colômbia','🇺🇸 EUA','🇲🇦 Marrocos','🇯🇵 Japão'];
-let campeonCache = null;
-async function loadCampeon(){
-  if(campeonCache) return campeonCache;
-  try{ const r = await window.storage.get('campeon',true); campeonCache=JSON.parse(r.value); }catch(e){ campeonCache={}; }
-  return campeonCache;
-}
-async function votarCampeon(time){
-  const deviceId = getDeviceId();
-  const data = await loadCampeon();
-  if(data[deviceId]===time){ delete data[deviceId]; showToast('Voto removido'); }
-  else{ data[deviceId]=time; showToast('✅ Votou em '+time); }
-  campeonCache=data;
-  await safeStorageSet('campeon',JSON.stringify(data),true);
-  renderCopa();
-}
-async function renderCopa(){
-  const data = await loadCampeon();
-  const deviceId = getDeviceId();
-  const meuVoto = data[deviceId];
-  const contagem = {};
-  COPA_TIMES.forEach(t=>contagem[t]=0);
-  Object.values(data).forEach(t=>{ if(contagem[t]!==undefined) contagem[t]++; });
-  const total = Object.values(contagem).reduce((s,v)=>s+v,0);
-  const ranking = [...COPA_TIMES].sort((a,b)=>contagem[b]-contagem[a]);
-
-  const votingEl = document.getElementById('copaChampionVoting');
-  const resultsEl = document.getElementById('copaChampionResults');
-  if(!votingEl || !resultsEl) return;
-
-  votingEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;">' +
-    COPA_TIMES.map(t=>`<button class="secondary" style="padding:8px 12px;font-size:13px;${meuVoto===t?'background:var(--cup-gold);color:#000;font-weight:800;border-color:var(--cup-gold);':''}" onclick="votarCampeon('${t}')">${t}</button>`).join('') +
-    '</div><div class="ptag" style="margin-top:8px;">' + (meuVoto?'Seu voto: <b>'+meuVoto+'</b> · toca de novo pra desfazer':'Toca no time pra votar') + '</div>';
-
-  resultsEl.innerHTML = ranking.filter(t=>contagem[t]>0).map((t,i)=>{
-    const pct = total>0 ? Math.round(contagem[t]/total*100) : 0;
-    return `<div style="margin-bottom:8px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:13px;">${i===0?'👑 ':''}${t}</span><span style="font-weight:700;color:var(--cup-gold);">${contagem[t]} voto${contagem[t]!==1?'s':''} (${pct}%)</span></div>
-      <div style="background:var(--card2);border-radius:6px;height:8px;"><div style="background:${i===0?'var(--cup-gold)':'var(--green)'};height:8px;border-radius:6px;width:${pct}%;"></div></div>
-    </div>`;
-  }).join('') || '<div class="ptag" style="text-align:center;padding:10px;">Aguardando votos...</div>';
-}
 
 // ---------- FIGURINHAS ----------
 function calcOverall(p, gols){
