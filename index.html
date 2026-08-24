@@ -145,7 +145,8 @@ const DEFAULT_SETTINGS = {
  pixKey: 'futclc22@gmail.com',
  localJogo: 'Quadra Alvorada',
  horarioJogo: '19h',
- splashTagline: 'Terça é dia de bola'
+ splashTagline: 'Terça é dia de bola',
+ prazoHora: 10
 };
 let settings = Object.assign({}, DEFAULT_SETTINGS);
 async function loadSettings(){
@@ -314,7 +315,6 @@ let fominhaCache = null;
 const MOTIVOS_FALTA = ['Trabalho','Saúde','Viagem','Imprevisto','Sem aviso'];
 const MAX_JOGADORES = 20; 
 const PRAZO_CONFIRMACAO_DIA = 0; 
-const PRAZO_CONFIRMACAO_HORA = 10; 
 let selectedGameDate = null;
 function getUpcomingTuesdays(n){
  const results = [];
@@ -416,7 +416,7 @@ function contaAmarelos(cartoes, playerId){
 function getPrazoConfirmacao(dateStr){
  const d = new Date(dateStr + 'T00:00:00');
  d.setDate(d.getDate() - PRAZO_CONFIRMACAO_DIA);
- d.setHours(PRAZO_CONFIRMACAO_HORA, 0, 0, 0);
+ d.setHours(settings.prazoHora, 0, 0, 0);
  return d;
 }
 function prazoPassou(dateStr){
@@ -424,7 +424,7 @@ function prazoPassou(dateStr){
 }
 function formatPrazo(dateStr){
  const p = getPrazoConfirmacao(dateStr);
- return p.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'}) + ' às ' + PRAZO_CONFIRMACAO_HORA + 'h';
+ return p.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'}) + ' às ' + settings.prazoHora + 'h';
 }
 async function loadAbsenceReasons(){
  if(absenceReasonsCache) return absenceReasonsCache;
@@ -2068,7 +2068,7 @@ async function renderHome(){
  document.getElementById('homeConfirmados').textContent = confirmados;
  document.getElementById('homePendentes').textContent = pendentes;
  const prazo = getPrazoConfirmacao(selectedGameDate);
- const prazoStr = prazo.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'}) + ' ' + PRAZO_CONFIRMACAO_HORA + 'h';
+ const prazoStr = prazo.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'}) + ' ' + settings.prazoHora + 'h';
  document.getElementById('homePrazo').textContent = prazoStr;
  const ano = currentYearKey();
  const gols = golsCache ? Object.values(golsCache[ano]||{}).reduce((s,v)=>s+v,0) : 0;
@@ -2193,6 +2193,8 @@ function mostrarConfigAdm(){
         <div style="font-weight:700;font-size:13px;margin-top:10px;">📍 Jogo</div>
         <div class="edit-row"><span class="ptag" style="width:130px;flex-shrink:0;">Local</span><input id="cfgLocal" class="exp-input" style="flex:1;min-width:0;" value="${settings.localJogo}"></div>
         <div class="edit-row"><span class="ptag" style="width:130px;flex-shrink:0;">Horário</span><input id="cfgHorario" class="exp-input" style="flex:1;min-width:0;" value="${settings.horarioJogo}"></div>
+        <div class="edit-row"><span class="ptag" style="width:130px;flex-shrink:0;">Prazo confirma até</span><input id="cfgPrazoHora" class="exp-input" type="number" min="0" max="23" style="flex:1;min-width:0;" value="${settings.prazoHora}"></div>
+        <div class="ptag" style="margin-top:-4px;">Hora do dia do próprio jogo (ex: 10 = até 10h da terça)</div>
         <div style="font-weight:700;font-size:13px;margin-top:10px;">🎬 Tela de abertura</div>
         <div class="edit-row"><span class="ptag" style="width:130px;flex-shrink:0;">Frase</span><input id="cfgTagline" class="exp-input" style="flex:1;min-width:0;" value="${settings.splashTagline}"></div>
         <button class="primary" style="margin-top:14px;" onclick="salvarConfig()">Salvar configurações</button>
@@ -2212,11 +2214,13 @@ async function salvarConfig(){
     pixKey: txt('cfgPix', settings.pixKey),
     localJogo: txt('cfgLocal', settings.localJogo),
     horarioJogo: txt('cfgHorario', settings.horarioJogo),
+    prazoHora: Math.min(23, num('cfgPrazoHora', settings.prazoHora)),
     splashTagline: txt('cfgTagline', settings.splashTagline)
   });
   renderRegrasRacha();
   showToast('✅ Configurações salvas');
   renderFinanceiro();
+  renderPresenca();
 }
 
 function checkAdmPin(){
