@@ -1038,6 +1038,7 @@ function escolherOpcaoSorteio(idx){
  renderTeams(currentDraw);
  fireConfetti();
  showToast('Opção ' + (idx+1) + ' escolhida!');
+ document.getElementById('teamsResult').scrollIntoView({behavior:'smooth', block:'start'});
 }
 function moverJogadorDraw(fromTeamIdx, playerId, toTeamIdx){
  if(fromTeamIdx === toTeamIdx || !currentDraw) return;
@@ -1106,6 +1107,7 @@ async function confirmarMontagemManual(){
  montagemManual = null;
  renderTeams(currentDraw);
  fireConfetti();
+ document.getElementById('teamsResult').scrollIntoView({behavior:'smooth', block:'start'});
 }
 function renderTeams(teams){
  const container = document.getElementById('teamsResult');
