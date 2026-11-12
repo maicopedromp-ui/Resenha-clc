@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Guia da Prova Prática</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1d2433; --soft:#4a5468; --muted:#7a8296;
+    --navy:#1f3a5f; --navy-2:#2c4f7c; --coral:#d9694a; --sand:#f6efe6; --cream:#fbf8f3; --line:#e4ddd2;
+  }
+  @page { size:108mm 192mm; margin:0; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#fff; }
+  body{ font-family:"Inter",sans-serif; color:var(--ink); font-size:16.5px; line-height:1.48;
+        -webkit-print-color-adjust:exact; print-color-adjust:exact; counter-reset:pg; }
+  p{ margin:0 0 10px; }
+  h1,h2,h3{ font-family:"Fraunces",serif; margin:0; color:var(--navy); line-height:1.15; }
+  h2{ font-size:26px; margin-bottom:12px; }
+  h3{ font-size:19px; margin:16px 0 6px; }
+
+  .page{ width:108mm; height:192mm; padding:12mm 8mm 13mm; overflow:hidden; break-after:page; position:relative; counter-increment:pg; }
+  .page::after{ content:counter(pg); position:absolute; bottom:6mm; right:8mm; font-size:11px; color:var(--muted); font-weight:600; }
+  .page::before{ content:"Guia da Prova Prática"; position:absolute; bottom:6mm; left:8mm; font-size:11px; color:var(--muted); }
+  .kicker{ display:block; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--coral); margin-bottom:6px; }
+  .lead{ font-size:17px; color:var(--soft); margin-bottom:14px; }
+
+  .cover, .part{ width:108mm; height:192mm; background:var(--navy); color:#fff; padding:16mm 10mm 12mm;
+          display:flex; flex-direction:column; justify-content:space-between; break-after:page; position:relative; overflow:hidden; }
+  .road{ position:absolute; right:-30mm; bottom:-10mm; width:110mm; opacity:.16; }
+  .tag{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#f3c9b9; font-weight:600; }
+  .cover h1{ color:#fff; font-size:38px; margin-top:12px; }
+  .cover h1 em, .part h1 em{ font-style:normal; color:#f2a488; }
+  .sub{ font-size:17px; color:#dfe6f1; margin-top:14px; }
+  .foot{ font-size:12.5px; color:#b9c6da; line-height:1.5; position:relative; }
+  .foot b{ color:#fff; letter-spacing:.06em; }
+  .part .num{ font-family:"Fraunces",serif; font-size:96px; line-height:1; color:#f2a488; opacity:.9; }
+  .part h1{ color:#fff; font-size:34px; margin-top:8px; }
+  .part ul{ list-style:none; padding:0; margin:18px 0 0; color:#dfe6f1; font-size:15.5px; }
+  .part li{ padding:6px 0; border-bottom:1px solid rgba(255,255,255,.15); }
+
+  .memo{ background:var(--navy); color:#fff; border-radius:14px; padding:11px 14px; margin:12px 0 0; }
+  .memo .label{ display:block; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#f2a488; margin-bottom:4px; }
+  .memo p{ font-family:"Fraunces",serif; font-size:19px; line-height:1.35; margin:0; }
+  .tip{ background:#fdf0ea; border:1px solid #f3cdbd; border-radius:14px; padding:10px 14px; margin:10px 0; }
+  .tip .label, .card .label{ display:block; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); margin-bottom:3px; }
+  .card{ background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin:10px 0; }
+  .note{ font-size:14px; color:var(--soft); background:#f1f4f9; border-radius:10px; padding:9px 11px; margin:10px 0; }
+  .note b{ color:var(--navy); }
+
+  ol.steps{ list-style:none; counter-reset:s; padding:0; margin:0; }
+  ol.steps li{ counter-increment:s; position:relative; padding:4px 0 4px 38px; min-height:33px; }
+  ol.steps li::before{ content:counter(s); position:absolute; left:0; top:4px; width:27px; height:27px; border-radius:50%;
+    background:var(--navy); color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; }
+  ul.dot{ list-style:none; padding:0; margin:0; }
+  ul.dot li{ padding:5px 0 5px 22px; position:relative; }
+  ul.dot li::before{ content:""; position:absolute; left:2px; top:13px; width:9px; height:9px; border-radius:50%; background:var(--coral); }
+  ul.check{ list-style:none; padding:0; margin:0; }
+  ul.check li{ padding:6px 0 6px 32px; position:relative; border-bottom:1px solid var(--line); font-size:15.5px; }
+  ul.check li:last-child{ border-bottom:none; }
+  ul.check li::before{ content:""; position:absolute; left:0; top:8px; width:19px; height:19px; border:2px solid var(--navy-2); border-radius:6px; }
+  ul.check li b{ color:var(--coral); margin-right:4px; }
+
+  table.ref{ width:100%; border-collapse:collapse; font-size:15px; margin:8px 0 4px; }
+  table.ref th{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); text-align:left; padding:6px 4px; }
+  table.ref td{ border-top:1px solid var(--line); padding:8px 4px; vertical-align:top; }
+  table.ref td:last-child{ font-weight:700; color:var(--navy); }
+
+  .etapa{ display:flex; align-items:baseline; gap:10px; margin-bottom:10px; }
+  .etapa .n{ font-family:"Fraunces",serif; font-size:44px; line-height:1; color:var(--coral); }
+  .etapa h2{ margin:0; }
+
+  .quotes p{ font-family:"Fraunces",serif; font-size:17px; color:var(--navy); border-left:4px solid var(--coral); padding:2px 0 2px 12px; margin:8px 0; }
+  .decl{ background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+  .decl p{ font-family:"Fraunces",serif; font-size:17px; line-height:1.33; color:var(--navy); margin:0 0 5px; }
+  .decl p:last-child{ margin:0; color:var(--coral); font-weight:700; }
+  .think p{ font-family:"Fraunces",serif; font-size:21px; color:var(--navy); margin:0 0 6px; }
+  .sign{ font-family:"Fraunces",serif; font-size:20px; color:var(--navy); margin-top:18px; }
+  .sign span{ display:block; font-family:"Inter",sans-serif; font-size:14px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="cover">
+  <svg class="road" viewBox="0 0 200 200" fill="none" stroke="#fff" stroke-width="6">
+    <path d="M20 200 C 60 140, 120 120, 200 40"/><path d="M70 200 C 100 160, 150 140, 200 100" stroke-dasharray="14 12"/><path d="M120 200 C 140 180, 170 170, 200 160"/>
+  </svg>
+  <div>
+    <div class="tag">Guia da prova prática</div>
+    <h1>Uma etapa<br><em>de cada vez.</em></h1>
+    <p class="sub">Procedimentos, percurso, preparação mental e ensaio da prova.</p>
+  </div>
+  <div class="foot"><b>DOMINATRAN</b><br>Material de apoio ao treinamento.<br>Não é documento oficial do Detran.</div>
+</section>
+
+<!-- ================= PARTE 1 ================= -->
+<section class="part">
+  <div>
+    <div class="tag">Parte 1</div>
+    <div class="num">01</div>
+    <h1>Preparação e <em>procedimentos</em></h1>
+    <ul>
+      <li>Antes de entrar no carro</li>
+      <li>Ao entrar no veículo</li>
+      <li>Preparando o veículo para sair</li>
+      <li>Durante a condução</li>
+      <li>Quando o examinador pedir para estacionar</li>
+      <li>Saindo novamente do estacionamento</li>
+    </ul>
+  </div>
+  <div class="foot">Guia da prova prática</div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 1</span>
+  <h2>Antes de entrar no carro</h2>
+  <p class="lead">Antes de entrar no veículo, observe o ambiente.</p>
+  <ul class="dot">
+    <li>Veja se existe espaço suficiente para sair de frente.</li>
+    <li>Se não houver espaço, avalie se será necessário fazer uma pequena manobra de ré.</li>
+    <li>Se precisar recuar, faça isso com cuidado, observando o entorno.</li>
+    <li>A referência do pneu traseiro do veículo próximo pode ajudar no treinamento, mas não substitui a avaliação da distância e do espaço disponível.</li>
+  </ul>
+  <div class="memo"><span class="label">Para memorizar</span><p>Primeiro eu observo. Depois eu decido. Só então eu movimento o veículo.</p></div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 2</span>
+  <h2>Ao entrar no veículo</h2>
+  <p>Entre com seu <strong>documento de identificação</strong> em mãos.</p>
+  <p>Enquanto o examinador realiza os procedimentos de identificação e fotografias, você já pode:</p>
+  <ol class="steps">
+    <li>Conferir a posição do banco.</li>
+    <li>Conferir os retrovisores.</li>
+    <li>Colocar o cinto de segurança.</li>
+  </ol>
+  <p style="margin-top:10px">Se tudo já estiver ajustado, não precisa mexer novamente. O importante é conferir conscientemente.</p>
+  <div class="tip">Não espere o examinador terminar para começar sua preparação.</div>
+  <div class="memo"><span class="label">Para memorizar</span><p>Banco. Retrovisores. Cinto.<br>Eu me preparo antes de começar.</p></div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 3</span>
+  <h2 style="font-size:24px;margin-bottom:8px">Preparando o veículo para sair</h2>
+  <p>Quando o examinador autorizar o início:</p>
+  <ol class="steps">
+    <li>Pressione a embreagem.</li>
+    <li>Ligue o motor.</li>
+    <li>Engate a primeira marcha.</li>
+    <li>Ligue a seta para a esquerda.</li>
+    <li>Solte o freio de mão por último.</li>
+    <li>Confira o retrovisor esquerdo e o entorno.</li>
+    <li>Saia somente quando houver segurança.</li>
+  </ol>
+  <div class="tip"><span class="label">Atenção</span>A seta não garante preferência. Antes de sair, verifique se há veículos, ciclistas ou pedestres.</div>
+  <div class="memo"><span class="label">Para memorizar</span><p>Embreagem, motor, primeira, seta, freio de mão, observação e saída.</p></div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 4</span>
+  <h2>Durante a condução</h2>
+  <p style="font-size:15px;color:var(--soft)">As velocidades abaixo são referências trabalhadas no treinamento, não metas obrigatórias. A sinalização, o trânsito e as condições da via sempre prevalecem.</p>
+  <table class="ref">
+    <tr><th>Situação</th><th>Referência</th></tr>
+    <tr><td>Primeira para segunda</td><td>Por volta de 15 km/h</td></tr>
+    <tr><td>Segunda para terceira</td><td>Por volta de 20 a 25 km/h</td></tr>
+    <tr><td>Trecho de desenvolvimento</td><td>Em torno de 30 a 35 km/h, se permitido e seguro</td></tr>
+  </table>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 4 · continuação</span>
+  <h2>Quando precisar virar à direita</h2>
+  <ol class="steps">
+    <li>Ligue a seta para a direita.</li>
+    <li>Observe o trânsito e os retrovisores.</li>
+    <li>Reduza a velocidade.</li>
+    <li>Passe da terceira para a segunda, se estiver na terceira e a situação permitir.</li>
+    <li>Faça a conversão com controle do veículo.</li>
+  </ol>
+  <div class="tip">Não mantenha a embreagem pressionada durante toda a curva. Faça o controle adequado da marcha e da velocidade.</div>
+  <div class="memo"><span class="label">Para memorizar</span><p>Sinalizar. Observar. Reduzir. Converter com controle.</p></div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 5</span>
+  <h2>Quando o examinador pedir para estacionar</h2>
+  <p>Se ouvir <strong>“Quando der, pode estacionar”</strong>, entenda que você deve procurar um local permitido e seguro.</p>
+  <ul class="dot">
+    <li>Sinalize para a direita.</li>
+    <li>Observe o retrovisor direito.</li>
+    <li>Aproxime-se do meio-fio com distância adequada.</li>
+    <li>Não pare diante de portões, garagens ou locais proibidos.</li>
+    <li>Respeite as regras de parada e estacionamento.</li>
+  </ul>
+  <div class="tip">Se perceber que parou diante de um portão, corrija a posição para a frente, quando isso for possível e seguro, em vez de improvisar uma manobra de ré.</div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 5 · continuação</span>
+  <h2>Para finalizar o estacionamento</h2>
+  <ol class="steps">
+    <li>Coloque em ponto morto.</li>
+    <li>Desligue a seta, se estiver ligada.</li>
+    <li>Puxe o freio de mão.</li>
+    <li>Retire os pés dos pedais.</li>
+  </ol>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 1 · Passo 6</span>
+  <h2 style="font-size:24px;margin-bottom:8px">Saindo novamente do estacionamento</h2>
+  <p style="margin-bottom:4px">Quando o examinador autorizar:</p>
+  <ol class="steps">
+    <li>Ligue a seta para a esquerda.</li>
+    <li>Pressione a embreagem.</li>
+    <li>Engate a primeira marcha.</li>
+    <li>Solte o freio de mão.</li>
+    <li>Confira se a luz de advertência do freio de estacionamento apagou.</li>
+    <li>Olhe o retrovisor esquerdo e todo o entorno.</li>
+    <li>Saia somente quando for seguro.</li>
+  </ol>
+  <div class="tip">Como a rua não permite desenvolver muita velocidade, saia de primeira e utilize a segunda marcha se as condições permitirem.</div>
+  <div class="memo"><span class="label">Para memorizar</span><p>Seta. Embreagem. Primeira. Freio de mão. Observação. Saída.</p></div>
+</section>
+
+<!-- ================= PARTE 2 ================= -->
+<section class="part">
+  <div>
+    <div class="tag">Parte 2</div>
+    <div class="num">02</div>
+    <h1>Memorização <em>do percurso</em></h1>
+    <p class="sub">Agora vamos imaginar que você já está dirigindo. O objetivo é memorizar a sequência de acontecimentos, as referências visuais e os comandos que podem aparecer.</p>
+  </div>
+  <div class="foot">Este é o percurso que treinamos. No dia, siga sempre o comando do examinador, a sinalização e o trânsito real.</div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">1</span><h2>Saída inicial</h2></div>
+  <p>Observe o espaço antes de sair, prepare o veículo e inicie a condução conforme a orientação do examinador.</p>
+  <div class="tip"><span class="label">Lembre-se</span>Observar antes de movimentar.</div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">2</span><h2>Desenvolvimento das marchas</h2></div>
+  <p>Desenvolva a condução de forma progressiva, respeitando o limite da via e as condições do trânsito.</p>
+  <p>Se o examinador pedir uma conversão à direita:</p>
+  <ul class="dot">
+    <li>Seta direita.</li>
+    <li>Redução de velocidade.</li>
+    <li>Segunda marcha, quando adequada.</li>
+    <li>Conversão com controle.</li>
+  </ul>
+  <div class="tip"><span class="label">Lembre-se</span>Não tenha pressa para trocar de marcha.</div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">3</span><h2>Primeiro estacionamento</h2></div>
+  <p>Quando o examinador pedir para estacionar, escolha o local permitido e seguro, aproxime-se do meio-fio e finalize os procedimentos.</p>
+  <div class="tip"><span class="label">Lembre-se</span>Estacionar também faz parte da condução. Faça com tranquilidade.</div>
+
+  <div class="etapa" style="margin-top:22px"><span class="n">4</span><h2>Saída do estacionamento</h2></div>
+  <p>Prepare o veículo novamente, sinalize à esquerda, observe o trânsito e saia com segurança.</p>
+  <div class="tip"><span class="label">Ponto importante</span>Depois de sair, a rua não permite desenvolver muito a velocidade. Trabalhe principalmente com primeira e segunda marcha, conforme necessário.</div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">5</span><h2>Placa PARE</h2></div>
+  <p>Ao final da rua, você encontrará a placa PARE. A conversão prevista nesse percurso é <strong>à direita</strong>.</p>
+  <ol class="steps">
+    <li>Reduza a velocidade.</li>
+    <li>Pare antes da linha de retenção ou do ponto adequado.</li>
+    <li>Engate a primeira marcha.</li>
+    <li>Observe os dois lados.</li>
+    <li>Se a visibilidade estiver limitada, avance somente o necessário, com cautela, e pare novamente se necessário.</li>
+    <li>Só prossiga quando houver segurança e preferência respeitada.</li>
+  </ol>
+  <div class="memo"><span class="label">Para memorizar</span><p>PARE significa parar de verdade. Observar. Depois prosseguir.</p></div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">6</span><h2>Entrada na via de três faixas</h2></div>
+  <p>Na via seguinte, você encontrará três faixas:</p>
+  <table class="ref">
+    <tr><td>Faixa da direita</td><td>Exclusiva para ônibus</td></tr>
+    <tr><td>Faixa do meio</td><td>Sua faixa de entrada</td></tr>
+    <tr><td>Faixa da esquerda</td><td>&nbsp;</td></tr>
+  </table>
+  <p style="margin-top:10px">A orientação do percurso é entrar na <strong>faixa do meio</strong>, respeitando a sinalização e as condições do trânsito.</p>
+  <p>Antes de sair, faça a observação completa dos dois lados. Confira também a presença de ciclistas e pedestres à direita.</p>
+  <div class="tip"><span class="label">Cabeça de ventilador</span>Movimentar a cabeça para ampliar a observação do ambiente.</div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">7</span><h2>Primeiro semáforo</h2></div>
+  <p>Ao chegar ao semáforo:</p>
+  <ul class="dot">
+    <li>Se estiver verde, prossiga somente se a passagem estiver livre e segura.</li>
+    <li>Se estiver vermelho, pare no local adequado.</li>
+    <li>Desenvolva as marchas conforme a situação permitir.</li>
+  </ul>
+  <div class="tip"><span class="label">Lembre-se</span>Semáforo verde não significa avançar sem observar.</div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">8</span><h2>Segundo semáforo e conversão à direita</h2></div>
+  <p>O examinador poderá solicitar uma conversão à direita.</p>
+  <ol class="steps">
+    <li>Sinalize para a direita.</li>
+    <li>Observe o retrovisor direito.</li>
+    <li>Confira o entorno e os pontos cegos.</li>
+    <li>Identifique o trecho em que a sinalização permite a mudança de faixa.</li>
+    <li>Faça a mudança para a faixa da direita somente onde for permitido e seguro.</li>
+  </ol>
+  <div class="tip">Observe as marcações no chão, inclusive as chamadas <strong>tartaruguinhas</strong>, e não atravesse sinalização que proíba a mudança.</div>
+  <p>Na conversão, respeite o semáforo correspondente: se estiver vermelho, pare. Se estiver verde, prossiga com cautela.</p>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">9</span><h2>Próxima conversão à direita</h2></div>
+  <ul class="dot">
+    <li>Se estiver em terceira marcha, reduza para segunda quando adequado.</li>
+    <li>Se já estiver em segunda, ajuste a velocidade e mantenha o controle.</li>
+    <li>Se precisou parar no semáforo, arranque em primeira e passe para segunda conforme a velocidade e a distância disponível.</li>
+    <li>Não é obrigatório colocar terceira antes da conversão.</li>
+  </ul>
+  <div class="memo"><span class="label">Lembre-se</span><p>A marcha deve acompanhar a situação, não o contrário.</p></div>
+</section>
+
+<section class="page">
+  <div class="etapa"><span class="n">10</span><h2>Rua final</h2></div>
+  <p>Você estará novamente na rua do início do percurso, tendo como referência a <strong>Jango Auto Som</strong>, atrás do Shopping Estação.</p>
+  <p>O examinador poderá solicitar o estacionamento no início da rua ou depois de determinado veículo.</p>
+  <div class="tip">Escute o comando, identifique o local indicado e estacione com segurança.</div>
+  <h3 style="margin-top:22px">Finalização da prova</h3>
+  <ol class="steps">
+    <li>Ponto morto.</li>
+    <li>Freio de mão.</li>
+    <li>Desligar a seta, se estiver ligada.</li>
+    <li>Desligar o motor.</li>
+  </ol>
+  <div class="memo"><p>Você concluiu o percurso!</p></div>
+</section>
+
+<!-- ================= PARTE 3 ================= -->
+<section class="part">
+  <div>
+    <div class="tag">Parte 3</div>
+    <div class="num">03</div>
+    <h1>Preparação mental <em>e confiança</em></h1>
+    <p class="sub">Antes de chegar à prova, leia isto com atenção.</p>
+  </div>
+  <div class="foot">Guia da prova prática</div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 3</span>
+  <h2>Você não chegou até aqui por acaso</h2>
+  <p>Cada treino foi uma oportunidade de aprender, corrigir e se preparar.</p>
+  <p>No dia da prova, não permita que a ansiedade fale mais alto do que tudo aquilo que você já praticou.</p>
+  <div class="memo"><p>Respire. Observe. Escute. Pense na próxima etapa e faça o seu melhor.</p></div>
+  <p style="margin-top:14px">Você não precisa provar nada para ninguém. Não precisa impressionar quem está olhando.</p>
+  <p>Você precisa conduzir com responsabilidade e demonstrar o que aprendeu.</p>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 3 · 1</span>
+  <h2>Não dê ouvidos à autossabotagem</h2>
+  <p>Talvez você encontre pessoas dizendo coisas como:</p>
+  <div class="quotes">
+    <p>“Você já reprovou!”</p>
+    <p>“Essa prova é muito difícil.”</p>
+    <p>“Cuidado, porque o examinador reprova por qualquer coisa.”</p>
+    <p>“Eu conheço alguém que errou tudo.”</p>
+    <p>“Se eu fosse você, estaria muito nervoso.”</p>
+  </div>
+  <p style="margin-top:10px">Essas pessoas podem estar falando por medo, experiência própria ou simplesmente por comentários que ouviram.</p>
+  <p>Mas a experiência de outra pessoa não determina o resultado da sua prova.</p>
+  <div class="memo"><p>Não carregue o medo dos outros para dentro do carro.</p></div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 3 · 2</span>
+  <h2>Não antecipe um erro que ainda não aconteceu</h2>
+  <p>Um dos maiores inimigos da concentração é ficar pensando no que pode dar errado. Você começa a dirigir e já pensa:</p>
+  <ul class="dot">
+    <li>“E se eu esquecer a seta?”</li>
+    <li>“E se eu deixar o carro morrer?”</li>
+    <li>“E se eu errar a conversão?”</li>
+  </ul>
+  <p style="margin-top:10px"><strong>Pare.</strong> Você não precisa resolver a prova inteira de uma vez. Concentre-se na etapa que está diante de você.</p>
+  <div class="card think"><span class="label">Pense assim</span>
+    <p>Agora eu vou observar.</p>
+    <p>Depois vou executar.</p>
+    <p>Em seguida, vou pensar na próxima etapa.</p>
+  </div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 3 · 3</span>
+  <h2>Não se desespere se algo sair diferente do planejado</h2>
+  <p>Pode acontecer de você precisar ajustar uma manobra, reduzir mais a velocidade ou lidar com uma situação inesperada.</p>
+  <p>Não transforme automaticamente um momento difícil em uma reprovação na sua cabeça.</p>
+  <p>Mantenha a calma, continue atento e siga as orientações do examinador.</p>
+  <div class="memo"><p>Se cometer um erro, não deixe que ele tire sua concentração do restante da prova.</p></div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 3 · 4 · Leia em voz alta antes de dormir e no dia da prova</span>
+  <h2>Minha declaração de confiança</h2>
+  <div class="decl">
+    <p>Eu estou preparado para viver esse momento.</p>
+    <p>Eu conheço os procedimentos que pratiquei.</p>
+    <p>Não preciso ter pressa.</p>
+    <p>Não preciso me comparar com ninguém.</p>
+    <p>Não vou absorver comentários negativos.</p>
+    <p>Não vou antecipar erros que ainda não aconteceram.</p>
+    <p>Vou prestar atenção ao que está acontecendo agora.</p>
+    <p>Se precisar pensar, vou respirar e organizar meus pensamentos.</p>
+    <p>Vou conduzir com responsabilidade, atenção e segurança.</p>
+    <p>Uma etapa de cada vez. Eu vou fazer o meu melhor.</p>
+  </div>
+</section>
+
+<!-- ================= PARTE 4 ================= -->
+<section class="part">
+  <div>
+    <div class="tag">Parte 4</div>
+    <div class="num">04</div>
+    <h1>Ensaio mental <em>da prova</em></h1>
+    <p class="sub">Agora vem uma parte muito importante. Reserve alguns minutos em um lugar tranquilo e imagine todo o percurso, do começo ao fim.</p>
+  </div>
+  <div class="foot">Não é para decorar apenas palavras. É para visualizar você executando cada procedimento.</div>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 4</span>
+  <h2>Meu ensaio mental</h2>
+  <p style="font-size:15px;color:var(--soft)">Leia devagar, imagine cada ação e marque a etapa visualizada.</p>
+  <ul class="check">
+    <li><b>1</b>Chego ao local e observo o espaço ao redor do veículo.</li>
+    <li><b>2</b>Entro no carro com meu documento.</li>
+    <li><b>3</b>Confiro banco, retrovisores e cinto.</li>
+    <li><b>4</b>Espero a autorização, preparo o veículo e saio com segurança.</li>
+    <li><b>5</b>Desenvolvo as marchas conforme a via permite.</li>
+    <li><b>6</b>Sinalizo e faço a conversão à direita.</li>
+    <li><b>7</b>Procuro um local permitido e estaciono.</li>
+    <li><b>8</b>Faço os procedimentos para sair novamente.</li>
+  </ul>
+</section>
+
+<section class="page">
+  <span class="kicker">Parte 4 · continuação</span>
+  <h2>Meu ensaio mental</h2>
+  <ul class="check">
+    <li><b>9</b>Chego à placa PARE, paro e observo os dois lados.</li>
+    <li><b>10</b>Entro na faixa correta, sem utilizar a faixa exclusiva de ônibus.</li>
+    <li><b>11</b>Observo os semáforos e respeito a sinalização.</li>
+    <li><b>12</b>Faço as mudanças de faixa e conversões somente quando permitido e seguro.</li>
+    <li><b>13</b>Retorno à rua da Jango Auto Som.</li>
+    <li><b>14</b>Estaciono no local indicado pelo examinador.</li>
+    <li><b>15</b>Finalizo a prova com ponto morto, freio de mão e motor desligado.</li>
+  </ul>
+  <div class="note"><b>Faça de novo</b> sempre que quiser: na véspera e no dia, antes de sair de casa.</div>
+</section>
+
+<!-- MENSAGEM FINAL -->
+<section class="part">
+  <div>
+    <div class="tag">Uma última mensagem do seu instrutor</div>
+    <h1 style="margin-top:18px">Entre para fazer a sua prova, <em>não para ter medo dela.</em></h1>
+    <p class="sub">Você treinou, aprendeu e chegou até aqui. Agora é hora de colocar em prática o que desenvolveu.</p>
+    <ul>
+      <li>Confie na sua preparação.</li>
+      <li>Mantenha a concentração.</li>
+      <li>Faça uma etapa de cada vez.</li>
+    </ul>
+    <p class="sub" style="margin-top:20px;color:#fff;font-weight:600">Estou torcendo por você!</p>
+  </div>
+  <div class="foot"><b style="font-family:'Fraunces',serif;font-size:22px;letter-spacing:0">Maico</b><br>Seu instrutor · DOMINATRAN</div>
+</section>
+
+</body>
+</html>
