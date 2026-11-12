@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Guia da Prova Prática</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1d2433; --soft:#4a5468; --muted:#7a8296;
+    --navy:#1f3a5f; --navy-2:#2c4f7c;
+    --coral:#d9694a; --sand:#f6efe6; --cream:#fbf8f3;
+    --line:#e4ddd2;
+    --leve:#3f8f6b; --media:#c99a2e; --grave:#d9694a; --gravissima:#a83a3a; --zero:#5b6b85;
+  }
+  @page { size: 108mm 192mm; margin: 0; }
+  .page{ width:108mm; height:192mm; padding:12mm 8mm 13mm; overflow:hidden; break-after:page; position:relative; counter-increment:pg; }
+  .page::after{ content:counter(pg); position:absolute; bottom:6mm; right:8mm; font-size:11px; color:var(--muted); font-weight:600; }
+  .page::before{ content:"Guia da Prova Prática"; position:absolute; bottom:6mm; left:8mm; font-size:11px; color:var(--muted); letter-spacing:.04em; }
+  body{ counter-reset:pg; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"Inter",sans-serif; color:var(--ink);
+    font-size:16.5px; line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    background:#fff;
+  }
+  p{ margin:0 0 10px; }
+  strong{ font-weight:700; }
+  h1,h2,h3{ font-family:"Fraunces",serif; margin:0; color:var(--navy); line-height:1.15; }
+
+  /* ---------- capa ---------- */
+  .cover{
+    width:108mm; height:192mm; background:var(--navy); color:#fff;
+    padding:16mm 10mm 12mm; display:flex; flex-direction:column; justify-content:space-between;
+    break-after:page; position:relative; overflow:hidden;
+  }
+  .cover .road{ position:absolute; right:-30mm; bottom:-10mm; width:110mm; opacity:.16; }
+  .cover .tag{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#f3c9b9; font-weight:600; }
+  .cover h1{ color:#fff; font-size:38px; margin-top:12px; }
+  .cover h1 em{ font-style:normal; color:#f2a488; }
+  .cover .sub{ font-size:17px; color:#dfe6f1; margin-top:14px; line-height:1.45; }
+  .cover .foot{ font-size:12.5px; color:#b9c6da; line-height:1.5; position:relative; }
+  .cover .foot b{ color:#fff; letter-spacing:.06em; }
+
+  /* ---------- capítulos ---------- */
+  
+  .chap-num{
+    display:inline-block; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--coral); margin-bottom:6px;
+  }
+  .chapter > h2{ font-size:28px; margin-bottom:14px; }
+  .lead{ font-size:17.5px; color:var(--soft); margin-bottom:16px; }
+  h3{ font-size:20px; margin:20px 0 8px; }
+
+  .card{
+    background:var(--cream); border:1px solid var(--line); border-radius:14px;
+    padding:14px 15px; margin:12px 0; break-inside:avoid;
+  }
+  .card.navy{ background:var(--navy); color:#fff; border:none; }
+  .card.navy h3{ color:#fff; margin-top:0; }
+  .card.coral{ background:#fdf0ea; border-color:#f3cdbd; }
+  .card .label{ font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); margin-bottom:6px; display:block; }
+  .card.navy .label{ color:#f2a488; }
+
+  ul.clean{ list-style:none; padding:0; margin:0; }
+  ul.clean li{ padding:7px 0 7px 26px; position:relative; border-bottom:1px dashed var(--line); }
+  ul.clean li:last-child{ border-bottom:none; }
+  ul.clean li::before{ content:""; position:absolute; left:2px; top:14px; width:9px; height:9px; border-radius:50%; background:var(--coral); }
+
+  ul.check{ list-style:none; padding:0; margin:0; }
+  ul.check li{ padding:8px 0 8px 34px; position:relative; border-bottom:1px solid var(--line); break-inside:avoid; }
+  ul.check li:last-child{ border-bottom:none; }
+  ul.check li::before{ content:""; position:absolute; left:0; top:9px; width:20px; height:20px; border:2px solid var(--navy-2); border-radius:6px; background:#fff; }
+
+  ol.steps{ list-style:none; counter-reset:s; padding:0; margin:0; }
+  ol.steps li{ counter-increment:s; position:relative; padding:8px 0 8px 40px; break-inside:avoid; }
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:0; top:7px; width:28px; height:28px; border-radius:50%;
+    background:var(--navy); color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center;
+  }
+
+  .quote{
+    font-family:"Fraunces",serif; font-size:20px; line-height:1.35; color:var(--navy);
+    border-left:4px solid var(--coral); padding:4px 0 4px 14px; margin:14px 0; break-inside:avoid;
+  }
+  .note{ font-size:14px; color:var(--soft); background:#f1f4f9; border-radius:10px; padding:10px 12px; margin:10px 0; break-inside:avoid; }
+  .note b{ color:var(--navy); }
+
+  /* ---------- tabela de pontos ---------- */
+  .scale{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; break-inside:avoid; }
+  .scale div{ border-radius:12px; padding:10px 12px; color:#fff; }
+  .scale span{ display:block; font-size:12px; text-transform:uppercase; letter-spacing:.12em; font-weight:700; opacity:.9; }
+  .scale b{ font-family:"Fraunces",serif; font-size:28px; line-height:1.1; }
+  .bg-leve{ background:var(--leve); } .bg-media{ background:var(--media); }
+  .bg-grave{ background:var(--grave); } .bg-gravissima{ background:var(--gravissima); }
+
+  table.cmp{ width:100%; border-collapse:collapse; font-size:14.5px; margin:10px 0; break-inside:avoid; }
+  table.cmp th, table.cmp td{ border-bottom:1px solid var(--line); padding:8px 6px; text-align:left; vertical-align:top; }
+  table.cmp th{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+  table.cmp td.n{ font-weight:700; text-align:center; }
+
+  /* ---------- situações ---------- */
+  .sit{ border:1px solid var(--line); border-radius:16px; overflow:hidden; margin:0; break-inside:avoid; background:#fff; }
+  .sit-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; background:var(--sand); }
+  .sit-head .n{ font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; }
+  .badge{ font-size:12.5px; font-weight:700; color:#fff; padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .sit-body{ padding:6px 14px 12px; }
+  .sit h4{ font-family:"Fraunces",serif; font-size:19px; color:var(--navy); margin:6px 0 6px; line-height:1.25; }
+  .row{ padding:7px 0; border-bottom:1px dashed var(--line); font-size:15.5px; }
+  .row:last-of-type{ border-bottom:none; }
+  .row .k{ display:block; font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--coral); margin-bottom:2px; }
+  .self{ background:#f1f4f9; border-radius:10px; padding:9px 11px; margin-top:8px; font-size:15px; }
+  .self .q{ font-weight:600; color:var(--navy); margin-bottom:6px; }
+  .opts{ display:flex; flex-wrap:wrap; gap:6px 14px; font-size:14px; color:var(--soft); }
+  .opts span::before{ content:""; display:inline-block; width:14px; height:14px; border:2px solid var(--navy-2); border-radius:4px; margin-right:6px; vertical-align:-2px; background:#fff; }
+
+  /* ---------- simulação ---------- */
+  .sum{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed var(--line); font-size:15px; }
+  .sum.total{ border-bottom:none; font-weight:800; font-size:16.5px; color:var(--navy); padding-top:9px; }
+
+  /* ---------- diagnóstico ---------- */
+  table.diag{ width:100%; border-collapse:collapse; font-size:14.5px; }
+  table.diag th{ font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:6px 2px; text-align:center; }
+  table.diag th:first-child{ text-align:left; }
+  table.diag td{ border-top:1px solid var(--line); padding:8px 2px; vertical-align:middle; }
+  table.diag td.b{ text-align:center; width:15%; }
+  table.diag td.b::before{ content:""; display:inline-block; width:18px; height:18px; border:2px solid var(--navy-2); border-radius:5px; }
+  table.diag tr{ break-inside:avoid; }
+  .diag-group{ font-weight:700; color:var(--coral); font-size:12px; letter-spacing:.12em; text-transform:uppercase; padding-top:14px !important; border-top:none !important; }
+
+  .toc{ list-style:none; padding:0; margin:0; counter-reset:t; }
+  .toc li{ counter-increment:t; padding:5px 0 5px 36px; position:relative; border-bottom:1px solid var(--line); font-size:15.5px; }
+  .toc li::before{ content:counter(t, decimal-leading-zero); position:absolute; left:0; font-family:"Fraunces",serif; font-weight:700; color:var(--coral); }
+  .toc li.esp::before{ content:"★"; }
+
+  .end{ text-align:center; padding-top:20px; }
+  .end .quote{ border-left:none; padding:0; font-size:22px; }
+  .small{ font-size:13px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ================= CAPA ================= -->
+<section class="cover">
+  <svg class="road" viewBox="0 0 200 200" fill="none" stroke="#fff" stroke-width="6">
+    <path d="M20 200 C 60 140, 120 120, 200 40"/>
+    <path d="M70 200 C 100 160, 150 140, 200 100" stroke-dasharray="14 12"/>
+    <path d="M120 200 C 140 180, 170 170, 200 160"/>
+  </svg>
+  <div>
+    <div class="tag">Guia de preparação</div>
+    <h1>Sua prova prática,<br><em>uma etapa de cada vez.</em></h1>
+    <p class="sub">O que fazer antes, durante e depois do exame. Com calma, atenção e confiança no que você treinou.</p>
+  </div>
+  <div class="foot">
+    <b>DOMINATRAN</b><br>
+    Material de apoio ao treinamento.<br>
+    Não é documento oficial do Detran.
+  </div>
+</section>
+
+<!-- ================= SUMÁRIO ================= -->
+<section class="page">
+  <span class="chap-num">Neste guia</span>
+  <h2 style="font-size:28px;margin-bottom:14px">O que você vai encontrar</h2>
+  <ol class="toc">
+    <li>Antes de tudo, respira</li>
+    <li>Antes de entrar no carro</li>
+    <li>Ajustes e procedimentos iniciais</li>
+    <li>Saindo com segurança</li>
+    <li>Atenção durante o percurso</li>
+    <li>Cruzamentos, sinalização, conversões e faixas</li>
+    <li>Pedestres, ciclistas e outros veículos</li>
+    <li>Estacionamento e fim do exame</li>
+    <li>Entendendo a pontuação da prova</li>
+    <li class="esp">Especial: quantos pontos você pode perder?</li>
+    <li>Erros que não são infração, mas merecem atenção</li>
+    <li>Preparação emocional</li>
+    <li>Checklist final</li>
+  </ol>
+</section>
+
+<!-- ================= 1 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 1</span>
+  <h2>Antes de tudo, respira</h2>
+  <p class="lead">Se você chegou até aqui, já fez a parte mais difícil: treinou, errou, corrigiu e voltou para treinar.</p>
+  <p>A prova prática não é um teste de perfeição. Ela verifica se você <strong>dirige com segurança</strong> e respeita as regras de trânsito.</p>
+  <div class="card">
+    <span class="label">Combinado entre nós</span>
+    <ul class="clean">
+      <li>Este guia não promete aprovação. Ele ajuda você a chegar preparada.</li>
+      <li>Ninguém conhece o percurso oficial antes da prova. O que treinamos é referência, não garantia.</li>
+      <li>A regra mais importante é sempre a mesma: respeitar a sinalização e o trânsito real à sua frente.</li>
+    </ul>
+  </div>
+  <p class="note" style="margin-top:10px"><b>Como usar:</b> leia com calma nos dias antes da prova. No dia, leia só o checklist final, com o carro desligado e estacionado.</p>
+</section>
+
+<!-- ================= 2 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 2</span>
+  <h2>Antes de entrar no carro</h2>
+  <p class="lead">A prova começa antes da ignição. Chegar tranquila já é metade do caminho.</p>
+
+  <h3>Na véspera</h3>
+  <ul class="check">
+    <li>Separe os documentos pedidos pelo Detran do seu estado.</li>
+    <li>Confira horário e local. Planeje chegar com folga.</li>
+    <li>Durma o melhor que puder. Evite treinar até tarde “só para garantir”.</li>
+  </ul>
+
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 2 · continuação</span>
+  <h3>No dia</h3>
+  <ul class="check">
+    <li>Coma algo leve. Prova de estômago vazio aumenta a tensão.</li>
+    <li>Use calçado que firme bem no pé. Nada de chinelo ou salto.</li>
+    <li>Roupa confortável, que não prenda os movimentos.</li>
+    <li>Cabelo preso, se ele cair no rosto.</li>
+    <li>Celular desligado ou no silencioso, guardado. Ele não faz parte da prova.</li>
+  </ul>
+  <div class="note"><b>Por que o calçado importa?</b> Dirigir com calçado que não se firma nos pés é infração prevista no CTB (art. 252, IV). Além disso, você sente menos os pedais.</div>
+</section>
+
+<!-- ================= 3 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 3</span>
+  <h2>Ajustes e procedimentos iniciais</h2>
+  <p class="lead">Entrou no carro? Sem pressa. Os ajustes fazem parte da direção segura.</p>
+  <ol class="steps">
+    <li><strong>Banco.</strong> Pé esquerdo pisa a embreagem até o fim com o joelho levemente dobrado.</li>
+    <li><strong>Encosto.</strong> Ombro no banco e punho alcançando o topo do volante.</li>
+    <li><strong>Espelhos.</strong> Interno mostra o vidro traseiro inteiro. Laterais mostram um pedacinho do carro.</li>
+    <li><strong>Cinto.</strong> Colocado e travado. O seu e o de quem estiver no carro.</li>
+    <li><strong>Portas.</strong> Confira se estão fechadas.</li>
+    <li><strong>Freio de mão e câmbio.</strong> Freio puxado, câmbio em ponto morto antes de ligar.</li>
+  </ol>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 3 · continuação</span>
+  <div class="card coral">
+    <span class="label">Uma coisa de cada vez</span>
+    Faça os ajustes na mesma ordem que você treinou. A sequência fixa evita esquecimentos quando o nervosismo aparece.
+  </div>
+  <div class="note"><b>Termo técnico:</b> “ponto morto” é a posição do câmbio em que nenhuma marcha está engatada. O carro liga sem dar tranco.</div>
+</section>
+
+<!-- ================= 4 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 4</span>
+  <h2>Saindo com segurança</h2>
+  <p class="lead">O começo do percurso costuma ser o momento de mais tensão. Por isso ele merece um roteiro simples.</p>
+  <ol class="steps">
+    <li>Pise na embreagem e ligue o carro.</li>
+    <li>Engate a primeira marcha.</li>
+    <li><strong>Dê seta</strong> para o lado em que vai sair.</li>
+    <li>Olhe o espelho e vire a cabeça para conferir o ponto cego.</li>
+    <li>Só com espaço livre: solte o freio de mão e saia devagar.</li>
+    <li>Desligue a seta depois de entrar na via.</li>
+  </ol>
+  <div class="card">
+    <span class="label">Ponto cego</span>
+    É a área ao lado do carro que os espelhos não mostram. Virar a cabeça rapidamente antes de sair ou mudar de faixa resolve.
+  </div>
+</section>
+
+<!-- ================= 5 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 5</span>
+  <h2>Atenção durante o percurso</h2>
+  <p class="lead">Durante a prova, sua tarefa é ler a via: placas, faixas, semáforos, pessoas e carros.</p>
+  <ul class="clean">
+    <li><strong>Olhe longe.</strong> Quem olha só para o capô descobre tudo em cima da hora.</li>
+    <li><strong>Espelhos com frequência.</strong> Uma olhada a cada poucos segundos, sem tirar os olhos da frente por muito tempo.</li>
+    <li><strong>Velocidade.</strong> Dentro do limite e adequada ao trânsito. Devagar demais também atrapalha.</li>
+    <li><strong>Distância.</strong> Mantenha espaço do carro da frente e das laterais.</li>
+    <li><strong>Mãos no volante.</strong> As duas, salvo para trocar marcha ou acionar comandos.</li>
+    <li><strong>Escute o examinador.</strong> Se não entendeu a instrução, pergunte. Perguntar não tira ponto.</li>
+  </ul>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 5 · continuação</span>
+  <div class="quote">“Não preciso ter pressa. Preciso ter atenção.”</div>
+  <div class="card coral">
+    <span class="label">Se o examinador não pediu nada</span>
+    Siga em frente respeitando a sinalização. Ele vai avisar quando for para virar ou estacionar. Não tente adivinhar o percurso.
+  </div>
+</section>
+
+<!-- ================= 6 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 6</span>
+  <h2>Cruzamentos, sinalização, conversões e faixas</h2>
+  <p class="lead">É aqui que se concentram as infrações mais pesadas. A boa notícia: todas são evitáveis com rotina.</p>
+
+  <h3>Placa PARE</h3>
+  <p>Parada <strong>total</strong>. O carro precisa ficar imóvel, não basta reduzir. Depois olhe para os dois lados e só então siga.</p>
+
+  <h3>Semáforo</h3>
+  <p>Vermelho é parada antes da faixa de retenção. Não pare em cima da faixa de pedestres. Se ficou em dúvida no amarelo, avalie se dá para parar com segurança.</p>
+
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 6 · continuação</span>
+  <h3>Conversões</h3>
+  <ol class="steps">
+    <li>Dê seta com antecedência.</li>
+    <li>Confira o espelho.</li>
+    <li>Posicione o carro na faixa do lado para onde vai virar.</li>
+    <li>Reduza antes da curva, não durante.</li>
+    <li>Atenção a pedestres atravessando a rua para onde você vai entrar.</li>
+  </ol>
+
+  <h3>Mudança de faixa</h3>
+  <p><strong>Seta, espelho, ponto cego, e só então muda.</strong> Mudança suave, sem fechar ninguém.</p>
+  <div class="note"><b>Faixa contínua:</b> linha sem interrupção no chão significa que não é permitido cruzá-la ali.</div>
+</section>
+
+<!-- ================= 7 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 7</span>
+  <h2>Pedestres, ciclistas e outros veículos</h2>
+  <p class="lead">Direção segura é cuidar de quem está mais exposto que você.</p>
+  <div class="card">
+    <span class="label">Pedestres</span>
+    Na faixa de pedestres sem semáforo, quem está atravessando ou já começou a travessia tem preferência. Pare e espere. Na conversão, os pedestres da via onde você vai entrar também têm prioridade.
+  </div>
+  <div class="card">
+    <span class="label">Ciclistas</span>
+    Para ultrapassar uma bicicleta, deixe pelo menos <strong>1,5 metro</strong> de distância lateral e reduza a velocidade. Se não houver espaço, espere atrás.
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 7 · continuação</span>
+  <div class="card">
+    <span class="label">Outros veículos</span>
+    Ônibus parado, carro saindo de garagem, moto no corredor. Antecipe: olhe, reduza e deixe espaço. Ultrapassagem é pela esquerda.
+  </div>
+  <div class="quote">“Minha concentração está no presente, não no medo do que pode acontecer.”</div>
+</section>
+
+<!-- ================= 8 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 8</span>
+  <h2>Estacionamento e fim do exame</h2>
+  <p class="lead">Quando o examinador pedir para estacionar, faça como treinou: devagar, olhando, corrigindo quando precisar.</p>
+  <ol class="steps">
+    <li>Seta para o lado da calçada.</li>
+    <li>Espelho e ponto cego.</li>
+    <li>Velocidade bem baixa. Use embreagem e freio para controlar.</li>
+    <li>Aproxime o carro da guia (meio-fio) sem bater a roda.</li>
+    <li>Pare, puxe o freio de mão, coloque em ponto morto.</li>
+    <li>Desligue o carro somente quando o examinador indicar.</li>
+    <li>Antes de abrir a porta, olhe o espelho. Pode vir carro, moto ou bicicleta.</li>
+  </ol>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 8 · continuação</span>
+  <div class="card coral">
+    <span class="label">Importante</span>
+    Corrigir a posição do carro não é erro. Manobrar devagar e ajustar faz parte. O que conta é o resultado: o carro bem parado, sem infração.
+  </div>
+  <div class="note"><b>Validar com seu instrutor:</b> o tipo de estacionamento cobrado (baliza ou outro) e a forma de avaliação mudaram com as novas regras e podem variar por estado.</div>
+</section>
+
+<!-- ================= 9 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 9</span>
+  <h2>Entendendo a pontuação da prova</h2>
+  <p class="lead">Com a Resolução CONTRAN nº 1.020/2025, a prova deixou de ter “falta eliminatória”. Agora, cada infração de trânsito cometida durante o exame soma pontos.</p>
+
+  <div class="scale">
+    <div class="bg-leve"><span>Leve</span><b>1 ponto</b></div>
+    <div class="bg-media"><span>Média</span><b>2 pontos</b></div>
+    <div class="bg-grave"><span>Grave</span><b>4 pontos</b></div>
+    <div class="bg-gravissima"><span>Gravíssima</span><b>6 pontos</b></div>
+  </div>
+
+  <div class="card navy">
+    <span class="label">A regra principal</span>
+    Você começa com zero. É aprovada se terminar com <strong>até 10 pontos</strong>. Passou de 10, o resultado é “não apto” naquela prova.
+  </div>
+
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 9 · continuação</span>
+  <h3>O que conta ponto</h3>
+  <p>O que soma pontos são <strong>infrações previstas no Código de Trânsito Brasileiro (CTB)</strong>, com a mesma classificação do código: leve, média, grave ou gravíssima.</p>
+  <p>Comportamentos que não são infração, como o motor morrer, não geram pontos automáticos por si só.</p>
+  <div class="note"><b>Para validar no seu estado:</b> os Detrans tiveram prazo de adaptação e há registro de aplicação diferente entre estados. Confirme com seu instrutor como a prova está sendo aplicada onde você vai fazer.</div>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 9 · continuação</span>
+  <h2>Pontos da prova não são pontos da CNH</h2>
+  <p class="lead">São dois sistemas diferentes. Misturar os dois gera confusão e medo à toa.</p>
+
+  <table class="cmp">
+    <tr><th>Natureza</th><th style="text-align:center">Prova prática</th><th style="text-align:center">Prontuário da CNH</th></tr>
+    <tr><td>Leve</td><td class="n">1</td><td class="n">3</td></tr>
+    <tr><td>Média</td><td class="n">2</td><td class="n">4</td></tr>
+    <tr><td>Grave</td><td class="n">4</td><td class="n">5</td></tr>
+    <tr><td>Gravíssima</td><td class="n">6</td><td class="n">7</td></tr>
+  </table>
+
+  <div class="card">
+    <span class="label">Pontos da prova</span>
+    Servem só para avaliar aquele exame. Base: Resolução CONTRAN nº 1.020/2025. Limite: 10 pontos. Cada nova prova é uma nova avaliação.
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 9 · continuação</span>
+  <div class="card">
+    <span class="label">Pontos da CNH</span>
+    São registrados no prontuário de quem já é habilitada, quando há autuação por infração. Base: art. 259 do CTB. Vêm com multa e outras penalidades previstas em lei.
+  </div>
+  <div class="quote">Na prova, a infração vale como critério de avaliação. Não é multa.</div>
+</section>
+
+<!-- ================= ESPECIAL ================= -->
+<section class="page">
+  <span class="chap-num">★ Capítulo especial</span>
+  <h2>Você sabe quantos pontos pode perder por uma infração?</h2>
+  <p class="lead">Situações reais da prova. Leia cada uma e responda com sinceridade a pergunta do final.</p>
+  <div class="card">
+    <span class="label">Como ler os cartões</span>
+    <ul class="clean">
+      <li><strong>O que acontece:</strong> o comportamento observado.</li>
+      <li><strong>Na prova:</strong> como isso pode aparecer no exame.</li>
+      <li><strong>No CTB:</strong> se existe infração e qual artigo.</li>
+      <li><strong>Pontos no exame:</strong> pela tabela da Resolução 1.020/2025.</li>
+      <li><strong>Como evitar:</strong> a orientação prática.</li>
+      <li><strong>Autoavaliação:</strong> marque onde você está hoje.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Capítulo especial</span>
+  <h2>Antes de começar</h2>
+  <p>Guarde esta escala. Ela aparece no topo de cada cartão.</p>
+  <div class="scale">
+    <div class="bg-leve"><span>Leve</span><b>1 ponto</b></div>
+    <div class="bg-media"><span>Média</span><b>2 pontos</b></div>
+    <div class="bg-grave"><span>Grave</span><b>4 pontos</b></div>
+    <div class="bg-gravissima"><span>Gravíssima</span><b>6 pontos</b></div>
+  </div>
+  <div class="card navy"><span class="label">Limite</span>Até 10 pontos: aprovada. Acima de 10: não apta naquela prova.</div>
+  <div class="card"><span class="label">Cartão cinza</span>Situação que não é infração por si só, ou que depende de como a conduta aconteceu.</div>
+  <p class="small">O artigo do CTB indica a natureza da infração. O enquadramento no dia da prova é feito pelo examinador, conforme o Manual Brasileiro de Exames de Direção Veicular e as orientações do Detran do seu estado.</p>
+</section>
+
+
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 1</span><span class="badge bg-grave">Grave · 4 pontos</span></div>
+    <div class="sit-body">
+      <h4>Sair sem colocar o cinto</h4>
+      <div class="row"><span class="k">O que acontece</span>Na pressa de começar, a aluna liga o carro e sai antes de travar o cinto.</div>
+      <div class="row"><span class="k">Na prova</span>O examinador registra logo no início. Você começa a prova já com pontos.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 167, deixar de usar o cinto de segurança. Natureza grave.</div>
+      <div class="row"><span class="k">Como evitar</span>Cinto faz parte da sequência fixa de ajustes. Só gire a chave depois de ouvir o “clique”.</div>
+      <div class="self"><div class="q">Coloco o cinto antes de ligar o carro, sem precisar lembrar?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda esqueço</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 2 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 2</span><span class="badge bg-grave">Grave · 4 pontos</span></div>
+    <div class="sit-body">
+      <h4>Virar ou mudar de faixa sem dar seta</h4>
+      <div class="row"><span class="k">O que acontece</span>A atenção vai toda para o volante e a seta fica para trás.</div>
+      <div class="row"><span class="k">Na prova</span>É dos esquecimentos mais comuns, principalmente na saída e nas conversões.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 196, deixar de indicar com antecedência, pela seta, a manobra. Natureza grave.</div>
+      <div class="row"><span class="k">Como evitar</span>Treine a frase mental “seta, espelho, manobra”. A seta vem sempre primeiro.</div>
+      <div class="self"><div class="q">Dou seta antes de toda conversão e mudança de faixa?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda esqueço</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 3 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 3</span><span class="badge bg-gravissima">Gravíssima · 6 pontos</span></div>
+    <div class="sit-body">
+      <h4>Não parar totalmente na placa PARE</h4>
+      <div class="row"><span class="k">O que acontece</span>A aluna reduz bastante, vê a rua vazia e segue sem o carro ficar imóvel.</div>
+      <div class="row"><span class="k">Na prova</span>Reduzir não é parar. O examinador observa se as rodas pararam de fato.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 208, avançar a parada obrigatória. Natureza gravíssima.</div>
+      <div class="row"><span class="k">Como evitar</span>No PARE, conte mentalmente “um, dois” com o carro parado. Depois olhe para os dois lados.</div>
+      <div class="self"><div class="q">Paro por completo no PARE mesmo quando a rua está vazia?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 4 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 4</span><span class="badge bg-gravissima">Gravíssima · 6 pontos</span></div>
+    <div class="sit-body">
+      <h4>Avançar o sinal vermelho</h4>
+      <div class="row"><span class="k">O que acontece</span>O sinal fecha no meio da aproximação e a aluna decide seguir.</div>
+      <div class="row"><span class="k">Na prova</span>Além de pontuar, é uma situação de risco real.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 208, avançar o sinal vermelho do semáforo. Natureza gravíssima.</div>
+      <div class="row"><span class="k">Como evitar</span>Ao ver um semáforo à frente, tire o pé do acelerador e prepare-se para parar. Sem pressa de “pegar o verde”.</div>
+      <div class="self"><div class="q">Chego ao semáforo já preparada para parar?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 5 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 5</span><span class="badge bg-gravissima">Gravíssima · 6 pontos</span></div>
+    <div class="sit-body">
+      <h4>Não dar preferência ao pedestre na faixa</h4>
+      <div class="row"><span class="k">O que acontece</span>Uma pessoa começa a atravessar e a aluna, focada no carro de trás, segue.</div>
+      <div class="row"><span class="k">Na prova</span>Muito comum em conversões, quando o pedestre atravessa a rua para onde você vai entrar.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 214, I, deixar de dar preferência ao pedestre na faixa. Natureza gravíssima.</div>
+      <div class="row"><span class="k">Como evitar</span>Antes de toda faixa de pedestres, olhe as calçadas dos dois lados. Na dúvida, pare.</div>
+      <div class="self"><div class="q">Olho as calçadas antes de passar por uma faixa de pedestres?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 6 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 6</span><span class="badge bg-grave">Grave · 4 pontos</span></div>
+    <div class="sit-body">
+      <h4>Mudar de faixa colado em outro carro</h4>
+      <div class="row"><span class="k">O que acontece</span>A aluna confere o espelho, mas muda de faixa com pouco espaço ao lado ou à frente.</div>
+      <div class="row"><span class="k">Na prova</span>O examinador avalia se houve espaço seguro na manobra.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 192, deixar de guardar distância de segurança lateral e frontal. Natureza grave.</div>
+      <div class="row"><span class="k">Como evitar</span>Inclua o ponto cego na rotina e, se o espaço for curto, espere. Faixa nenhuma vale a pressa.</div>
+      <div class="self"><div class="q">Espero o espaço certo antes de mudar de faixa?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 7 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 7</span><span class="badge bg-media">Média · 2 pontos</span></div>
+    <div class="sit-body">
+      <h4>Parar em cima da faixa de pedestres</h4>
+      <div class="row"><span class="k">O que acontece</span>O sinal fecha e o carro para avançado, sobre a faixa.</div>
+      <div class="row"><span class="k">Na prova</span>Acontece por freada tardia ou por não enxergar a linha de retenção.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 183, parar sobre a faixa de pedestres na mudança de sinal. Natureza média.</div>
+      <div class="row"><span class="k">Como evitar</span>Comece a frear mais cedo e use como referência a linha de retenção, antes da faixa.</div>
+      <div class="self"><div class="q">Consigo parar antes da faixa sem freada brusca?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 8 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 8</span><span class="badge bg-media">Média · 2 pontos</span></div>
+    <div class="sit-body">
+      <h4>Passar um pouco do limite de velocidade</h4>
+      <div class="row"><span class="k">O que acontece</span>Em uma descida ou reta livre, o carro ganha velocidade sem a aluna perceber.</div>
+      <div class="row"><span class="k">Na prova</span>Velocidade até 20% acima do limite.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 218, I. Natureza média. Acima disso, a natureza sobe (grave ou gravíssima).</div>
+      <div class="row"><span class="k">Como evitar</span>Procure as placas de velocidade e dê uma olhada no velocímetro junto com os espelhos.</div>
+      <div class="self"><div class="q">Sei qual é o limite da via onde estou dirigindo?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 9 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 9</span><span class="badge bg-media">Média · 2 pontos</span></div>
+    <div class="sit-body">
+      <h4>Ultrapassar ciclista muito perto</h4>
+      <div class="row"><span class="k">O que acontece</span>A bicicleta está na beira da via e a aluna passa sem se afastar.</div>
+      <div class="row"><span class="k">Na prova</span>O examinador observa a distância e a velocidade na passagem.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 201, deixar de guardar 1,5 m ao passar ou ultrapassar bicicleta. Natureza média.</div>
+      <div class="row"><span class="k">Como evitar</span>Reduza, afaste-se e, se não houver espaço, espere atrás com calma.</div>
+      <div class="self"><div class="q">Fico tranquila esperando atrás de um ciclista quando não há espaço?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 10 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 10</span><span class="badge bg-media">Média · 2 pontos</span></div>
+    <div class="sit-body">
+      <h4>Converter sem se posicionar na faixa certa</h4>
+      <div class="row"><span class="k">O que acontece</span>A aluna vai virar à direita, mas faz a curva saindo da faixa do meio ou da esquerda.</div>
+      <div class="row"><span class="k">Na prova</span>Comum quando a aluna reage à instrução em cima da hora.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 197, deixar de deslocar com antecedência o veículo para a faixa adequada. Natureza média.</div>
+      <div class="row"><span class="k">Como evitar</span>Ouviu a instrução? Seta, espelho e posicione o carro. Se não der tempo, siga em frente com segurança.</div>
+      <div class="self"><div class="q">Me posiciono para a conversão com antecedência?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 11 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 11</span><span class="badge bg-media">Média · 2 pontos</span></div>
+    <div class="sit-body">
+      <h4>Dirigir com uma mão só sem necessidade</h4>
+      <div class="row"><span class="k">O que acontece</span>A mão fica no câmbio depois da troca de marcha, ou apoiada na perna.</div>
+      <div class="row"><span class="k">Na prova</span>Hábito que muita gente traz sem perceber.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 252, V, dirigir com apenas uma das mãos, fora das exceções (sinais de braço, troca de marcha, acionar equipamentos). Natureza média.</div>
+      <div class="row"><span class="k">Como evitar</span>Trocou a marcha, a mão volta ao volante. Treine até virar automático.</div>
+      <div class="self"><div class="q">Minha mão volta ao volante logo depois da troca de marcha?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 12 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 12</span><span class="badge bg-media">Média · 2 pontos</span></div>
+    <div class="sit-body">
+      <h4>Parar no meio do cruzamento</h4>
+      <div class="row"><span class="k">O que acontece</span>O trânsito à frente para e o carro fica dentro do cruzamento, travando a passagem.</div>
+      <div class="row"><span class="k">Na prova</span>Acontece quando a aluna entra no cruzamento sem ver se há espaço do outro lado.</div>
+      <div class="row"><span class="k">No CTB</span>Sim. Art. 182, VI, parar na área de cruzamento prejudicando a circulação. Natureza média.</div>
+      <div class="row"><span class="k">Como evitar</span>Só entre no cruzamento se houver espaço para sair dele.</div>
+      <div class="self"><div class="q">Confiro se há espaço do outro lado antes de cruzar?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 13 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 13</span><span class="badge" style="background:var(--zero)">Depende da conduta</span></div>
+    <div class="sit-body">
+      <h4>Estacionar longe da guia</h4>
+      <div class="row"><span class="k">O que acontece</span>A aluna termina a manobra com o carro afastado do meio-fio.</div>
+      <div class="row"><span class="k">Na prova</span>Dificuldade, correções e lentidão <strong>não geram pontos automáticos</strong>. Avalia-se a conduta concreta: onde o carro ficou.</div>
+      <div class="row"><span class="k">No CTB</span>Pode haver. Art. 181, II: afastado de 50 cm a 1 m da guia, natureza leve (1 ponto). Art. 181, III: a mais de 1 m, natureza grave (4 pontos).</div>
+      <div class="row"><span class="k">Como evitar</span>Use as referências do treino. Ficou longe? Corrija com calma.</div>
+      <div class="self"><div class="q">Termino o estacionamento perto da guia sem bater a roda?</div><div class="opts"><span>Sempre</span><span>Às vezes</span><span>Ainda não</span></div></div>
+    </div>
+  </div>
+</section>
+
+  <!-- 14 -->
+<section class="page">
+  <div class="sit">
+    <div class="sit-head"><span class="n">Situação 14</span><span class="badge" style="background:var(--zero)">Não é infração · 0 automático</span></div>
+    <div class="sit-body">
+      <h4>Deixar o motor morrer</h4>
+      <div class="row"><span class="k">O que acontece</span>Na saída, no semáforo ou na subida, a embreagem sobe rápido e o carro apaga.</div>
+      <div class="row"><span class="k">Na prova</span>Isoladamente, não gera pontos. O problema é o que vem depois, se a aluna se desesperar.</div>
+      <div class="row"><span class="k">No CTB</span>Não há infração prevista para o motor apagar.</div>
+      <div class="row"><span class="k">Como evitar</span>Se apagar: pé no freio, ponto morto, respira, liga de novo e sai como treinou. Sem pressa por causa de buzina.</div>
+      <div class="self"><div class="q">Se o carro apagar, sei retomar com calma?</div><div class="opts"><span>Sim</span><span>Mais ou menos</span><span>Ainda travo</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Capítulo especial · continuação</span>
+  <h2>Como os pontos se somam</h2>
+  <p class="lead">Um exemplo ajuda a entender a margem que você tem. Não é para assustar. É para mostrar onde mora a atenção.</p>
+
+  <div class="card">
+    <span class="label">Exemplo A</span>
+    <div class="sum"><span>Esqueceu a seta uma vez</span><b>4</b></div>
+    <div class="sum"><span>Parou sobre a faixa de pedestres</span><b>2</b></div>
+    <div class="sum"><span>Motor morreu duas vezes</span><b>0</b></div>
+    <div class="sum total"><span>Total</span><span>6 · aprovada</span></div>
+  </div>
+  <div class="card">
+    <span class="label">Exemplo B</span>
+    <div class="sum"><span>Não parou totalmente no PARE</span><b>6</b></div>
+    <div class="sum"><span>Esqueceu a seta uma vez</span><b>4</b></div>
+    <div class="sum"><span>Dirigiu com uma mão só</span><b>2</b></div>
+    <div class="sum total"><span>Total</span><span>12 · não apta</span></div>
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Capítulo especial · continuação</span>
+  <div class="card navy">
+    <span class="label">O que esses exemplos mostram</span>
+    Uma gravíssima sozinha não reprova. Mas ela consome mais da metade da sua margem. As infrações mais pesadas vêm de três hábitos: <strong>parar de verdade, dar seta e olhar o pedestre.</strong> Domine esses três.
+  </div>
+  <p class="small">Os exemplos são ilustrativos. O registro no dia é feito pelo examinador.</p>
+</section>
+
+<!-- ================= 10 (erros sem infração) ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 10</span>
+  <h2>Erros que não são infração, mas merecem atenção</h2>
+  <p class="lead">Alguns deslizes não geram pontos por si só. O risco é eles abalarem sua concentração e puxarem um erro de verdade.</p>
+  <div class="card">
+    <span class="label">Freio de mão esquecido</span>
+    Você percebe o carro “pesado”. Pare, solte o freio de mão e siga. Corrigiu, acabou.
+  </div>
+  <div class="card">
+    <span class="label">Marcha errada</span>
+    Engatou terceira no lugar da primeira? Pé na embreagem, corrige, segue. Sem drama.
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 10 · continuação</span>
+  <div class="card">
+    <span class="label">Tranco na troca de marcha</span>
+    Normal sob nervosismo. Respire e suavize a próxima.
+  </div>
+  <div class="card">
+    <span class="label">Não entendeu a instrução</span>
+    Pergunte. Melhor perguntar do que virar no lugar errado em cima da hora.
+  </div>
+  <div class="card coral">
+    <span class="label">O erro mais perigoso</span>
+    É pensar <strong>“já era”</strong> depois de um deslize. Esse pensamento rouba a atenção do que vem à frente, e é aí que surge a infração. Um imprevisto não significa que você perdeu a prova.
+  </div>
+</section>
+
+<!-- ================= 11 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 11</span>
+  <h2>Preparação emocional</h2>
+  <p class="lead">O nervosismo vai aparecer. Ele não é sinal de despreparo. É sinal de que isso importa para você.</p>
+  <ul class="clean">
+    <li><strong>Não precisa ter pressa.</strong> Ninguém avalia rapidez. Avaliam segurança.</li>
+    <li><strong>Uma coisa de cada vez.</strong> Agora é a seta. Depois o espelho. Depois a manobra.</li>
+    <li><strong>Não antecipe erros.</strong> A curva lá na frente ainda não chegou. Cuide do agora.</li>
+    <li><strong>Imprevisto não é fracasso.</strong> Motor apagou, buzinaram, errou a marcha: respira e retoma.</li>
+    <li><strong>Confie no treino.</strong> Seu corpo já sabe fazer o que você praticou várias vezes.</li>
+  </ul>
+
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 11 · continuação</span>
+  <h3>Troque os pensamentos</h3>
+  <table class="cmp">
+    <tr><th>Quando vier</th><th>Troque por</th></tr>
+    <tr><td>“Vou errar.”</td><td>“Vou fazer a próxima etapa.”</td></tr>
+    <tr><td>“Não vou conseguir.”</td><td>“Eu treinei isso. Sei como fazer.”</td></tr>
+    <tr><td>“Vai dar tudo errado.”</td><td>“Agora é só este cruzamento.”</td></tr>
+    <tr><td>“Já era, errei.”</td><td>“Respiro e sigo com atenção.”</td></tr>
+  </table>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 11 · continuação</span>
+  <h2>Exercício mental antes da prova</h2>
+  <p class="lead">Faça com o carro <strong>estacionado e desligado</strong>, ou sentada na sala de espera. Leva cerca de três minutos.</p>
+  <ol class="steps">
+    <li><strong>Postura.</strong> Pés apoiados no chão, ombros soltos, mãos no colo.</li>
+    <li><strong>Respiração 4 e 6.</strong> Inspire pelo nariz contando até 4. Solte pela boca contando até 6. Repita cinco vezes.</li>
+    <li><strong>Corpo.</strong> Perceba onde está a tensão: ombro, mandíbula, mãos. Solte uma de cada vez.</li>
+    <li><strong>Ensaio.</strong> De olhos fechados, imagine-se fazendo os ajustes na ordem: banco, encosto, espelhos, cinto, portas, freio de mão, ponto morto.</li>
+  </ol>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 11 · continuação</span>
+  <h2>Exercício mental (cont.)</h2>
+  <ol class="steps" style="counter-reset:s 4">
+    <li><strong>Saída.</strong> Imagine a seta, o espelho, o ponto cego e a saída suave.</li>
+    <li><strong>Imprevisto.</strong> Imagine o motor apagando. Veja-se respirando, ligando de novo e saindo com calma.</li>
+    <li><strong>Frase.</strong> Repita em silêncio: “Eu sei o que preciso fazer. Vou executar uma etapa de cada vez.”</li>
+  </ol>
+  <div class="note"><b>Áudio guiado:</b> se você usar um áudio de preparação, ouça apenas antes da prova, com o veículo parado. Durante a direção, nada de celular, áudio ou fone.</div>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 11 · continuação</span>
+  <h2>Frases para levar com você</h2>
+  <div class="quote">“Eu sei o que preciso fazer. Vou executar uma etapa de cada vez.”</div>
+  <div class="quote">“Não preciso ter pressa. Preciso ter atenção.”</div>
+  <div class="quote">“Minha concentração está no presente, não no medo do que pode acontecer.”</div>
+  <div class="quote">“Eu me preparei para este momento. Agora é colocar em prática.”</div>
+  <div class="quote">“Se algo sair do plano, eu respiro e retomo.”</div>
+</section>
+
+<!-- ================= DIAGNÓSTICO ================= -->
+<section class="page">
+  <span class="chap-num">★ Diagnóstico</span>
+  <h2>Meu nível de preparação</h2>
+  <p class="lead">Marque com honestidade. O objetivo não é tirar nota. É descobrir o que treinar nas próximas aulas.</p>
+  <table class="diag">
+    <tr><th>Habilidade</th><th>Domino</th><th>Às vezes</th><th>Treinar</th></tr>
+    <tr><td colspan="4" class="diag-group">Início</td></tr>
+    <tr><td>Ajustes na ordem certa</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Cinto antes de ligar</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Saída com seta e ponto cego</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Retomar se o motor apagar</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+  </table>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Diagnóstico · continuação</span>
+  <h2>Meu nível de preparação</h2>
+  <table class="diag">
+    <tr><th>Habilidade</th><th>Domino</th><th>Às vezes</th><th>Treinar</th></tr>
+    <tr><td colspan="4" class="diag-group">Percurso</td></tr>
+    <tr><td>Parada total no PARE</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Semáforo sem parar na faixa</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Seta em toda manobra</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Mudança de faixa com espaço</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Posicionar antes de converter</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Controle de velocidade</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Duas mãos no volante</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+  </table>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Diagnóstico · continuação</span>
+  <h2>Meu nível de preparação</h2>
+  <table class="diag">
+    <tr><th>Habilidade</th><th>Domino</th><th>Às vezes</th><th>Treinar</th></tr>
+    <tr><td colspan="4" class="diag-group">Pessoas</td></tr>
+    <tr><td>Preferência ao pedestre</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>1,5 m do ciclista</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td colspan="4" class="diag-group">Final e mente</td></tr>
+    <tr><td>Estacionar perto da guia</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Seguir em frente após um erro</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+  </table>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Diagnóstico · resultado</span>
+  <h2>Como ler o seu resultado</h2>
+  <div class="card">
+    <span class="label">Marcou “Domino”</span>
+    Ótimo. Mantenha o hábito nas próximas aulas para ele continuar automático no dia da prova.
+  </div>
+  <div class="card">
+    <span class="label">Marcou “Às vezes”</span>
+    Você sabe fazer, mas ainda depende de lembrar. Esses itens precisam de repetição até virarem rotina. Leve a lista para o seu instrutor.
+  </div>
+  <div class="card coral">
+    <span class="label">Marcou “Treinar”</span>
+    Comece por aqui, principalmente se o item for PARE, seta ou pedestre. São os que mais pesam na pontuação. Peça ao instrutor uma aula focada neles.
+  </div>
+</section>
+
+<section class="page">
+  <span class="chap-num">★ Diagnóstico</span>
+  <div class="card navy">
+    <span class="label">A mensagem principal</span>
+    <p style="font-family:'Fraunces',serif;font-size:20px;line-height:1.35;margin:0">Não espere descobrir suas dificuldades no dia da prova. Identifique agora o que precisa melhorar e treine até conseguir executar com segurança.</p>
+  </div>
+</section>
+
+<!-- ================= 12 ================= -->
+<section class="page">
+  <span class="chap-num">Capítulo 12</span>
+  <h2>Checklist final</h2>
+  <p class="lead">Leia no dia da prova, antes de entrar no carro.</p>
+  <h3>Antes de ligar</h3>
+  <ul class="check">
+    <li>Documentos em mãos. Celular desligado e guardado.</li>
+    <li>Calçado firme no pé.</li>
+    <li>Banco, encosto e espelhos ajustados.</li>
+    <li>Cinto travado. Portas fechadas.</li>
+    <li>Freio de mão puxado, câmbio em ponto morto.</li>
+  </ul>
+</section>
+
+<section class="page">
+  <span class="chap-num">Capítulo 12 · continuação</span>
+  <h3>Durante</h3>
+  <ul class="check">
+    <li>Seta, espelho, ponto cego, manobra.</li>
+    <li>PARE é parada total.</li>
+    <li>Olhe as calçadas antes de toda faixa de pedestres.</li>
+    <li>Velocidade dentro do limite.</li>
+    <li>Duas mãos no volante.</li>
+    <li>Não entendeu? Pergunte.</li>
+  </ul>
+  <h3>No final</h3>
+  <ul class="check">
+    <li>Estacione devagar, corrija se precisar.</li>
+    <li>Freio de mão, ponto morto, espere a orientação.</li>
+    <li>Espelho antes de abrir a porta.</li>
+  </ul>
+</section>
+
+<section class="page end">
+  <span class="chap-num">Para fechar</span>
+  <div class="quote" style="margin-top:20px">Você treinou para isso.<br>Agora é uma etapa de cada vez.</div>
+  <p class="lead" style="margin-top:18px">Respire, preste atenção no que está à sua frente e confie no que você construiu nas aulas.</p>
+  <div class="card" style="text-align:left;margin-top:26px">
+    <span class="label">Sobre este material</span>
+    <p class="small" style="margin:0">Guia de apoio ao treinamento, produzido pela DOMINATRAN. Não é documento oficial do Detran e não substitui as orientações do órgão de trânsito do seu estado. Pontuação do exame conforme Resolução CONTRAN nº 1.020/2025. Classificação das infrações conforme o Código de Trânsito Brasileiro (Lei nº 9.503/1997). Pontos de prontuário conforme art. 259 do CTB. Informações conferidas em novembro de 2026.</p>
+  </div>
+</section>
+
+</body>
+</html>
