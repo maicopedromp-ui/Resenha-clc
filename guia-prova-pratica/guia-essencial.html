@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Prova Prática: o Essencial</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1d2433; --soft:#4a5468; --muted:#7a8296;
+    --navy:#1f3a5f; --navy-2:#2c4f7c; --coral:#d9694a; --sand:#f6efe6; --cream:#fbf8f3; --line:#e4ddd2;
+    --leve:#3f8f6b; --media:#c99a2e; --grave:#d9694a; --gravissima:#a83a3a; --zero:#5b6b85;
+  }
+  @page { size:108mm 192mm; margin:0; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#fff; }
+  body{ font-family:"Inter",sans-serif; color:var(--ink); font-size:16.5px; line-height:1.48;
+        -webkit-print-color-adjust:exact; print-color-adjust:exact; counter-reset:pg; }
+  p{ margin:0 0 10px; }
+  h1,h2,h3{ font-family:"Fraunces",serif; margin:0; color:var(--navy); line-height:1.15; }
+  h2{ font-size:27px; margin-bottom:12px; }
+  h3{ font-size:19px; margin:16px 0 6px; }
+
+  .page{ width:108mm; height:192mm; padding:12mm 8mm 13mm; overflow:hidden; break-after:page; position:relative; counter-increment:pg; }
+  .page::after{ content:counter(pg); position:absolute; bottom:6mm; right:8mm; font-size:11px; color:var(--muted); font-weight:600; }
+  .page::before{ content:"Prova prática · o essencial"; position:absolute; bottom:6mm; left:8mm; font-size:11px; color:var(--muted); }
+  .kicker{ display:block; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--coral); margin-bottom:6px; }
+  .lead{ font-size:17px; color:var(--soft); margin-bottom:14px; }
+
+  .cover{ width:108mm; height:192mm; background:var(--navy); color:#fff; padding:16mm 10mm 12mm;
+          display:flex; flex-direction:column; justify-content:space-between; break-after:page; position:relative; overflow:hidden; }
+  .cover .road{ position:absolute; right:-30mm; bottom:-10mm; width:110mm; opacity:.16; }
+  .cover .tag{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#f3c9b9; font-weight:600; }
+  .cover h1{ color:#fff; font-size:38px; margin-top:12px; }
+  .cover h1 em{ font-style:normal; color:#f2a488; }
+  .cover .sub{ font-size:17px; color:#dfe6f1; margin-top:14px; }
+  .cover .foot{ font-size:12.5px; color:#b9c6da; line-height:1.5; position:relative; }
+  .cover .foot b{ color:#fff; letter-spacing:.06em; }
+
+  .card{ background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin:10px 0; }
+  .card.navy{ background:var(--navy); color:#fff; border:none; }
+  .card.coral{ background:#fdf0ea; border-color:#f3cdbd; }
+  .label{ display:block; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); margin-bottom:4px; }
+  .card.navy .label{ color:#f2a488; }
+
+  .scale{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; }
+  .scale div{ border-radius:12px; padding:9px 12px; color:#fff; }
+  .scale span{ display:block; font-size:12px; text-transform:uppercase; letter-spacing:.12em; font-weight:700; }
+  .scale b{ font-family:"Fraunces",serif; font-size:26px; line-height:1.1; }
+  .bg-leve{ background:var(--leve); } .bg-media{ background:var(--media); }
+  .bg-grave{ background:var(--grave); } .bg-gravissima{ background:var(--gravissima); } .bg-zero{ background:var(--zero); }
+
+  ol.steps{ list-style:none; counter-reset:s; padding:0; margin:0; }
+  ol.steps li{ counter-increment:s; position:relative; padding:6px 0 6px 38px; }
+  ol.steps li::before{ content:counter(s); position:absolute; left:0; top:6px; width:27px; height:27px; border-radius:50%;
+    background:var(--navy); color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; }
+
+  ul.check{ list-style:none; padding:0; margin:0; }
+  ul.check li{ padding:6px 0 6px 32px; position:relative; border-bottom:1px solid var(--line); }
+  ul.check li:last-child{ border-bottom:none; }
+  ul.check li::before{ content:""; position:absolute; left:0; top:8px; width:19px; height:19px; border:2px solid var(--navy-2); border-radius:6px; }
+
+  .inf{ border:1px solid var(--line); border-radius:12px; padding:9px 12px; margin:8px 0; }
+  .inf .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .inf .t{ font-weight:700; color:var(--navy); font-size:16px; line-height:1.3; }
+  .badge{ font-size:12px; font-weight:700; color:#fff; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .inf .how{ font-size:14.5px; color:var(--soft); margin-top:3px; }
+  .inf .art{ font-size:12px; color:var(--muted); }
+
+  .big3{ display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line); }
+  .big3:last-child{ border-bottom:none; }
+  .big3 .n{ font-family:"Fraunces",serif; font-size:30px; color:var(--coral); line-height:1; width:26px; flex:none; }
+  .big3 b{ color:var(--navy); }
+
+  .quote{ font-family:"Fraunces",serif; font-size:19px; line-height:1.35; color:var(--navy); border-left:4px solid var(--coral); padding:2px 0 2px 12px; margin:10px 0; }
+  .note{ font-size:13.5px; color:var(--soft); background:#f1f4f9; border-radius:10px; padding:9px 11px; margin:10px 0; }
+  .note b{ color:var(--navy); }
+  .small{ font-size:12.5px; color:var(--muted); }
+
+  table.diag{ width:100%; border-collapse:collapse; font-size:14.5px; }
+  table.diag th{ font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:4px 2px; text-align:center; }
+  table.diag th:first-child{ text-align:left; }
+  table.diag td{ border-top:1px solid var(--line); padding:6px 2px; }
+  table.diag td.b{ text-align:center; width:15%; }
+  table.diag td.b::before{ content:""; display:inline-block; width:17px; height:17px; border:2px solid var(--navy-2); border-radius:5px; vertical-align:middle; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="cover">
+  <svg class="road" viewBox="0 0 200 200" fill="none" stroke="#fff" stroke-width="6">
+    <path d="M20 200 C 60 140, 120 120, 200 40"/>
+    <path d="M70 200 C 100 160, 150 140, 200 100" stroke-dasharray="14 12"/>
+    <path d="M120 200 C 140 180, 170 170, 200 160"/>
+  </svg>
+  <div>
+    <div class="tag">Prova prática · o essencial</div>
+    <h1>Uma etapa<br><em>de cada vez.</em></h1>
+    <p class="sub">O que você precisa saber e fazer no dia da prova. Leitura de 10 minutos.</p>
+  </div>
+  <div class="foot">
+    <b>DOMINATRAN</b><br>
+    Material de apoio ao treinamento.<br>
+    Não é documento oficial do Detran.
+  </div>
+</section>
+
+<!-- 1. COMO A PROVA FUNCIONA -->
+<section class="page">
+  <span class="kicker">01 · Como a prova funciona</span>
+  <h2>Você começa com zero</h2>
+  <p>Cada <strong>infração de trânsito</strong> cometida durante o exame soma pontos (Resolução CONTRAN nº 1.020/2025).</p>
+  <div class="scale">
+    <div class="bg-leve"><span>Leve</span><b>1 ponto</b></div>
+    <div class="bg-media"><span>Média</span><b>2 pontos</b></div>
+    <div class="bg-grave"><span>Grave</span><b>4 pontos</b></div>
+    <div class="bg-gravissima"><span>Gravíssima</span><b>6 pontos</b></div>
+  </div>
+  <div class="card navy">
+    <span class="label">Aprovação</span>
+    Até <strong>10 pontos</strong>: aprovada. Acima de 10: não apta naquela prova.
+  </div>
+  <div class="card">
+    <span class="label">O que não gera ponto sozinho</span>
+    O motor morrer, corrigir a posição do carro ou manobrar devagar. Só pontua o que é infração prevista no CTB.
+  </div>
+  <p class="small">Esses pontos valem só para a prova. Não são os pontos da CNH (3, 4, 5 e 7 do art. 259 do CTB), que são outro sistema e vêm de autuação.</p>
+</section>
+
+<!-- 2. ANTES DE LIGAR -->
+<section class="page">
+  <span class="kicker">02 · Antes de ligar</span>
+  <h2>Sem pressa nos ajustes</h2>
+  <p class="lead">Faça sempre na mesma ordem. A sequência fixa evita esquecimentos.</p>
+  <ol class="steps">
+    <li><strong>Banco:</strong> embreagem até o fim com o joelho levemente dobrado.</li>
+    <li><strong>Encosto:</strong> ombro no banco, punho alcança o topo do volante.</li>
+    <li><strong>Espelhos:</strong> interno e laterais.</li>
+    <li><strong>Cinto</strong> travado. Sem ele são 4 pontos antes de sair.</li>
+    <li><strong>Portas</strong> fechadas.</li>
+    <li><strong>Freio de mão</strong> puxado e <strong>ponto morto</strong>.</li>
+  </ol>
+  <h3>Para sair</h3>
+  <ol class="steps">
+    <li>Embreagem, liga, primeira marcha.</li>
+    <li><strong>Seta</strong>, espelho e olhada por cima do ombro.</li>
+    <li>Espaço livre: solta o freio de mão e sai devagar.</li>
+  </ol>
+</section>
+
+<!-- 3. OS 3 HÁBITOS -->
+<section class="page">
+  <span class="kicker">03 · Durante o percurso</span>
+  <h2>Os três hábitos que mais protegem sua nota</h2>
+  <p class="lead">As infrações mais pesadas da prova vêm de esquecer um destes.</p>
+  <div class="big3"><span class="n">1</span><div><b>PARE é parada total.</b> O carro fica imóvel. Conte “um, dois” e depois olhe para os dois lados.<br><span class="small">Gravíssima · 6 pontos (art. 208)</span></div></div>
+  <div class="big3"><span class="n">2</span><div><b>Seta antes de toda manobra.</b> Seta, espelho, manobra. Sempre nessa ordem.<br><span class="small">Grave · 4 pontos (art. 196)</span></div></div>
+  <div class="big3"><span class="n">3</span><div><b>Olhe as calçadas antes de toda faixa de pedestres.</b> Alguém atravessando? Pare e espere. Vale também na conversão.<br><span class="small">Gravíssima · 6 pontos (art. 214, I)</span></div></div>
+  <div class="card coral" style="margin-top:12px">Só o PARE e a seta juntos já somam 10 pontos. É o limite.</div>
+</section>
+
+<!-- 4-5. OUTRAS INFRAÇÕES -->
+<section class="page">
+  <span class="kicker">04 · Fique atenta também</span>
+  <h2>Outras infrações comuns na prova</h2>
+  <div class="inf"><div class="top"><span class="t">Avançar o sinal vermelho</span><span class="badge bg-gravissima">6</span></div>
+    <div class="how">Viu semáforo? Tire o pé e prepare-se para parar.</div><div class="art">Gravíssima · art. 208</div></div>
+  <div class="inf"><div class="top"><span class="t">Mudar de faixa colada em outro carro</span><span class="badge bg-grave">4</span></div>
+    <div class="how">Seta, espelho, ombro. Espaço curto? Espere.</div><div class="art">Grave · art. 192</div></div>
+  <div class="inf"><div class="top"><span class="t">Parar sobre a faixa de pedestres</span><span class="badge bg-media">2</span></div>
+    <div class="how">Freie mais cedo. Pare antes da linha de retenção.</div><div class="art">Média · art. 183</div></div>
+  <div class="inf"><div class="top"><span class="t">Passar até 20% do limite de velocidade</span><span class="badge bg-media">2</span></div>
+    <div class="how">Procure as placas e olhe o velocímetro junto com os espelhos.</div><div class="art">Média · art. 218, I (acima de 20% a natureza sobe)</div></div>
+</section>
+
+<section class="page">
+  <span class="kicker">04 · Continuação</span>
+  <div class="inf"><div class="top"><span class="t">Passar perto do ciclista</span><span class="badge bg-media">2</span></div>
+    <div class="how">Mínimo de 1,5 m e velocidade reduzida. Sem espaço, espere atrás.</div><div class="art">Média · art. 201</div></div>
+  <div class="inf"><div class="top"><span class="t">Virar sem estar na faixa certa</span><span class="badge bg-media">2</span></div>
+    <div class="how">Ouviu a instrução: seta e posicione o carro com antecedência.</div><div class="art">Média · art. 197</div></div>
+  <div class="inf"><div class="top"><span class="t">Dirigir com uma mão só</span><span class="badge bg-media">2</span></div>
+    <div class="how">Trocou a marcha, a mão volta ao volante.</div><div class="art">Média · art. 252, V</div></div>
+  <div class="inf"><div class="top"><span class="t">Parar dentro do cruzamento</span><span class="badge bg-media">2</span></div>
+    <div class="how">Só entre se houver espaço para sair do outro lado.</div><div class="art">Média · art. 182, VI</div></div>
+  <div class="inf"><div class="top"><span class="t">Estacionar longe da guia</span><span class="badge bg-zero">1 ou 4</span></div>
+    <div class="how">De 50 cm a 1 m: leve. Mais de 1 m: grave. Ficou longe? Corrija com calma.</div><div class="art">Art. 181, II e III</div></div>
+</section>
+
+<!-- 5. IMPREVISTOS -->
+<section class="page">
+  <span class="kicker">05 · Se algo sair do plano</span>
+  <h2>Imprevisto não é reprovação</h2>
+  <div class="card"><span class="label">O motor morreu</span>Não é infração. Pé no freio, ponto morto, respira, liga de novo e sai como treinou. Buzina não te apressa.</div>
+  <div class="card"><span class="label">Esqueceu o freio de mão</span>Carro “pesado”? Solte e siga.</div>
+  <div class="card"><span class="label">Errou a marcha</span>Embreagem, corrige, segue.</div>
+  <div class="card"><span class="label">Não entendeu a instrução</span>Pergunte. Perguntar não tira ponto.</div>
+  <div class="card coral"><span class="label">O erro mais perigoso</span>Pensar “já era”. Esse pensamento rouba a atenção do que vem à frente.</div>
+</section>
+
+<!-- 6. CABEÇA -->
+<section class="page">
+  <span class="kicker">06 · Cabeça no lugar</span>
+  <h2>Um minuto antes de começar</h2>
+  <p>Com o carro <strong>parado e desligado</strong>, ou na sala de espera:</p>
+  <ol class="steps">
+    <li>Pés no chão, ombros soltos.</li>
+    <li>Inspire contando até 4. Solte contando até 6. Cinco vezes.</li>
+    <li>De olhos fechados, repasse a ordem: banco, encosto, espelhos, cinto, portas, freio de mão.</li>
+    <li>Imagine o motor apagando e você retomando com calma.</li>
+  </ol>
+  <h3>Leve com você</h3>
+  <div class="quote">“Não preciso ter pressa. Preciso ter atenção.”</div>
+  <div class="quote">“Eu sei o que preciso fazer. Uma etapa de cada vez.”</div>
+</section>
+
+<!-- 7. DIAGNÓSTICO -->
+<section class="page">
+  <span class="kicker">07 · Antes do dia da prova</span>
+  <h2>Meu nível de preparação</h2>
+  <p style="font-size:15px">O que ficar em “treinar” vai para a próxima aula.</p>
+  <table class="diag">
+    <tr><th>Eu faço sem pensar</th><th>Sim</th><th>Às vezes</th><th>Treinar</th></tr>
+    <tr><td>Cinto antes de ligar</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Parada total no PARE</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Seta em toda manobra</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Olhar o pedestre na faixa</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Parar antes da faixa no semáforo</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Controlar a velocidade</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Estacionar perto da guia</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+    <tr><td>Retomar se o motor apagar</td><td class="b"></td><td class="b"></td><td class="b"></td></tr>
+  </table>
+  <div class="card navy" style="margin-top:12px">Não espere descobrir suas dificuldades no dia da prova. Identifique agora o que precisa melhorar e treine até conseguir executar com segurança.</div>
+</section>
+
+<!-- 8. CHECKLIST -->
+<section class="page">
+  <span class="kicker">08 · No dia</span>
+  <h2>Checklist final</h2>
+  <ul class="check">
+    <li>Documentos em mãos, celular desligado e guardado.</li>
+    <li>Calçado firme no pé.</li>
+    <li>Ajustes na ordem, cinto travado.</li>
+    <li>Seta, espelho, manobra.</li>
+    <li>PARE é parada total.</li>
+    <li>Olhar as calçadas antes da faixa.</li>
+    <li>Duas mãos no volante.</li>
+    <li>Não entendeu? Pergunte.</li>
+    <li>No fim: freio de mão, ponto morto, espelho antes de abrir a porta.</li>
+  </ul>
+  <p class="small" style="margin-top:12px">Material de apoio da DOMINATRAN, não oficial. O percurso treinado é referência, não garantia de percurso da prova. Siga sempre a sinalização e o trânsito real. Confirme com seu instrutor como o Detran do seu estado está aplicando as regras.</p>
+</section>
+
+</body>
+</html>
